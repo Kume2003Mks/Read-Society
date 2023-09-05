@@ -5,7 +5,7 @@ const Explore: JSX.ElementType = () => {
     return (
         <>
             <Nav />
-            <main className="h-screen pt-[8vh] overflow-auto flex flex-col">
+            <main className="h-screen p-container overflow-auto flex flex-col">
             
                 <Book_View title='New'>
 

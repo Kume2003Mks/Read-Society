@@ -7,7 +7,7 @@ const Community: JSX.ElementType = () => {
     return (
         <>
             <Nav />
-            <main className="flex-row h-screen justify-between flex-wrap flex pt-[8vh]">
+            <main className="flex-row h-screen justify-between flex-wrap flex p-container">
                 <SideBar className="p-1">
                     <h1 className='text-xl font-bold text-left px-3 mb-2'>Explore</h1>
                     <ul className='nav-list mx-2'>

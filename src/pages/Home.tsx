@@ -6,7 +6,7 @@ function Home(): JSX.Element {
   return (
     <>
       <Nav />
-      <main className='pt-[8vh]'>
+      <main className='p-container'>
         <div className="hero-container justify-center">
           <p className="">Homu</p>
         </div>
@@ -26,7 +26,6 @@ function Home(): JSX.Element {
           </div>
         </div>
         
-
       </main>
 
     </>

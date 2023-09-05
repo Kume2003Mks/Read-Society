@@ -26,12 +26,21 @@ const Nav: JSX.ElementType = () => {
         <NavLink to='/'>
           <img src={logo} alt="logo" className='w-24 h-full mr-4' />
         </NavLink>
+        <div className="m-wrap">
+        <div className="m-theme-button" onClick={() => { alert('hello world') }}>
+          <Icon 
+            icon="mingcute:sun-fill" 
+            className='toggle-theme' />
+        </div>
         <div className="m-theme-button" onClick={toggleMenu}>
           <Icon
             icon={isMenuOpen ? 'octicon:x-12' : 'ci:hamburger-md'}
             className={`toggle-dropdown ${isMenuOpen ? 'open' : ''}`}
           />
         </div>
+
+        </div>
+
       </div>
       
       <ul className={`navbar-links ${isMenuOpen ? 'menu-open' : ''}`}>

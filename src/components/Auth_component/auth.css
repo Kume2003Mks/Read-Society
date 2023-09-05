@@ -13,7 +13,6 @@
     align-items: center;
     align-self: center;
     position: absolute;
-    /*margin-top: 60px;*/
 }
 
 .mainbox h1 {
@@ -212,7 +211,7 @@
         border: 1px solid #FFF;
         padding: 0.55rem;
         width: 300px;
-        position: relative;
+        position: fixed;
     }
 
     .mainbox h1 {

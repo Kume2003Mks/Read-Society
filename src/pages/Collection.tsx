@@ -139,6 +139,6 @@ const Collection: JSX.ElementType = () => {
 export default Collection
 
 const classStyle = {
-    MainScreen: 'flex-row justify-between flex-wrap flex h-screen pt-[8vh]',
+    MainScreen: 'flex-row justify-between flex-wrap flex h-screen p-container',
     Link_Btn: 'text-base text-center flex flex-row flex-wrap justify-between p-2',
 }

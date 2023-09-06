@@ -61,9 +61,15 @@
     justify-content: space-around;
     justify-items: space-around;
     background-color: #6f048000;
-    flex-direction: row;
-    margin: 1rem;
+    flex-direction: column;
+    margin: 0.5rem;
 }
+
+.input-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
 
 .from-layout-password {
     width: 80%;
@@ -130,6 +136,23 @@
     width: 100%;
     align-content: space-between;
 }
+
+.password-toggle-button{
+    position: absolute;
+    display: flex;
+    align-self: flex-end;
+    cursor: pointer;
+    top : auto;
+    left: 82%;
+    margin-bottom: 4px;
+}
+.error{
+    padding-top: 4px;
+    padding-left: 36px;
+    font-size: 10pt;
+    color: #b60000;
+}
+
 
 /* tablat */
 @media (min-width: 640px) and (max-width: 1280px) {
@@ -202,6 +225,10 @@
         width: 1.25rem;
         height: 1.25rem;
         margin: 0 0.5rem 0 0.5rem
+    }
+
+    .password-toggle-button{
+        cursor: default;
     }
 
 }
@@ -288,4 +315,9 @@
         width: 80%;
         justify-content: space-between;
     }
+
+    .password-toggle-button{
+        cursor: default;
+    }
+
   }

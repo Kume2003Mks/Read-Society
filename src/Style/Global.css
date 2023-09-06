@@ -45,6 +45,17 @@
     border-radius: 8px;
 }
 
+.filter-list{
+    list-style-type: none;
+    width: 100%;
+    height: 3rem;
+    background-color: #c5c5c5;
+}
+
+.filter-list li{
+    float: left;
+}
+
    /* tablat */
   @media (min-width: 640px) and (max-width: 1280px) {
 

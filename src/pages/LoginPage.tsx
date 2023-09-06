@@ -4,6 +4,7 @@ import '../Style/Global.css'
 
 
 const LoginPage: JSX.ElementType = () => {
+
     return (
         <>
             <Nav />

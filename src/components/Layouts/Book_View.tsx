@@ -1,4 +1,4 @@
-const Book_View: JSX.ElementType = ({ children, title}: any) => {
+const Book_View: JSX.ElementType = ({ children, title }: any) => {
 
     return (
         <div className='items-center flex mt-4 flex-col px-12'>

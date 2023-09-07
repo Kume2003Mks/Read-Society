@@ -2,8 +2,11 @@ import './auth.css'
 import { useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
+import { UserCredential, createUserWithEmailAndPassword } from 'firebase/auth';
+import { Auth, database } from '../../utils/Firebase.ts'
+import { collection, doc, setDoc } from 'firebase/firestore';
 
-const RegisterBox: React.FC = () => {
+const RegisterBox: JSX.ElementType = () => {
     const navigate = useNavigate();
 
     // State variables for form inputs and errors
@@ -80,12 +83,43 @@ const RegisterBox: React.FC = () => {
         return Object.values(newErrors).every((error) => !error);
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
 
-            //firebase data
+            try {
+                // Create the user with email and password
+                const userCredential: UserCredential = await createUserWithEmailAndPassword(Auth, email, password);
+                const user = userCredential.user;
+    
+                // Add additional user profile information
+                const userData = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    username: username,
+                    profile_image: 'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/profile.png?alt=media&token=1ae321b5-a447-4ca8-81f3-53875f3c0db8',
+                    about_me: '',
+                    facebook: '',
+                    instagram: '',
+                    website: '',
+                };
+    
+                // Create a new subcollection for the user profiles and set the user data as a document within it
+                const userProfilesCollectionRef = collection(database, 'users', user.uid, 'profiles');
+                const userProfileDocRef = doc(userProfilesCollectionRef, user.uid);
+    
+                await setDoc(userProfileDocRef, userData);
+    
+                console.log('Registration successful');
 
+                alert('Registration successful');
+
+                navigate('/login');
+
+            } catch (error:any) {
+                console.error('Error registering user:', error.message);
+            }
+    
             console.log('Form submitted successfully');
         }
     }

@@ -2,6 +2,9 @@ import './auth.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { Auth } from '../../utils/Firebase.ts'
+
 const LoginBox: JSX.ElementType = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -33,16 +36,36 @@ const LoginBox: JSX.ElementType = () => {
     } else if (password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
     }
+
     setErrors(newErrors);
     return Object.values(newErrors).every((error) => !error);
   }
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      //firebase data
-      console.log('Login successfully');
+
+
+      //login user
+      await signInWithEmailAndPassword(Auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          console.log('Login successfully');
+          const user = userCredential.user
+          console.log('Login With',user)
+          // ...
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          console.log(errorMessage);
+          alert("login failed")
+          setPassword("")
+        });
+
     }
   }
+
+
   return (
     <form className="mainbox gap-y-2">
       <h1 style={{ textAlign: 'center', marginTop: '1rem' }}>Login</h1>
@@ -76,7 +99,7 @@ const LoginBox: JSX.ElementType = () => {
           <div
             onClick={handleTogglePassword}
             className="password-toggle-button">
-              <Icon icon={showPassword ? 'mdi:eye-off' : 'mdi:eye'} className="icon-from" />
+            <Icon icon={showPassword ? 'mdi:eye-off' : 'mdi:eye'} className="icon-from" />
           </div>
         </div>
         <div className="error">{errors.password}</div>

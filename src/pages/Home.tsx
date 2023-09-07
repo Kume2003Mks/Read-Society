@@ -1,3 +1,4 @@
+import Book_Card from '../components/Element/Book_Card'
 import Nav from '../components/nevigation/NavBar'
 import '../Style/Global.css'
 
@@ -23,6 +24,7 @@ function Home(): JSX.Element {
           <div className='w-full my-2 border-t-2 border-black' />
           <div className=' bg-slate-400 w-full p-8 h-[16rem]'>
             {/**content */}
+            <Book_Card/>
           </div>
         </div>
         

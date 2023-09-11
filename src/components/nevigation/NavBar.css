@@ -4,8 +4,8 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: 8vh;
-  padding: 0 20px;
+  height: 64px;
+  padding: 10px;
   position: fixed;
   top: 0;
 }
@@ -126,7 +126,7 @@
   animation: shake 1s linear 0s infinite normal none;
 }
 
-.m-wrap{
+.m-wrap {
   display: none;
 }
 
@@ -149,7 +149,7 @@
   .navbar {
     flex-direction: column;
     height: auto;
-    padding: 0.75rem;
+    padding: 10px;
     position: sticky;
     top: 0;
   }
@@ -177,7 +177,7 @@
     display: flex;
   }
 
-  .m-wrap{
+  .m-wrap {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
@@ -224,6 +224,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -233,6 +234,7 @@
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }

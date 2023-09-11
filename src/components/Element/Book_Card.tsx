@@ -1,4 +1,4 @@
-import '../../Style/Component_Gobal.css'
+import style from '../../Style/Component_Gobal.module.css'
 
 const Book_Card: JSX.ElementType = () => {
   return (
@@ -9,7 +9,7 @@ const Book_Card: JSX.ElementType = () => {
 
       <div className={`p-2 h-fill w-fill justify-center rounded-lg cursor-pointer bg-slate-300 hover:bg-slate-400`}>
             <div>
-                <img src={'https://images.gr-assets.com/books/1255614970l/2.jpg'} alt={'props.authors'} className='w-full h-auto rounded-lg A4-Size' />
+                <img src={'https://images.gr-assets.com/books/1255614970l/2.jpg'} alt={'props.authors'} className={`w-full h-auto rounded-lg ${style.A4_Size}`} />
                 <div className='mt-1'>
                     <p className='text-sm truncate'>Harry Potter</p>
                     <p className='text-xs text-slate-500'>jkk</p>

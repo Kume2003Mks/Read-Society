@@ -5,6 +5,7 @@ import SideBar from '../components/Layouts/SideBar'
 import Nav from '../components/nevigation/NavBar'
 import '../Style/Global.css'
 import { useEffect, useState } from 'react'
+import Capsule from '../components/Element/Capsule'
 
 const Explore: JSX.ElementType = () => {
 
@@ -32,10 +33,13 @@ const Explore: JSX.ElementType = () => {
             <Nav />
             <main className="flex-row justify-between flex-wrap flex h-screen p-container">
                 <SideBar className='bg-white p-2'>
-                    <h1 className='text-2xl font-bold text-center'>Explore</h1>
+                    <h1 className='text-2xl font-bold text-center underline underline-offset-2'>Explore</h1>
                     {/* My Creation */}
-                    <div className='m-4 border-t-2 border-black' />
-                    <h1 className='text-xl font-bold text-left px-3 mb-2'>Category</h1>
+                    <h1 className='text-xl font-bold text-left px-3 mt-2'>Category</h1>
+                    <div className='mx-4 border-t-2 border-black' />
+                    <div className='grid grid-cols-2 gap-2 mx-2 mt-1'>
+                        <Capsule label='Novel' color='red'/><Capsule label='Cartoon' color='orange'/><Capsule label='Cartoon' color='green'/>
+                    </div>
                 </SideBar>
                 <div className='grid-layout h-full flex-1 p-4'>
                     {data?.map((val: any) => (
@@ -49,8 +53,3 @@ const Explore: JSX.ElementType = () => {
 }
 
 export default Explore
-
-const classStyle = {
-    MainScreen: 'flex-row justify-between flex-wrap flex h-screen p-container',
-    Link_Btn: 'text-base text-center flex flex-row flex-wrap justify-between p-2',
-}

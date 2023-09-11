@@ -1,4 +1,4 @@
-const Book_View: JSX.ElementType = ({ children, title }: any) => {
+const Book_View: JSX.ElementType = ({ children, title, className }: any) => {
 
     return (
         <div className='items-center flex mt-4 flex-col px-12'>
@@ -6,7 +6,7 @@ const Book_View: JSX.ElementType = ({ children, title }: any) => {
                 <p className='text-xl'>{title}</p>
             </div>
             <div className='w-full my-2 border-t-2 border-black' />
-            <div className=' bg-slate-400 w-full p-8 h-[16rem]'>
+            <div className={`w-full ${className}`}>
                 {children}
             </div>
         </div>

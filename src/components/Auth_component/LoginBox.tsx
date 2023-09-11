@@ -2,10 +2,10 @@ import './auth.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { Auth } from '../../utils/Firebase.ts'
+import authentication from '../../function/authentication.ts';
 
 const LoginBox: JSX.ElementType = () => {
+  const getlogin = new authentication();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +20,7 @@ const LoginBox: JSX.ElementType = () => {
   const handleRegisterPage = (): void => {
     navigate('/register');
   }
-  // Validation functions
+
   const validateForm = () => {
     const newErrors = {
       email: '',
@@ -44,24 +44,7 @@ const LoginBox: JSX.ElementType = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-
-
-      //login user
-      await signInWithEmailAndPassword(Auth, email, password)
-        .then((userCredential) => {
-          // Signed in 
-          console.log('Login successfully');
-          const user = userCredential.user
-          console.log('Login With',user)
-          // ...
-        })
-        .catch((error) => {
-          const errorMessage = error.message;
-          console.log(errorMessage);
-          alert("login failed")
-          setPassword("")
-        });
-
+      getlogin.login(email, password)
     }
   }
 

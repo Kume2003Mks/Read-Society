@@ -26,7 +26,7 @@ export default class authentication {
     public async login(email: string, password: string) {
         await signInWithEmailAndPassword(Auth, email, password)
             .then((userCredential) => {
-                console.log('Login successfully');
+                alert('Login successfully');
                 const user = userCredential.user;
                 console.log('Login With', user.email);
             })

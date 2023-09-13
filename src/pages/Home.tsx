@@ -11,7 +11,7 @@ function Home(): JSX.Element {
       <main className='p-container overflow-x-hidden h-fit'>
         <div className='flex flex-col overflow-y-auto h-full'>
         <div className="hero-container justify-center">
-          <p className="">Homu</p>
+          <p className="">Homu123123123</p>
         </div>
 
         <Book_View title='Popular' className='grid-row-layout snap-both'>

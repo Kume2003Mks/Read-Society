@@ -1,11 +1,11 @@
 import styles from '../../Style/Component_Gobal.module.css'
 
-const Collection_Card: JSX.ElementType = ({ className, props }: any) => {
+const Collection_Card: JSX.ElementType = ({ props }: any) => {
     return (
-        <div className={`p-3 h-auto justify-center rounded-lg cursor-pointer ${className}`}>
+        <div className={`h-auto p-2 justify-center rounded-lg cursor-pointer hover:bg-slate-300`}>
             <div>
                 <img src={props.image_url} alt={props.authors} className={`w-full rounded-lg ${styles.A4_Size}`} />
-                <div className='mt-2'>
+                <div className='mt-1'>
                     <p className='text-sm truncate'>{props.title}</p>
                     <p className='text-xs text-slate-500'>{props.authors}</p>
                 </div>

@@ -4,26 +4,20 @@ import { Icon } from '@iconify/react'
 import { useEffect, useState } from 'react'
 import '../Style/Global.css'
 import Collection_Card from '../components/Element/Collection_Card'
+import getdata from '../function/test/getdata.ts'
 
 
 const Collection: JSX.ElementType = () => {
     const [data, setdata] = useState([])
-    const fetchdata = async () => {
-        try {
-            const res = await fetch("https://example-data.draftbit.com/books?_limit=33")
-            const convert = await res.json()
-            setdata(convert)
-            console.log(convert)
-        } catch (error) {
-            console.log(error)
-        }
 
+    async function fatchtest() {
+        let test:any = await getdata();
+        setdata(test)
     }
 
     useEffect(() => {
-        fetchdata();
+        fatchtest()
     }, [])
-
 
     return (
         <>
@@ -127,8 +121,8 @@ const Collection: JSX.ElementType = () => {
                     </ul>
                 </SideBar>
                 <div className='grid-layout h-full flex-1 p-4'>
-                    {data?.map((val: any) => (
-                        <Collection_Card key={val.id} props={val} className='bg-slate-200 rounded-lg hover:bg-slate-300' />
+                    {data?.map((items: any) => (
+                        <Collection_Card key={items.id} props={items}/>
                     ))}
                 </div>
             </main>

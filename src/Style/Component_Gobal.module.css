@@ -1,10 +1,45 @@
-.A4_Size{
+.A4_Size {
     aspect-ratio: 1/1.41;
 }
 
 .circle {
-    height: 15px;
-    width: 15px;
-    border-radius: 100px;
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
     display: inline-block;
-  }
+}
+
+.header {
+    font-size: 14px;
+    line-height: 1.25rem;
+}
+
+/* tablat */
+@media (min-width: 640px) and (max-width: 1280px) {
+    .circle {
+        height: 16px;
+        width: 16px;
+        border-radius: 100%;
+        display: inline-block;
+    }
+
+    .header {
+        font-size: 12px;
+        line-height: 1rem;
+    }
+}
+
+/* mobile */
+@media (max-width: 640px) {
+    .circle {
+        height: 12px;
+        width: 12px;
+        border-radius: 100%;
+        display: inline-block;
+    }
+
+    .header {
+        font-size: 12px;
+        line-height: 0.5rem;
+    }
+}

@@ -5,7 +5,7 @@ const Capsule = ({label, color}:any) => {
   return (
     <div className='p-1 flex flex-row items-center gap-1 rounded-full border-2 cursor-pointer' style={{borderColor: color}}>
       <div className={styles.circle} style={{ backgroundColor: color}}/>
-      <p className='text-sm'>{label}</p>
+      <p className={styles.header}>{label}</p>
     </div>
   )
 }

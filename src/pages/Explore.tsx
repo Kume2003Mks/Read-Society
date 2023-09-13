@@ -1,32 +1,24 @@
-import { Icon } from '@iconify/react'
+
 import Collection_Card from '../components/Element/Collection_Card'
-import Book_View from '../components/Layouts/Book_View'
 import SideBar from '../components/Layouts/SideBar'
 import Nav from '../components/nevigation/NavBar'
 import '../Style/Global.css'
 import { useEffect, useState } from 'react'
 import Capsule from '../components/Element/Capsule'
+import getdata from '../function/test/getdata'
 
 const Explore: JSX.ElementType = () => {
 
-
     const [data, setdata] = useState([])
-    const fetchdata = async () => {
-        try {
-            const res = await fetch("https://example-data.draftbit.com/books?_limit=33")
-            const convert = await res.json()
-            setdata(convert)
-            console.log(convert)
-        } catch (error) {
-            console.log(error)
-        }
 
+    async function fatchtest() {
+        let test:any = await getdata();
+        setdata(test)
     }
 
     useEffect(() => {
-        fetchdata();
+        fatchtest()
     }, [])
-
 
     return (
         <>

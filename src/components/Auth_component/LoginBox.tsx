@@ -2,10 +2,11 @@ import './auth.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import authentication from '../../function/authentication.ts';
+import { useAuth } from '../../function/AuthContext.tsx';
+
 
 const LoginBox: JSX.ElementType = () => {
-  const getlogin = new authentication();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +45,7 @@ const LoginBox: JSX.ElementType = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      getlogin.login(email, password)
+      login(email, password)
     }
   }
 

@@ -3,6 +3,7 @@ import {
     signInWithEmailAndPassword,
     UserCredential,
     createUserWithEmailAndPassword,
+    signOut as firebaseSignOut
 } from "firebase/auth";
 import { collection, doc, setDoc } from 'firebase/firestore';
 
@@ -66,4 +67,13 @@ export default class authentication {
             console.error('Error registering user:', error.message);
         }
     }
+
+    public async logout() {
+        try {
+          await firebaseSignOut(Auth);
+          console.log('Logout successful');
+        } catch (error) {
+          console.error('Error logging out:', error);
+        }
+      }
 }

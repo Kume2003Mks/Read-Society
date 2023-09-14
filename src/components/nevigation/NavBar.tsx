@@ -3,10 +3,14 @@ import { useState } from 'react';;
 import { Icon } from '@iconify/react';
 import logo from '../../assets/RS_Logo.svg';
 import './NavBar.css';
+import { useAuth } from '../../function/AuthContext';
 
 const Nav: JSX.ElementType = () => {
+  const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
+
+  console.log('login', isLoggedIn)
 
   const handleLoginPage = (): void => {
     navigate('/login');
@@ -27,24 +31,24 @@ const Nav: JSX.ElementType = () => {
           <img src={logo} alt="logo" className='w-24 h-full mr-4' />
         </NavLink>
         <div className="m-wrap">
-        <div className="m-theme-button" onClick={() => { alert('hello world') }}>
-          <Icon 
-            icon="mingcute:sun-fill" 
-            className='toggle-theme' />
-        </div>
-        <div className="m-theme-button" onClick={toggleMenu}>
-          <Icon
-            icon={isMenuOpen ? 'octicon:x-12' : 'ci:hamburger-md'}
-            className={`toggle-dropdown ${isMenuOpen ? 'open' : ''}`}
-          />
-        </div>
+          <div className="m-theme-button" onClick={() => { alert('hello world') }}>
+            <Icon
+              icon="mingcute:sun-fill"
+              className='toggle-theme' />
+          </div>
+          <div className="m-theme-button" onClick={toggleMenu}>
+            <Icon
+              icon={isMenuOpen ? 'octicon:x-12' : 'ci:hamburger-md'}
+              className={`toggle-dropdown ${isMenuOpen ? 'open' : ''}`}
+            />
+          </div>
 
         </div>
 
       </div>
-      
+
       <ul className={`navbar-links ${isMenuOpen ? 'menu-open' : ''}`}>
-      
+
         <li>
           <NavLink to='/'>Home</NavLink>
         </li>
@@ -62,12 +66,23 @@ const Nav: JSX.ElementType = () => {
         <div className="theme-button" onClick={() => { alert('hello world') }}>
           <Icon icon="mingcute:sun-fill" className='toggle-theme' />
         </div>
-        <div className="login-button" onClick={handleLoginPage}>
-          Login
-        </div>
-        <div className="regis-button" onClick={handleRegisterPage}>
-          Register
-        </div>
+        {isLoggedIn ? (
+          <>
+            <div className="login-button" onClick={() => logout()}>
+              Logout
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="login-button" onClick={handleLoginPage}>
+              Login
+            </div>
+            <div className="regis-button" onClick={handleRegisterPage}>
+              Register
+            </div>
+          </>
+        )}
+
       </div>
     </nav>
   );

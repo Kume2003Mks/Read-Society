@@ -102,7 +102,7 @@ const Collection: JSX.ElementType = () => {
                             {/* Categoly */}
                             <a href='#' className={classStyle.Link_Btn}>
                                 <p className='text-left flex flex-row'>
-                                    <Icon icon="material-symbols:circle" color="red" className="icon-size" />
+                                    <Icon icon="material-symbols:circle" color="EF476F" className="icon-size" />
                                     Novel
                                 </p>
                                 <p className='text-right'>0</p>
@@ -112,8 +112,28 @@ const Collection: JSX.ElementType = () => {
                         <li>
                             <a href='#' className={classStyle.Link_Btn}>
                                 <p className='text-left flex flex-row'>
-                                    <Icon icon="material-symbols:circle" color="yellow" className="icon-size" />
+                                    <Icon icon="material-symbols:circle" color="FFD166" className="icon-size" />
                                     Manga
+                                </p>
+                                <p className='text-right'>0</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='#' className={classStyle.Link_Btn}>
+                                <p className='text-left flex flex-row'>
+                                    <Icon icon="material-symbols:circle" color="06D0A0" className="icon-size" />
+                                    General
+                                </p>
+                                <p className='text-right'>0</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='#' className={classStyle.Link_Btn}>
+                                <p className='text-left flex flex-row'>
+                                    <Icon icon="material-symbols:circle" color="118AB2" className="icon-size" />
+                                    Audio book
                                 </p>
                                 <p className='text-right'>0</p>
                             </a>

@@ -58,6 +58,9 @@ const Nav: JSX.ElementType = () => {
           <NavLink to='/community'>Community</NavLink>
         </li>
       </ul>
+
+      
+
       <div className={`navbar-buttons ${isMenuOpen ? 'menu-open' : ''}`}>
         <div className="theme-button" onClick={() => { alert('hello world') }}>
           <Icon icon="mingcute:sun-fill" className='toggle-theme' />

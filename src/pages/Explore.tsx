@@ -28,10 +28,25 @@ const Explore: JSX.ElementType = () => {
                     <h1 className='text-2xl font-bold text-center underline underline-offset-2'>Explore</h1>
                     {/* My Creation */}
                     <h1 className='text-xl font-bold text-left px-3 mt-2'>Category</h1>
-                    <div className='mx-4 border-t-2 border-black' />
-                    <div className='grid grid-cols-2 gap-2 mx-2 mt-1'>
-                        <Capsule label='Novel' color='red'/><Capsule label='Cartoon' color='orange'/><Capsule label='Cartoon' color='green'/>
+                    <div className='m-2 mx-4 border-t-2 border-black' />
+                    <div className='m-5 grid grid-cols-2 gap-2 mx-2 mt-1'>
+                        <Capsule label='Novel' color='#EF476F'/>
+                        <Capsule label='Cartoon' color='#FFD166'/>
+                        <Capsule label='General' color='#06D0A0'/>
+                        <Capsule label='Audio Book' color='#118AB2'/>
                     </div>
+
+                    <h1 className='text-xl font-bold text-left px-3 mt-2'>Hot #Tags</h1>
+                    <div className='m-2 mx-4 border-t-2 border-black' />
+
+                    <h1 className='text-xl font-bold text-left px-3 mt-2'>More filters</h1>
+                    <div className='m-2 mx-4 border-t-2 border-black' />
+                    <div className='Container t-2 grid-cols-2 gap-2 mx-2 mt-1'>
+                        <Capsule label='Latest' color='#818487' hight='50%'/><br/>
+                        <Capsule label='Most Viewed' color='#818487'/><br/>
+                        <Capsule label='Top Rated' color='#818487'/>
+                    </div>
+                    
                 </SideBar>
                 <div className='grid-layout h-full flex-1 p-4'>
                     {data?.map((val: any) => (

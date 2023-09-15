@@ -1,8 +1,7 @@
 // AuthContext.tsx
 import { createContext, useContext, useEffect, useState } from 'react';
-import authentication from './authentication'; // แก้ไฟล์อ้างอิงไปยังคลาส authentication
+import authentication from './authentication';
 
-// สร้าง instance ของคลาส authentication
 const auth = new authentication();
 
 interface AuthContextType {
@@ -33,7 +32,7 @@ export const AuthProvider = ({ children }:any) => {
   };
 
   const logout = () => {
-    auth.logout(); // เรียกใช้ฟังก์ชัน logout จากคลาส authentication
+    auth.logout();
     setIsLoggedIn(false);
   };
 

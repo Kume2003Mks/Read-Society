@@ -8,6 +8,7 @@ import Home from './pages/Home.tsx'
 import Explore from './pages/Explore.tsx'
 import Collection from './pages/Collection.tsx'
 import Community from './pages/Community.tsx'
+import My_Creation  from './pages/My_Creation.tsx';
 import LoginPage from './pages/LoginPage.tsx'
 import RegisterPage from './pages/RegisterPage.tsx'
 import ErrorPage from './pages/ErrorPage.tsx'
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "community",
     element: <Community />
+  },
+  {
+    path: "mycreation",
+    element: <My_Creation />
   },
   {
     path: "login",

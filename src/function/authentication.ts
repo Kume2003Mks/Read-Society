@@ -9,19 +9,35 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 
 export default class authentication {
 
+    private storageKey: string = 'SweetDream';
+
     constructor() {
         // initialize
     }
 
+    private encodeData(data: any): string {
+        const jsonData = JSON.stringify(data);
+        return btoa(jsonData);
+    }
+
+    // เพิ่มเมทอดเพื่อถอดรหัสข้อมูลจาก Base64
+    private decodeData(encodedData: string): any {
+        const jsonData = atob(encodedData);
+        return JSON.parse(jsonData);
+    }
+
+
     public getAuthStatus() {
-        const user = Auth.currentUser;
-            if (user) {
-                console.log('user: ' + user.email);
+        const encodedData = localStorage.getItem(this.storageKey);
+        if (encodedData) {
+            const decodedData = this.decodeData(encodedData);
+            if (decodedData && decodedData.user) {
+                console.log('User: ' + decodedData.user.email);
                 return true;
-            } else {
-                console.log('user: None');
-                return false;
             }
+        }
+        console.log('User: None');
+        return false;
     }
 
     public async login(email: string, password: string) {
@@ -30,6 +46,7 @@ export default class authentication {
                 alert('Login successfully');
                 const user = userCredential.user;
                 console.log('Login With', user.email);
+                localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential.user }));
             })
             .catch((error) => {
                 const errorMessage = error.message;
@@ -70,10 +87,11 @@ export default class authentication {
 
     public async logout() {
         try {
-          await firebaseSignOut(Auth);
-          console.log('Logout successful');
+            await firebaseSignOut(Auth);
+            console.log('Logout successful');
+            localStorage.removeItem(this.storageKey);
         } catch (error) {
-          console.error('Error logging out:', error);
+            console.error('Error logging out:', error);
         }
-      }
+    }
 }

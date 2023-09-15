@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }:any) => {
 
   useEffect(() => {
     setIsLoggedIn(auth.getAuthStatus());
-  }, []);
+  }, [auth]);
 
   const login = async (email: string, password: string) => {
     await auth.login(email, password);

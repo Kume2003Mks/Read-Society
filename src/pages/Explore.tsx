@@ -6,6 +6,7 @@ import '../Style/Global.css'
 import { useEffect, useState } from 'react'
 import Capsule from '../components/Element/Capsule'
 import Sbar from '../components/Element/Sbar'
+import MoerF from '../components/Element/MoerF'
 import getdata from '../function/test/getdata'
 
 const Explore: JSX.ElementType = () => {
@@ -47,9 +48,9 @@ const Explore: JSX.ElementType = () => {
                     <h1 className='text-xl font-bold text-left px-3 mt-2'>More filters</h1>
                     <div className='mx-4 border-t-2 border-black' />
                     <div>
-                        <div>1</div>
-                        <div>2</div>
-                        <div>3</div>
+                        <MoerF More='Latest'/>
+                        <MoerF More='Most Viewed'/>
+                        <MoerF More='Top Rated'/>
                     </div>
                 </SideBar>
                 <div className='grid-layout h-full flex-1 p-4'>

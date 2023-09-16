@@ -1,16 +1,32 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useState } from 'react';;
-import { Icon } from '@iconify/react';
-import logo from '../../assets/RS_Logo.svg';
-import './NavBar.css';
-import { useAuth } from '../../function/AuthContext';
+import { useEffect, useState } from 'react'
+import { Icon } from '@iconify/react'
+import logo from '../../assets/RS_Logo.svg'
+import './NavBar.css'
+import { useAuth } from '../../function/AuthContext'
+import userDataBase from '../../function/userDataBase'
 
 const Nav: JSX.ElementType = () => {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout, userData } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [userProfile, setUserProfile] =useState<any>(null)
 
-  console.log('login', isLoggedIn)
+  useEffect(() => {
+    if (userData && userData.uid) {
+
+      console.log('User UID:', userData.uid);
+      getProfile(userData.uid)
+    }
+  }, [userData]);
+
+  const getProfile = async (uid: string) => {
+    const Uprofile = new userDataBase(uid);
+    const userProfile = await Uprofile.getProfile()
+    setUserProfile(userProfile)
+  }
+
+  console.log(userProfile)
 
   const handleLoginPage = (): void => {
     navigate('/login');
@@ -55,12 +71,26 @@ const Nav: JSX.ElementType = () => {
         <li>
           <NavLink to='/explore'>Explore</NavLink>
         </li>
-        <li>
-          <NavLink to='/collection'>Collection</NavLink>
-        </li>
-        <li>
-          <NavLink to='/community'>Community</NavLink>
-        </li>
+
+        {isLoggedIn ? (
+          <>
+            <li>
+              <NavLink to='/collection'>Collection</NavLink>
+            </li>
+            <li>
+              <NavLink to='/community'>Community</NavLink>
+            </li>
+            <li>
+              <NavLink to='/mycreation'>My Creation</NavLink>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <NavLink to='/community'>Community</NavLink>
+            </li>
+          </>
+        )}
       </ul>
       <div className={`navbar-buttons ${isMenuOpen ? 'menu-open' : ''}`}>
         <div className="theme-button" onClick={() => { alert('hello world') }}>
@@ -68,6 +98,14 @@ const Nav: JSX.ElementType = () => {
         </div>
         {isLoggedIn ? (
           <>
+              {userProfile ? (
+                <div className='flex flex-row align-middle gap-2'>
+                  <p className='profile-name'>{userProfile[0].userName}</p>
+                  <img src={userProfile[0].profile_image} alt={userProfile[0].userName} className='profile-img' />
+                </div>
+              ) : (
+                <p>Loading...</p>
+              )}
             <div className="login-button" onClick={() => logout()}>
               Logout
             </div>

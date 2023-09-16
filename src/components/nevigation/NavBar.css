@@ -28,6 +28,20 @@
   color: #505050;
 }
 
+.profile-name{
+  font-weight: bold;
+  font-size: 1rem;
+  align-self: center;
+}
+
+.profile-img{
+  width: 3rem;
+  height: 3rem;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 100%;
+}
+
 .navbar-buttons {
   display: flex;
   align-items: center;

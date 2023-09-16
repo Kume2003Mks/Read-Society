@@ -15,29 +15,28 @@ export default class authentication {
         // initialize
     }
 
+    // เข้ารหัสข้อมูลจาก Base64
     private encodeData(data: any): string {
         const jsonData = JSON.stringify(data);
         return btoa(jsonData);
     }
 
-    // เพิ่มเมทอดเพื่อถอดรหัสข้อมูลจาก Base64
+    // ถอดรหัสข้อมูลจาก Base64
     private decodeData(encodedData: string): any {
         const jsonData = atob(encodedData);
         return JSON.parse(jsonData);
     }
 
-
+    
     public getAuthStatus() {
         const encodedData = localStorage.getItem(this.storageKey);
         if (encodedData) {
             const decodedData = this.decodeData(encodedData);
             if (decodedData && decodedData.user) {
-                console.log('User: ' + decodedData.user.email);
-                return true;
+                return decodedData.user; // return user data with decoded data
             }
         }
-        console.log('User: None');
-        return false;
+        return null; // if not found user
     }
 
     public async login(email: string, password: string) {
@@ -72,12 +71,11 @@ export default class authentication {
                 website: '', //default value
             };
 
-            // Create a new subcollection for the user profiles and set the user data as a document within it
             const userProfilesCollectionRef = collection(database, 'users', user.uid, 'profiles');
             const userProfileDocRef = doc(userProfilesCollectionRef, user.uid);
 
             await setDoc(userProfileDocRef, userData);
-
+            localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential.user }));
             console.log('Registration successful');
             alert('Registration successful');
         } catch (error: any) {
@@ -89,6 +87,7 @@ export default class authentication {
         try {
             await firebaseSignOut(Auth);
             console.log('Logout successful');
+            sessionStorage.removeItem('userProfile')
             localStorage.removeItem(this.storageKey);
         } catch (error) {
             console.error('Error logging out:', error);

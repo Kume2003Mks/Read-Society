@@ -9,7 +9,7 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 
 export default class authentication {
 
-    private storageKey: string = 'SweetDream';
+    private storageKey: string = 'users';
 
     constructor() {
         // initialize
@@ -46,6 +46,7 @@ export default class authentication {
                 const user = userCredential.user;
                 console.log('Login With', user.email);
                 localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential.user }));
+                window.location.reload();
             })
             .catch((error) => {
                 const errorMessage = error.message;
@@ -89,6 +90,7 @@ export default class authentication {
             console.log('Logout successful');
             sessionStorage.removeItem('userProfile')
             localStorage.removeItem(this.storageKey);
+            window.location.reload();
         } catch (error) {
             console.error('Error logging out:', error);
         }

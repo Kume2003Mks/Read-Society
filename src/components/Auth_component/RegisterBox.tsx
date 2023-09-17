@@ -87,7 +87,6 @@ const RegisterBox: JSX.ElementType = () => {
         e.preventDefault();
         if (validateForm()) {
             register(email, password, firstName, lastName, username)
-            navigate('/login')
             console.log('Form submitted successfully');
         }
     }

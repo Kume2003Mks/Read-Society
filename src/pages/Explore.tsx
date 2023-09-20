@@ -9,6 +9,7 @@ import Sbar from '../components/Element/Sbar'
 import MoerF from '../components/Element/MoerF'
 import getdata from '../function/test/getdata'
 
+
 const Explore: JSX.ElementType = () => {
 
     const [data, setdata] = useState([])
@@ -31,27 +32,22 @@ const Explore: JSX.ElementType = () => {
                     {/* My Creation */}
                     <h1 className='text-xl font-bold text-left px-3 mt-2'>Category</h1>
                     <div className='mx-4 border-t-2 border-black' />
-                    <div className='grid grid-cols-2 gap-2 mx-2 mt-1'>
-                        <Capsule label='Novel' color='red'/><Capsule label='Cartoon' color='orange'/><Capsule label='Cartoon' color='green'/>
+                    <div className='py-[4px] grid grid-cols-2 gap-2 mx-2 mt-1'>
+                        <Capsule label='Novel' color='red'/>
+                        <Capsule label='Cartoon' color='orange'/>
+                        <Capsule label='Cartoon' color='green'/>
                     </div>
                     {/* My Hot tags */}
                     <h1 className='text-xl font-bold text-left px-3 mt-2'>Hot tags</h1>
                     <div className='mx-4 border-t-2 border-black' />
                     <Sbar/>
                     <div className='grid grid-cols-3 gap-2 mx-2 mt-1'>
-                        <Capsule label='#JoJo' color='#EF476F'/>
-                        <Capsule label='#Good' color='#EF476F'/>
-                        <Capsule label='#DoDo' color='#EF476F'/>
-                        <Capsule label='#Nora' color='#EF476F'/>
+                        <MoerF Hot='#JoJo' color='red'/>
+                        <MoerF Hot='#Good' color='#06D0A0'/>
+                        <MoerF Hot='#Nora' color='orange'/>
                     </div>
                     {/* My More filters */}
-                    <h1 className='text-xl font-bold text-left px-3 mt-2'>More filters</h1>
-                    <div className='mx-4 border-t-2 border-black' />
-                    <div>
-                        <MoerF More='Latest'/>
-                        <MoerF More='Most Viewed'/>
-                        <MoerF More='Top Rated'/>
-                    </div>
+                    
                 </SideBar>
                 <div className='grid-layout h-full flex-1 p-4'>
                     {data?.map((val: any) => (

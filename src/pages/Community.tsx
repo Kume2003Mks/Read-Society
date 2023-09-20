@@ -2,7 +2,7 @@ import Nav from '../components/nevigation/NavBar'
 import SideBar from '../components/Layouts/SideBar'
 import { Icon } from '@iconify/react'
 import '../Style/Global.css'
-
+import ComBox from '../components/Element/CommunBox'
 const Community: JSX.ElementType = () => {
     return (
         <>
@@ -69,6 +69,10 @@ const Community: JSX.ElementType = () => {
 
 
                 </SideBar>
+
+                <div>
+                    <ComBox/>
+                </div>
 
                 <SideBar className='p-2'>
                     <h1 className='text-xl font-bold text-left px-3 mb-2'>Following</h1>

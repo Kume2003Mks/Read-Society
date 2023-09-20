@@ -1,6 +1,6 @@
 // AuthContext.tsx
 import { createContext, useContext, useEffect, useState } from 'react';
-import authentication from './authentication';
+import authentication from '../authentication';
 
 const auth = new authentication();
 

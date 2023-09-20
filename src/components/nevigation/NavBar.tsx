@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Icon } from '@iconify/react'
 import logo from '../../assets/RS_Logo.svg'
 import './NavBar.css'
-import { useAuth } from '../../function/AuthContext'
+import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
 
 const Nav: JSX.ElementType = () => {

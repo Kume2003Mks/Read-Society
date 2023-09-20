@@ -2,7 +2,7 @@
 import Nav from '../components/nevigation/NavBar'
 import RegisterBox from '../components/Auth_component/RegisterBox'
 import '../Style/Global.css'
-import { useAuth } from '../function/AuthContext';
+import { useAuth } from '../function/context/AuthContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 

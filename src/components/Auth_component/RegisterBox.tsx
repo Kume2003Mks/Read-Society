@@ -2,7 +2,7 @@ import './auth.css'
 import { useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import { useAuth } from '../../function/AuthContext.tsx';
+import { useAuth } from '../../function/context/AuthContext.tsx';
 
 const RegisterBox: JSX.ElementType = () => {
     

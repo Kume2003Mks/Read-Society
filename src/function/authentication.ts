@@ -56,7 +56,7 @@ export default class authentication {
     }
 
     public async register(email: string, password: string, firstname: string, lastname: string, username: string) {
-        const profile_image: string = 'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/profile.png?alt=media&token=1ae321b5-a447-4ca8-81f3-53875f3c0db8'
+        const profile_image: string = 'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/Uni.png?alt=media&token=dc96bce1-5857-4ad6-b9a5-e635074c2169'
         try {
             const userCredential: UserCredential = await createUserWithEmailAndPassword(Auth, email, password);
             const user = userCredential.user;

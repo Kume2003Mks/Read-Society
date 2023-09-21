@@ -2,11 +2,12 @@ import './auth.css'
 import { useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import authentication from '../../function/authentication.ts';
+import { useAuth } from '../../function/context/AuthContext.tsx';
 
 const RegisterBox: JSX.ElementType = () => {
+    
     const navigate = useNavigate();
-    const getRegister = new authentication();
+    const { register } = useAuth();
 
     // State variables for form inputs and errors
     const [firstName, setFirstName] = useState('');
@@ -85,8 +86,7 @@ const RegisterBox: JSX.ElementType = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
-            getRegister.register(email, password, firstName, lastName, username)
-            navigate('/login')
+            register(email, password, firstName, lastName, username)
             console.log('Form submitted successfully');
         }
     }

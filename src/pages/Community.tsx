@@ -3,12 +3,14 @@ import SideBar from '../components/Layouts/SideBar'
 import { Icon } from '@iconify/react'
 import '../Style/Global.css'
 import ComBox from '../components/Element/CommunBox'
+import PostBox from '../components/Element/PostBox'
+
 const Community: JSX.ElementType = () => {
     return (
         <>
             <Nav />
-            <main className="flex-row h-screen justify-between flex-wrap flex p-container">
-                <SideBar className="p-1">
+            <main className="flex-row h-screen justify-between flex p-container">
+                <SideBar className='p-1'>
                     <h1 className='text-xl font-bold text-left px-3 mb-2'>Explore</h1>
                     <ul className='nav-list mx-2'>
                         <li>
@@ -70,12 +72,8 @@ const Community: JSX.ElementType = () => {
 
                 </SideBar>
 
-                <div>
-                    <ComBox/>
-                </div>
-
-                <SideBar className='p-2'>
-                    <h1 className='text-xl font-bold text-left px-3 mb-2'>Following</h1>
+                <SideBar className='p-2 sticky top-0'>
+                    <h1 className='text-xl font-bold text-left px-3 mb-2 '>Following</h1>
                 </SideBar>
             </main>
         </>
@@ -86,3 +84,6 @@ const Community: JSX.ElementType = () => {
 const Link_Btn: string = 'text-base text-center flex flex-row flex-wrap justify-between p-2 '
 
 export default Community
+
+const faketext: string = '푸른 달아 오랜 고운 내 달아 비친 내 손에 내려다오 은색 소매 내 곁에 두른 채로 한 번만 타는 입을 축여다오'
+const faketext2: string = "I couldn't wait for you to come and clear the cupboards But now you're gonna leave with nothing but a sign Another evening I'll be sitting, reading in between your lines Because I miss you all the time"

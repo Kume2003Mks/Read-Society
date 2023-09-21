@@ -1,4 +1,4 @@
-import { Auth, database } from "../utils/Firebase";
+import { Auth, database } from '../utils/Firebase';
 import {
     signInWithEmailAndPassword,
     UserCredential,

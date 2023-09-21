@@ -2,7 +2,6 @@ import Nav from '../components/nevigation/NavBar'
 import SideBar from '../components/Layouts/SideBar'
 import { Icon } from '@iconify/react'
 import '../Style/Global.css'
-import ComBox from '../components/Element/CommunBox'
 import PostBox from '../components/Element/PostBox'
 
 const Community: JSX.ElementType = () => {
@@ -71,7 +70,11 @@ const Community: JSX.ElementType = () => {
 
 
                 </SideBar>
-
+                <div className='flex flex-col flex-1 gap-8 py-8 px-[10%] container overflow-y-auto'>
+                    <PostBox content={faketext} img_link='https://images.pexels.com/photos/18355606/pexels-photo-18355606/free-photo-of-e-commerce-banner-photo.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'/>
+                    <PostBox img_link='https://images.pexels.com/photos/18334760/pexels-photo-18334760/free-photo-of-processed-with-vsco-with-m5-preset.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'/>
+                    <PostBox content={faketext2}/>
+                </div>
                 <SideBar className='p-2 sticky top-0'>
                     <h1 className='text-xl font-bold text-left px-3 mb-2 '>Following</h1>
                 </SideBar>

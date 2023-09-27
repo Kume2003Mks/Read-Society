@@ -22,7 +22,7 @@ const Collection: JSX.ElementType = () => {
     return (
         <>
             <Nav />
-            <main className={classStyle.MainScreen}>
+            <div className={classStyle.MainScreen}>
 
                 <SideBar className='bg-white p-2'>
                     <h1 className='text-2xl font-bold text-center'>My Collection</h1>
@@ -125,7 +125,7 @@ const Collection: JSX.ElementType = () => {
                         <Collection_Card key={items.id} props={items}/>
                     ))}
                 </div>
-            </main>
+            </div>
         </>
     )
 }

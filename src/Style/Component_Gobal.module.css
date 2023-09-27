@@ -20,6 +20,14 @@
     width: 100%;
 }
 
+.profile_user{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 100%;
+    border-width: 2px;
+    border-color: black;
+}
+
 .circle {
     height: 20px;
     width: 20px;

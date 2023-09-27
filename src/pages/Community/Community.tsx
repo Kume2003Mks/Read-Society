@@ -1,8 +1,9 @@
-import Nav from '../components/nevigation/NavBar'
-import SideBar from '../components/Layouts/SideBar'
+import Nav from '../../components/nevigation/NavBar'
+import SideBar from '../../components/Layouts/SideBar'
 import { Icon } from '@iconify/react'
-import '../Style/Global.css'
-import PostBox from '../components/Element/PostBox'
+import '../../Style/Global.css'
+import PostBox from '../../components/Element/PostBox'
+import Followers from '../../components/Element/Followers'
 
 const Community: JSX.ElementType = () => {
     return (
@@ -76,8 +77,11 @@ const Community: JSX.ElementType = () => {
                     <PostBox content={faketext2}/>
                 </div>
 
-                <SideBar className='p-2 sticky top-0'>
+                <SideBar className='p-2 flex gap-2'>
                     <h1 className='text-xl font-bold text-left px-3 mb-2 '>Following</h1>
+                    <Followers name='Oakza007' image='https://play-lh.googleusercontent.com/cJokjWYV_EhTZJvJG0zbV6CowN5V8EoyjzF4LssGyjhTo6rAVntx3XjD7AkBQ2IdFKw'/>
+                    <Followers name='Tammy' image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT71xmspkWvWl83N6iCRNHZcok0SMJfrE9SZw&usqp=CAU'/>
+                    <Followers name='Mookrata' image='https://today.tamu.edu/wp-content/uploads/2019/06/image-220.png'/>
                 </SideBar>
             </main>
         </>

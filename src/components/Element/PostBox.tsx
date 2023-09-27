@@ -7,7 +7,7 @@ const PostBox: JSX.ElementType = ({ img_link, content }: any) => {
     <div className={styles.post_Box}>
       <div className='flex'>
 
-        <img src="https://i.pinimg.com/564x/a2/0c/7d/a20c7d2976558fb38392403c51cc5cb1.jpg" alt='RS' className='w-12 h-12 rounded-full' />
+        <img src="https://i.pinimg.com/564x/a2/0c/7d/a20c7d2976558fb38392403c51cc5cb1.jpg" alt='RS' className={styles.profile_user} />
 
         <div className='ml-2 text-xl'>TOM<br/>
           <div className='text-sm'>10 days</div>

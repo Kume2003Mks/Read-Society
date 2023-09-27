@@ -1,8 +1,9 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Icon } from '@iconify/react'
 import logo from '../../assets/RS_Logo.svg'
 import './NavBar.css'
+import './NavBar-dropdown.css'
 import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
 
@@ -10,7 +11,8 @@ const Nav: JSX.ElementType = () => {
   const { isLoggedIn, logout, userData } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [userProfile, setUserProfile] =useState<any>(null)
+  const [userProfile, setUserProfile] = useState<any>(null)
+  const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (userData && userData.uid) {
@@ -40,6 +42,10 @@ const Nav: JSX.ElementType = () => {
     setMenuOpen(!isMenuOpen);
   };
 
+  const toggleProfileMenu = (): void => {
+    setProfileMenuOpen(!isProfileMenuOpen);
+  };
+
   return (
     <nav className={`navbar ${isMenuOpen ? 'menu-open' : ''}`}>
       <div className='navbar-logo'>
@@ -58,9 +64,7 @@ const Nav: JSX.ElementType = () => {
               className={`toggle-dropdown ${isMenuOpen ? 'open' : ''}`}
             />
           </div>
-
         </div>
-
       </div>
 
       <ul className={`navbar-links ${isMenuOpen ? 'menu-open' : ''}`}>
@@ -98,17 +102,50 @@ const Nav: JSX.ElementType = () => {
         </div>
         {isLoggedIn ? (
           <>
-              {userProfile ? (
-                <div className='flex flex-row align-middle gap-2'>
-                  <p className='profile-name'>{userProfile[0].userName}</p>
-                  <img src={userProfile[0].profile_image} alt={userProfile[0].userName} className='profile-img' />
-                </div>
-              ) : (
-                <p>Loading...</p>
-              )}
-            <div className="login-button" onClick={() => logout()}>
-              Logout
-            </div>
+            {userProfile ? (
+              <div className='flex flex-row align-middle gap-2 hover:cursor-pointer' onClick={toggleProfileMenu}>
+                <p className='profile-name'>{userProfile.userName}</p>
+                <img src={userProfile.profile_image} alt={userProfile.userName} className='profile-img' />
+                <Icon
+                  icon={isProfileMenuOpen ? 'octicon:x-12' : 'ci:hamburger-md'}
+                  className={`toggle-dropdown ${isProfileMenuOpen ? 'open' : ''} self-center`}
+                />
+                {isProfileMenuOpen && (
+                  <div className="profile-menu">
+                    <ul>
+                      <li>
+                        <div className="nav-button" >
+                          <Icon icon="ph:pencil-bold" className="menu-icon-size" />
+                          <h1>Edit Profile</h1>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="nav-button">
+                          <Icon icon="oi:shield" className="menu-icon-size" />
+                          <h1>Password & Securerity</h1>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="nav-button">
+                          <Icon icon="mingcute:question-fill" className="menu-icon-size" />
+                          <h1>Help</h1>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="nav-button" onClick={() => logout()}>
+                          <Icon icon="ion:log-out" className="menu-icon-size" />
+                          <h1>
+                            Logout
+                          </h1>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p>Loading...</p>
+            )}
           </>
         ) : (
           <>
@@ -120,7 +157,6 @@ const Nav: JSX.ElementType = () => {
             </div>
           </>
         )}
-
       </div>
     </nav>
   );

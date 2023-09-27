@@ -10,7 +10,7 @@ export default async function getdata() {
             return data;
         } else {
             // ถ้าไม่มีข้อมูลใน Session Storage ให้ดึงข้อมูลจาก API
-            const res = await fetch("https://example-data.draftbit.com/books?_limit=43");
+            const res = await fetch("https://example-data.draftbit.com/books?_limit=47");
             const data = await res.json();
             console.log("Data from API:", data);
 

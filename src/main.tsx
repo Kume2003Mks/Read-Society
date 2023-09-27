@@ -1,17 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
 import { AuthProvider } from './function/context/AuthContext.tsx';
 
 import './Style/Core_Style.css'
 import Home from './pages/Home.tsx'
 import Explore from './pages/Explore.tsx'
 import Collection from './pages/Collection.tsx'
-import Community from './pages/Community.tsx'
+import Community from './pages/Community/Community.tsx'
 import My_Creation  from './pages/My_Creation.tsx';
 import LoginPage from './pages/LoginPage.tsx'
 import RegisterPage from './pages/RegisterPage.tsx'
 import ErrorPage from './pages/ErrorPage.tsx'
+import Profile from './pages/Community/Children_pages/Profile.tsx';
 
 const router = createBrowserRouter([
   {
@@ -19,27 +20,37 @@ const router = createBrowserRouter([
     element: <Home />
   },
   {
-    path: "explore",
+    path: "/explore",
     element: <Explore />
   },
   {
-    path: "collection",
+    path: "/collection",
     element: <Collection />
   },
   {
-    path: "community",
-    element: <Community />
+    path: "/community",
+    element: <Outlet/>,
+        children: [
+      {
+        path: '',
+        element: <Community />,
+      },
+      {
+        path: 'profile/:id',
+        element: <Profile />,
+      },
+    ],
   },
   {
-    path: "mycreation",
+    path: "/mycreation",
     element: <My_Creation />
   },
   {
-    path: "login",
+    path: "/login",
     element: <LoginPage />
   },
   {
-    path: "register",
+    path: "/register",
     element: <RegisterPage />
   },
   {

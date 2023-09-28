@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Icon } from '@iconify/react'
 import logo from '../../assets/RS_Logo.svg'
 import './NavBar.css'
@@ -13,6 +13,7 @@ const Nav: JSX.ElementType = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [userProfile, setUserProfile] = useState<any>(null)
   const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
+  const navbarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (userData && userData.uid) {
@@ -22,6 +23,23 @@ const Nav: JSX.ElementType = () => {
     }
   }, [userData]);
 
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
+        toggleProfileMenu();
+      }
+    };
+
+    if (isProfileMenuOpen) {
+      window.addEventListener('click', handleOutsideClick);
+    } else {
+      window.removeEventListener('click', handleOutsideClick);
+    }
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, [isProfileMenuOpen]);
+
   const getProfile = async (uid: string) => {
     const Uprofile = new userDataBase(uid);
     const userProfile = await Uprofile.getProfile()
@@ -30,24 +48,12 @@ const Nav: JSX.ElementType = () => {
 
   console.log(userProfile)
 
-  const handleLoginPage = (): void => {
-    navigate('/login');
-  };
-
-  const handleRegisterPage = (): void => {
-    navigate('/register');
-  };
-
-  const toggleMenu = (): void => {
-    setMenuOpen(!isMenuOpen);
-  };
-
   const toggleProfileMenu = (): void => {
     setProfileMenuOpen(!isProfileMenuOpen);
   };
 
   return (
-    <nav className={`navbar ${isMenuOpen ? 'menu-open' : ''}`}>
+    <nav className={`navbar ${isMenuOpen ? 'menu-open' : ''}`} ref={navbarRef}>
       <div className='navbar-logo'>
         <NavLink to='/'>
           <img src={logo} alt="logo" className='w-24 h-full mr-4' />
@@ -58,7 +64,7 @@ const Nav: JSX.ElementType = () => {
               icon="mingcute:sun-fill"
               className='toggle-theme' />
           </div>
-          <div className="m-theme-button" onClick={toggleMenu}>
+          <div className="m-theme-button" onClick={() => setMenuOpen(!isMenuOpen)}>
             <Icon
               icon={isMenuOpen ? 'octicon:x-12' : 'ci:hamburger-md'}
               className={`toggle-dropdown ${isMenuOpen ? 'open' : ''}`}
@@ -66,16 +72,13 @@ const Nav: JSX.ElementType = () => {
           </div>
         </div>
       </div>
-
       <ul className={`navbar-links ${isMenuOpen ? 'menu-open' : ''}`}>
-
         <li>
           <NavLink to='/'>Home</NavLink>
         </li>
         <li>
           <NavLink to='/explore'>Explore</NavLink>
         </li>
-
         {isLoggedIn ? (
           <>
             <li>
@@ -149,10 +152,10 @@ const Nav: JSX.ElementType = () => {
           </>
         ) : (
           <>
-            <div className="login-button" onClick={handleLoginPage}>
+            <div className="login-button" onClick={() => navigate('/login')}>
               Login
             </div>
-            <div className="regis-button" onClick={handleRegisterPage}>
+            <div className="regis-button" onClick={() => navigate('/register')}>
               Register
             </div>
           </>

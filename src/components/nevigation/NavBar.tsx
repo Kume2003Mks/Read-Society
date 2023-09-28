@@ -53,7 +53,7 @@ const Nav: JSX.ElementType = () => {
   };
 
   return (
-    <nav className={`navbar ${isMenuOpen ? 'menu-open' : ''}`} ref={navbarRef}>
+    <nav className={`navbar ${isMenuOpen ? 'menu-open' : ''}`}>
       <div className='navbar-logo'>
         <NavLink to='/'>
           <img src={logo} alt="logo" className='w-24 h-full mr-4' />
@@ -106,7 +106,7 @@ const Nav: JSX.ElementType = () => {
         {isLoggedIn ? (
           <>
             {userProfile ? (
-              <div className='flex flex-row align-middle gap-2 hover:cursor-pointer' onClick={toggleProfileMenu}>
+              <div className='flex flex-row align-middle gap-2 hover:cursor-pointer' onClick={toggleProfileMenu} ref={navbarRef}>
                 <p className='profile-name'>{userProfile.userName}</p>
                 <img src={userProfile.profile_image} alt={userProfile.userName} className='profile-img' />
                 <Icon

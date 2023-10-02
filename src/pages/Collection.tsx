@@ -1,4 +1,3 @@
-import Nav from '../components/nevigation/NavBar'
 import SideBar from '../components/Layouts/SideBar'
 import { Icon } from '@iconify/react'
 import { useEffect, useState } from 'react'
@@ -21,9 +20,7 @@ const Collection: JSX.ElementType = () => {
 
     return (
         <>
-            <Nav />
             <div className={classStyle.MainScreen}>
-
                 <SideBar className='bg-white p-2'>
                     <h1 className='text-2xl font-bold text-center'>My Collection</h1>
                     {/* My Creation */}

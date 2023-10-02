@@ -26,6 +26,7 @@
     border-radius: 100%;
     border-width: 2px;
     border-color: black;
+    object-fit: cover;
 }
 
 .circle {

@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react"
-import PostBox from "../../../components/Element/PostBox"
-import SideBar from "../../../components/Layouts/SideBar"
+import PostBox from "../../components/Element/PostBox"
+import SideBar from "../../components/Layouts/SideBar"
 
 
 const Profile = () => {

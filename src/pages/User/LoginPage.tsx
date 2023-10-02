@@ -1,4 +1,4 @@
-import Nav from "../../components/nevigation/NavBar"
+import Nav from "../../components/navigation/Navigation"
 import LoginBox from "../../components/Auth_component/LoginBox";
 import '../../Style/Global.css'
 import { useAuth } from '../../function/context/AuthContext'

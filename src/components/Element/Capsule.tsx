@@ -1,4 +1,4 @@
-import styles from '../../Style/Component_Gobal.module.css'
+import styles from '../../Style/Component.module.css'
 import { Icon } from '@iconify/react';
 const Capsule = ({label, color,icon}:any) => {
   

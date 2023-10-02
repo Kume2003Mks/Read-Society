@@ -5,21 +5,22 @@ import Home from './pages/Home.tsx'
 import Explore from './pages/Explore.tsx'
 import Collection from './pages/Collection.tsx'
 import Community from './pages/Community/Community.tsx'
-import My_Creation from './pages/My_Creation.tsx';
+import My_Creation from './pages/Creation/My_Creation.tsx';
 import LoginPage from './pages/User/LoginPage.tsx'
 import RegisterPage from './pages/User/RegisterPage.tsx'
 import ErrorPage from './pages/ErrorPage.tsx'
-import Profile from './pages/Community/Children_pages/Profile.tsx';
-import Nav from './components/nevigation/NavBar.tsx';
-
-
+import Profile from './pages/Community/Profile.tsx';
+import Navigation from './components/navigation/Navigation.tsx';
+import EditProfile from './pages/User/EditProfile.tsx';
+import Security from './pages/User/Security.tsx';
+import Help from './pages/User/Help.tsx';
 
 const App = () => {
 
     const Layout = () => {
         return (
             <>
-                <Nav />
+                <Navigation />
                 <Outlet />
             </>
         )
@@ -28,7 +29,13 @@ const App = () => {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <Home />
+            element: <Layout />,
+            children: [
+                {
+                    path: '',
+                    element: <Home />,
+                }
+            ],
         },
         {
             path: "/explore",
@@ -46,7 +53,13 @@ const App = () => {
         },
         {
             path: "/collection",
-            element: <Collection />
+            element: <Layout />,
+            children: [
+                {
+                    path: '',
+                    element: <Collection />,
+                },
+            ],
         },
         {
             path: "/community",
@@ -64,7 +77,13 @@ const App = () => {
         },
         {
             path: "/mycreation",
-            element: <My_Creation />
+            element: <Layout />,
+            children: [
+                {
+                    path: '',
+                    element: <My_Creation />,
+                },
+            ],
         },
         {
             path: "/user",
@@ -77,6 +96,18 @@ const App = () => {
                 {
                     path: "register",
                     element: <RegisterPage />
+                },
+                {
+                    path: "profile",
+                    element: <EditProfile />
+                },
+                {
+                    path: "security",
+                    element: <Security />
+                },
+                {
+                    path: "help",
+                    element: <Help />
                 },
             ],
         },

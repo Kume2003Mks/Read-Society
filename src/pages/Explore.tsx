@@ -1,7 +1,5 @@
-
 import Collection_Card from '../components/Element/Collection_Card'
 import SideBar from '../components/Layouts/SideBar'
-import Nav from '../components/nevigation/NavBar'
 import '../Style/Global.css'
 import { useEffect, useState } from 'react'
 import Capsule from '../components/Element/Capsule'

@@ -7,7 +7,7 @@ import './NavBar-dropdown.css'
 import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
 
-const Nav: JSX.ElementType = () => {
+const Navigation: JSX.ElementType = () => {
   const { isLoggedIn, logout, userData } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -117,19 +117,19 @@ const Nav: JSX.ElementType = () => {
                   <div className="profile-menu">
                     <ul>
                       <li>
-                        <div className="nav-button" >
+                        <div className="nav-button" onClick={() => navigate('/user/profile')}>
                           <Icon icon="ph:pencil-bold" className="menu-icon-size" />
                           <h1>Edit Profile</h1>
                         </div>
                       </li>
                       <li>
-                        <div className="nav-button">
+                        <div className="nav-button" onClick={() => navigate('/user/security')}>
                           <Icon icon="oi:shield" className="menu-icon-size" />
                           <h1>Password & Securerity</h1>
                         </div>
                       </li>
                       <li>
-                        <div className="nav-button">
+                        <div className="nav-button" onClick={() => navigate('/user/help')}>
                           <Icon icon="mingcute:question-fill" className="menu-icon-size" />
                           <h1>Help</h1>
                         </div>
@@ -165,4 +165,4 @@ const Nav: JSX.ElementType = () => {
   );
 };
 
-export default Nav;
+export default Navigation;

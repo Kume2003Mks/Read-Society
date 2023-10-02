@@ -1,5 +1,5 @@
 
-import Nav from '../../components/nevigation/NavBar'
+import Nav from '../../components/navigation/Navigation'
 import RegisterBox from '../../components/Auth_component/RegisterBox'
 import '../../Style/Global.css'
 import { useAuth } from '../../function/context/AuthContext';

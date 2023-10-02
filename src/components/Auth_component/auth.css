@@ -27,9 +27,8 @@
     font-size: 1.5rem;
     padding: 0.5rem;
     background-color: #005FC7;
-    color: rgb(255, 255, 255);
+    color: #005FC7;
     transition-duration: 0.5s;
-
 }
 
 .Register-btn {
@@ -46,6 +45,7 @@
 
 .login-btn:hover {
     border: 3px solid #ffffff;
+    color: white;
     border-radius: 50px;
     cursor: pointer;
 }

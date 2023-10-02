@@ -1,13 +1,11 @@
 import { Icon } from "@iconify/react"
 import PostBox from "../../../components/Element/PostBox"
 import SideBar from "../../../components/Layouts/SideBar"
-import Nav from "../../../components/nevigation/NavBar"
 
 
 const Profile = () => {
   return (
     <>
-    <Nav />
     <main className="flex-row h-screen justify-between flex p-container">
         <SideBar className='p-1'>
             <img src="" alt="" />

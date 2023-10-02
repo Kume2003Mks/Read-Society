@@ -1,7 +1,7 @@
-import Nav from "../components/nevigation/NavBar"
-import LoginBox from "../components/Auth_component/LoginBox";
-import '../Style/Global.css'
-import { useAuth } from '../function/context/AuthContext'
+import Nav from "../../components/nevigation/NavBar"
+import LoginBox from "../../components/Auth_component/LoginBox";
+import '../../Style/Global.css'
+import { useAuth } from '../../function/context/AuthContext'
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 
@@ -21,7 +21,6 @@ const LoginPage: JSX.ElementType = () => {
 
     return (
         <>
-            <Nav />
             <main className="blackground-css">
                 {isLoggedIn ? (
                     <>Your login</>

@@ -152,10 +152,10 @@ const Nav: JSX.ElementType = () => {
           </>
         ) : (
           <>
-            <div className="login-button" onClick={() => navigate('/login')}>
+            <div className="login-button" onClick={() => navigate('/user/login')}>
               Login
             </div>
-            <div className="regis-button" onClick={() => navigate('/register')}>
+            <div className="regis-button" onClick={() => navigate('/user/register')}>
               Register
             </div>
           </>

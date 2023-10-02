@@ -22,7 +22,6 @@ const Explore: JSX.ElementType = () => {
 
     return (
         <>
-            <Nav />
             <main className="flex-row justify-between flex-wrap flex h-screen p-container">
                 <SideBar className='bg-white p-2'>
                     <h1 className='text-2xl font-bold text-center underline underline-offset-2'>Explore</h1>

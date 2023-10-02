@@ -1,8 +1,8 @@
 
-import Nav from '../components/nevigation/NavBar'
-import RegisterBox from '../components/Auth_component/RegisterBox'
-import '../Style/Global.css'
-import { useAuth } from '../function/context/AuthContext';
+import Nav from '../../components/nevigation/NavBar'
+import RegisterBox from '../../components/Auth_component/RegisterBox'
+import '../../Style/Global.css'
+import { useAuth } from '../../function/context/AuthContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 
@@ -18,7 +18,6 @@ const RegisterPage: JSX.ElementType = () => {
 
     return (
         <>
-            <Nav />
             <main className="blackground-css">
                 {isLoggedIn ? (
                     <div className='flex-row items-center align-middle'>

@@ -19,7 +19,7 @@ const LoginBox: JSX.ElementType = () => {
     setShowPassword(!showPassword);
   };
   const handleRegisterPage = (): void => {
-    navigate('/register');
+    navigate('/user/register');
   }
 
   const validateForm = () => {

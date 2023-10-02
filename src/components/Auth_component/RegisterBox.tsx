@@ -36,7 +36,7 @@ const RegisterBox: JSX.ElementType = () => {
     };
 
     const handleLoginPage = (): void => {
-        navigate('/login');
+        navigate('/user/login');
     }
 
     // Validation functions

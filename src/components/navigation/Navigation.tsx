@@ -116,26 +116,26 @@ const Navigation: JSX.ElementType = () => {
                 {isProfileMenuOpen && (
                   <div className="profile-menu">
                     <ul>
-                      <li>
-                        <div className="nav-button" onClick={() => navigate('/user/profile')}>
+                      <li onClick={() => navigate('/user/profile')}>
+                        <div className="nav-button">
                           <Icon icon="ph:pencil-bold" className="menu-icon-size" />
                           <h1>Edit Profile</h1>
                         </div>
                       </li>
-                      <li>
-                        <div className="nav-button" onClick={() => navigate('/user/security')}>
+                      <li onClick={() => navigate('/user/security')}>
+                        <div className="nav-button">
                           <Icon icon="oi:shield" className="menu-icon-size" />
                           <h1>Password & Securerity</h1>
                         </div>
                       </li>
-                      <li>
-                        <div className="nav-button" onClick={() => navigate('/user/help')}>
+                      <li onClick={() => navigate('/user/help')}>
+                        <div className="nav-button">
                           <Icon icon="mingcute:question-fill" className="menu-icon-size" />
                           <h1>Help</h1>
                         </div>
                       </li>
-                      <li>
-                        <div className="nav-button" onClick={() => logout()}>
+                      <li onClick={() => logout()}>
+                        <div className="nav-button">
                           <Icon icon="ion:log-out" className="menu-icon-size" />
                           <h1>
                             Logout

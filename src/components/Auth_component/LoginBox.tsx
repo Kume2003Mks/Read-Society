@@ -92,8 +92,8 @@ const LoginBox: JSX.ElementType = () => {
         <Link to="#">Forgotten Password</Link>
       </div>
       <div style={{ width: '80%', marginBottom: '2rem', marginTop: '0.5rem' }}>
-        <button type="submit" className="login-btn" style={{ marginBottom: '1rem' }} onClick={handleSubmit}>Login</button>
-        <button className="Register-btn" onClick={handleRegisterPage}>Register</button>
+        <div className="login-btn" style={{ marginBottom: '1rem' }} onClick={handleSubmit}>Login</div>
+        <div className="Register-btn" onClick={handleRegisterPage}>Register</div>
       </div>
     </form>
   )

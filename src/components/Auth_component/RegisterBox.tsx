@@ -188,10 +188,10 @@ const RegisterBox: JSX.ElementType = () => {
             {/* Regis*/}
             <div className="register-btn-layout" style={{ margin: '1rem', marginBottom: '2rem' }}>
                 <div style={{ flex: 1, marginRight: '0.5rem' }}>
-                    <button type="submit" className="login-btn" onClick={handleSubmit}>Register</button>
+                    <div className="login-btn" onClick={handleSubmit}>Register</div>
                 </div>
                 <div style={{ flex: 1, marginLeft: '0.5rem' }}>
-                    <button className="Register-btn" onClick={handleLoginPage}>Cancel</button>
+                    <div className="Register-btn" onClick={handleLoginPage}>Cancel</div>
                 </div>
             </div>
         </form>

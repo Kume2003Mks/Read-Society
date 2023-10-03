@@ -27,7 +27,8 @@
     font-size: 1.5rem;
     padding: 0.5rem;
     background-color: #005FC7;
-    color: #005FC7;
+    text-align: center;
+    color: #ffffff;
     transition-duration: 0.5s;
 }
 
@@ -38,6 +39,7 @@
     font-size: 1.5rem;
     padding: 0.5rem;
     background-color: rgb(255, 255, 255);
+    text-align: center;
     color: #005FC7;
     transition-duration: 0.5s;
 

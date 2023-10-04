@@ -32,11 +32,9 @@ const LoginBox: JSX.ElementType = () => {
     } else if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/.test(email)) {
       newErrors.email = 'Invalid email format';
     }
-    if (!password) {
+    if (!password.trim()) {
       newErrors.password = 'Password is required';
-    } else if (password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
-    }
+    } 
 
     setErrors(newErrors);
     return Object.values(newErrors).every((error) => !error);

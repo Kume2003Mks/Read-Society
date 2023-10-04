@@ -30,6 +30,7 @@
     text-align: center;
     color: #ffffff;
     transition-duration: 0.5s;
+    cursor: pointer;
 }
 
 .Register-btn {
@@ -42,19 +43,17 @@
     text-align: center;
     color: #005FC7;
     transition-duration: 0.5s;
-
+    cursor: pointer;
 }
 
 .login-btn:hover {
     border: 3px solid #ffffff;
     color: white;
     border-radius: 50px;
-    cursor: pointer;
 }
 
 .Register-btn:hover {
     border-radius: 50px;
-    cursor: pointer;
 }
 
 .from-layout {

@@ -125,7 +125,7 @@ const Navigation: JSX.ElementType = () => {
                       <li onClick={() => navigate('/user/security')}>
                         <div className="nav-button">
                           <Icon icon="oi:shield" className="menu-icon-size" />
-                          <h1>Password & Securerity</h1>
+                          <h1>Password & Security</h1>
                         </div>
                       </li>
                       <li onClick={() => navigate('/user/help')}>

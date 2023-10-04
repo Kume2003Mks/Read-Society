@@ -1,7 +1,12 @@
+import Sidebarnav from "../../components/navigation/Sidebarnav"
 
 const Help = () => {
   return (
-    <div>help</div>
+    <>
+    <main className="flex-row h-screen justify-between flex p-container">
+      <Sidebarnav/>
+    </main>
+  </>
   )
 }
 

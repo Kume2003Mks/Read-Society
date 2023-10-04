@@ -33,7 +33,7 @@ const Explore: JSX.ElementType = () => {
                 <div className='grid-layout h-full flex-1 p-4'>
                     {data?.map((val: any) => (
                         <Collection_Card key={val.id} props={val} className='bg-slate-200 rounded-lg hover:bg-slate-300' />
-                    ))}
+                    ))} 
                 </div>
             </main>
         </>

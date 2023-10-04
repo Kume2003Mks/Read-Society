@@ -5,7 +5,7 @@ import {
     createUserWithEmailAndPassword,
     signOut as firebaseSignOut
 } from "firebase/auth";
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { Timestamp, collection, doc, setDoc } from 'firebase/firestore';
 
 export default class authentication {
 
@@ -70,6 +70,7 @@ export default class authentication {
                 facebook: '', //default value
                 instagram: '', //default value
                 website: '', //default value
+                last_time: Timestamp.now().toDate(), //default value
             };
 
             const userProfilesCollectionRef = collection(database, 'users', user.uid, 'profiles');

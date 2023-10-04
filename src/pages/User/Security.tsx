@@ -3,7 +3,6 @@ import '../../Style/Global.css'
 import Sidebarnav from '../../components/navigation/Sidebarnav'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../../function/context/AuthContext'
-import userDataBase from '../../function/userDataBase'
 import { Icon } from '@iconify/react'
 
 const Security = () => {

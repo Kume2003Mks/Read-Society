@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
 
-
 const EditProfile = () => {
 
   const { userData } = useAuth();
@@ -82,10 +81,9 @@ const EditProfile = () => {
       alert('Error updating profile. Please try again.');
       console.error('Error updating profile:', error);
     } finally {
-      setIsLoading(false); // สิ้นสุดการแสดงสถานะ loading
+      setIsLoading(false);
     }
   };
-
 
   const handleAboutMeChange = (e: any) => {
     const text = e.target.value;
@@ -164,7 +162,7 @@ const EditProfile = () => {
                         alt="Preview"
                         className={styles.editable_image}
                       />
-                      <p className='absolute bottom-0'>Preview</p>
+                      <p className={styles.preview_label}>Preview</p>
                     </>
                   ) : (
                     <img

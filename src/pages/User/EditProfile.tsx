@@ -19,7 +19,9 @@ const EditProfile = () => {
   const [Website, setWebsite] = useState('');
   const [aboutMe, setAboutMe] = useState('');
   const [canEdit, setCanEdit] = useState(true);
-
+  const [previewImage, setPreviewImage] = useState('');
+  const [imgfile, setImgfile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const maxWords = 250;
 
@@ -55,11 +57,35 @@ const EditProfile = () => {
 
   }
 
+  const handleImageUpload = (e: any) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size <= 2 * 1024 * 1024) { // 2MB
+        const imageUrl = URL.createObjectURL(file);
+        setPreviewImage(imageUrl);
+        setImgfile(file);
+      } else {
+        alert('File size exceeds the limit (Max: 2MB).');
+      }
+    }
+  };
+
   const updateProfile = async () => {
-    await Uprofile.editProfile(username, firstName, lastName, Instagram, Facebook, Website, aboutMe)
-    await getProfile();
-    window.location.reload()
-  }
+    setIsLoading(true); // เริ่มแสดงสถานะ loading
+
+    try {
+      await Uprofile.editProfile(username, firstName, lastName, Instagram, Facebook, Website, aboutMe, imgfile);
+      await getProfile();
+      alert('Profile updated successfully!');
+      window.location.reload();
+    } catch (error) {
+      alert('Error updating profile. Please try again.');
+      console.error('Error updating profile:', error);
+    } finally {
+      setIsLoading(false); // สิ้นสุดการแสดงสถานะ loading
+    }
+  };
+
 
   const handleAboutMeChange = (e: any) => {
     const text = e.target.value;
@@ -129,7 +155,33 @@ const EditProfile = () => {
           </div>
           <div className={styles.container}>
             {userProfile ? (
-              <> <img src={userProfile?.profile_image} alt={userProfile.userName} className={styles.profile_image} /></>
+              <div className={styles.profile_container}>
+                <label htmlFor="uploadInput" className={styles.edit_image}>
+                  {previewImage ? (
+                    <>
+                      <img
+                        src={previewImage}
+                        alt="Preview"
+                        className={styles.editable_image}
+                      />
+                      <p className='absolute bottom-0'>Preview</p>
+                    </>
+                  ) : (
+                    <img
+                      src={userProfile?.profile_image}
+                      alt={userProfile.userName}
+                      className={styles.editable_image}
+                    />
+                  )}
+                  <input
+                    type="file"
+                    id="uploadInput"
+                    accept="image/*"
+                    className={styles.upload_input}
+                    onChange={handleImageUpload}
+                  />
+                </label>
+              </div>
             )
               :
               (<><div className='styles.profile_image'>Loading...</div></>)}
@@ -147,9 +199,13 @@ const EditProfile = () => {
                 <p className={styles.word_count}>Words remaining: {maxWords - aboutMe.length}</p>
               </div>
             </div>
-            <div className={styles.save_btn} onClick={updateProfile}>
-              Save
-            </div>
+
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : (
+              <div className={styles.save_btn} onClick={updateProfile}>Save</div>
+            )}
+
           </div>
 
         </form>

@@ -1,5 +1,6 @@
 import { Timestamp, collection, doc, getDocs, setDoc } from "firebase/firestore";
-import { database } from "../utils/Firebase";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { database, storage } from "../utils/Firebase";
 
 export default class userDataBase {
 
@@ -45,7 +46,8 @@ export default class userDataBase {
     Instagram: string,
     Facebook: string,
     Website: string,
-    About: string
+    About: string,
+    imageFile: File | null
   ) {
     const userDocRef = doc(database, 'users', this.uid);
     const profilesCollectionRef = collection(userDocRef, 'profiles');
@@ -69,12 +71,24 @@ export default class userDataBase {
           facebook: Facebook,
           instagram: Instagram,
           website: Website,
+       
         };
 
         if (hasChanged) {
           updatedData.last_time = Timestamp.now().toDate();
         }
 
+        if (imageFile) {
+          // ลบรูปภาพเก่าถ้ามี
+          if (userProfileData.profile_image) {
+            await this.deleteProfileImage(userProfileData.profile_image);
+          }
+  
+          // อัปโหลดรูปภาพใหม่
+          const imageUrl = await this.uploadProfileImage(imageFile);
+          updatedData.profile_image = imageUrl;
+        }
+  
         await setDoc(userProfileDocRef, updatedData, { merge: true });
         sessionStorage.removeItem('userProfile');
       }
@@ -83,5 +97,33 @@ export default class userDataBase {
     }
   }
 
+  private async uploadProfileImage(imageFile: File): Promise<string> {
+    const storageRef = ref(storage, `profile_images/${this.uid}/${imageFile.name}`);
 
+    try {
+      // อัปโหลดรูปภาพไปยัง Firebase Storage
+      const snapshot = await uploadBytes(storageRef, imageFile);
+      
+      // ดึง URL ของรูปภาพจาก Firebase Storage
+      const imageUrl = await getDownloadURL(snapshot.ref);
+  
+      return imageUrl;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  private async deleteProfileImage(imageUrl: string): Promise<void> {
+    // สร้างอ้างอิงไปยังรูปภาพที่ต้องการลบ
+    const imageRef = ref(storage, imageUrl);
+  
+    try {
+      // ลบรูปภาพ
+      await deleteObject(imageRef);
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  
 }

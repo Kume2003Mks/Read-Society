@@ -57,6 +57,16 @@
     border-radius: 8px;
 }
 
+.nav-list li a:hover {
+    background-color: #c5c5c5;
+    border-radius: 8px;
+}
+
+.nav-list li a.active {
+    background-color: #c5c5c5;
+    border-radius: 8px;
+}
+
 .filter-list {
     list-style-type: none;
     width: 100%;

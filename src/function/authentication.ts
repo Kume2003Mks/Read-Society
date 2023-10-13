@@ -1,4 +1,5 @@
 import { Auth, database } from '../utils/Firebase';
+import Swal from 'sweetalert2';
 import {
     signInWithEmailAndPassword,
     UserCredential,
@@ -27,7 +28,7 @@ export default class authentication {
         return JSON.parse(jsonData);
     }
 
-    
+
     public getAuthStatus() {
         const encodedData = localStorage.getItem(this.storageKey);
         if (encodedData) {
@@ -42,16 +43,27 @@ export default class authentication {
     public async login(email: string, password: string) {
         await signInWithEmailAndPassword(Auth, email, password)
             .then((userCredential) => {
-                alert('Login successfully');
                 const user = userCredential.user;
                 console.log('Login With', user.email);
                 localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential.user }));
-                window.location.reload();
+                Swal.fire({
+                    title: '<strong>Login successfully</strong>',
+                    icon: 'success',
+                    confirmButtonText: '<h1>Ok</h1>',
+                    timer: 3000,
+                    timerProgressBar: true,
+                }).then(() => {
+                    window.location.reload();
+                });
             })
             .catch((error) => {
                 const errorMessage = error.message;
                 console.log(errorMessage);
-                alert("login failed");
+                Swal.fire({
+                    title: '<strong>Login Failed</strong>',
+                    icon: 'error',
+                    confirmButtonText: '<h1>Ok</h1>',
+                });
             });
     }
 
@@ -79,9 +91,22 @@ export default class authentication {
             await setDoc(userProfileDocRef, userData);
             localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential.user }));
             console.log('Registration successful');
-            alert('Registration successful');
+            Swal.fire({
+                title: '<strong>Registration successful</strong>',
+                icon: 'success',
+                confirmButtonText: '<h1>Ok</h1>',
+                timer: 3000,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location.reload();
+            });
         } catch (error: any) {
             console.error('Error registering user:', error.message);
+            Swal.fire({
+                title: '<strong>Registration Failed</strong>',
+                icon: 'error',
+                confirmButtonText: '<h1>Ok</h1>',
+            });
         }
     }
 

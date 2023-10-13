@@ -47,7 +47,6 @@ const LoginBox: JSX.ElementType = () => {
     }
   }
 
-
   return (
     <form className="mainbox gap-y-2">
       <h1 style={{ textAlign: 'center', marginTop: '1rem' }}>Login</h1>

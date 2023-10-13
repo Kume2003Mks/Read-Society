@@ -114,12 +114,15 @@ export default class userDataBase {
   }
 
   private async deleteProfileImage(imageUrl: string): Promise<void> {
+    const def_image: string = 'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/Uni.png?alt=media&token=dc96bce1-5857-4ad6-b9a5-e635074c2169'
     // สร้างอ้างอิงไปยังรูปภาพที่ต้องการลบ
     const imageRef = ref(storage, imageUrl);
   
     try {
       // ลบรูปภาพ
-      await deleteObject(imageRef);
+      if (def_image !== imageUrl){
+        await deleteObject(imageRef);
+      }
     } catch (error) {
       throw error;
     }

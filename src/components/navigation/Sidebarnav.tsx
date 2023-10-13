@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import SideBar from '../Layouts/SideBar'
+import '../../Style/Global.css'
 import { Icon } from '@iconify/react'
 import { useAuth } from '../../function/context/AuthContext';
 
@@ -12,28 +13,28 @@ const Sidebarnav = () => {
             <SideBar className='p-1'>
                 <ul className='nav-list mx-2'>
                     <li>
-                        <Link to='/user/profile' className={Link_Btn}>
+                        <NavLink to='/user/profile' className={Link_Btn}>
                             <p className='text-left flex flex-row'>
                                 <Icon icon="ph:pencil-bold" className="icon-size" />
                                 Edit Profile
                             </p>
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to='/user/security' className={Link_Btn}>
+                        <NavLink to='/user/security' className={Link_Btn}>
                             <p className='text-left flex flex-row'>
                                 <Icon icon="oi:shield" className="icon-size" />
                                 Password & Security
                             </p>
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to='/user/help' className={Link_Btn}>
+                        <NavLink to='/user/help' className={Link_Btn}>
                             <p className='text-left flex flex-row'>
                                 <Icon icon="mingcute:question-fill" className="icon-size" />
                                 Help
                             </p>
-                        </Link>
+                        </NavLink>
                     </li> 
                     <li>
                         <div className={Link_Btn} onClick={() => logout()}>

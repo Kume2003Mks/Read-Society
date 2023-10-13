@@ -4,6 +4,7 @@ import Sidebarnav from '../../components/navigation/Sidebarnav'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
+import Swal from 'sweetalert2'
 
 const EditProfile = () => {
 
@@ -64,25 +65,53 @@ const EditProfile = () => {
         setPreviewImage(imageUrl);
         setImgfile(file);
       } else {
-        alert('File size exceeds the limit (Max: 2MB).');
+        Swal.fire({
+          title: '<strong>File size exceeds the limit (Max: 2MB)</strong>',
+          icon: 'error',
+          confirmButtonText: '<h1>Ok</h1>',
+        });
       }
     }
   };
 
   const updateProfile = async () => {
-    setIsLoading(true); // เริ่มแสดงสถานะ loading
-
-    try {
-      await Uprofile.editProfile(username, firstName, lastName, Instagram, Facebook, Website, aboutMe, imgfile);
-      await getProfile();
-      alert('Profile updated successfully!');
-      window.location.reload();
-    } catch (error) {
-      alert('Error updating profile. Please try again.');
-      console.error('Error updating profile:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setIsLoading(true); // เริ่มแสดงสถานะ loading
+        try {
+          await Uprofile.editProfile(username, firstName, lastName, Instagram, Facebook, Website, aboutMe, imgfile);
+          await getProfile();
+          Swal.fire({
+            title: '<strong>Profile updated successfully!</strong>',
+            icon: 'success',
+            confirmButtonText: '<h1>Ok</h1>',
+            timer: 3000,
+            timerProgressBar: true,
+          }).then(() => {
+            window.location.reload();
+          });
+        } catch (error) {
+          Swal.fire({
+            title: '<strong>Error updating profile. Please try again.</strong>',
+            icon: 'error',
+            confirmButtonText: '<h1>Ok</h1>',
+            timer: 3000,
+            timerProgressBar: true,
+          });
+          console.error('Error updating profile:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    })
   };
 
   const handleAboutMeChange = (e: any) => {

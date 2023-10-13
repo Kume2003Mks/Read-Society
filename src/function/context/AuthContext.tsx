@@ -1,6 +1,7 @@
 // AuthContext.tsx
 import { createContext, useContext, useEffect, useState } from 'react';
 import authentication from '../authentication';
+import Swal from 'sweetalert2';
 
 const auth = new authentication();
 
@@ -9,13 +10,13 @@ interface AuthContextType {
   userData: any | null;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, firstname: string, lastname: string, username: string) => Promise<void>;
-  logout: () => void; 
+  logout: () => void;
   getAuthStatus: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }:any) => {
+export const AuthProvider = ({ children }: any) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState<any | null>(null);
 
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }:any) => {
     const user = auth.getAuthStatus();
     setIsLoggedIn(!!user);
     setUserData(user); // เพิ่มการตั้งค่าข้อมูลผู้ใช้ใน state ใหม่
-}, [auth]);
+  }, [auth]);
 
   const login = async (email: string, password: string) => {
     await auth.login(email, password);
@@ -36,8 +37,20 @@ export const AuthProvider = ({ children }:any) => {
   };
 
   const logout = () => {
-    auth.logout();
-    setIsLoggedIn(false);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to logout?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sure'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        auth.logout();
+        setIsLoggedIn(false);
+      }
+    })
   };
 
   return (

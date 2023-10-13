@@ -1,5 +1,5 @@
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
-import { AuthProvider } from './function/context/AuthContext.tsx';
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom'
+import { useAuth } from './function/context/AuthContext.tsx';
 
 import Home from './pages/Home.tsx'
 import Explore from './pages/Explore.tsx'
@@ -17,6 +17,8 @@ import Help from './pages/User/Help.tsx';
 
 const App = () => {
 
+    const { isLoggedIn } = useAuth();
+
     const Layout = () => {
         return (
             <>
@@ -24,6 +26,20 @@ const App = () => {
                 <Outlet />
             </>
         )
+    }
+
+    const ProtectuserRoute = ({ user, children }:any) => {
+        if (user === true) {
+            return <Navigate to="/"  />;
+          }
+          return children;
+    }
+
+    const ProtectRoute = ({ user, children }:any) => {
+        if (user === false) {
+            return <Navigate to="/"  />;
+          }
+          return children;
     }
 
     const router = createBrowserRouter([
@@ -57,7 +73,7 @@ const App = () => {
             children: [
                 {
                     path: '',
-                    element: <Collection />,
+                    element: <ProtectRoute user={isLoggedIn}><Collection /></ProtectRoute>,
                 },
             ],
         },
@@ -81,7 +97,7 @@ const App = () => {
             children: [
                 {
                     path: '',
-                    element: <My_Creation />,
+                    element: <ProtectRoute user={isLoggedIn}><My_Creation /></ProtectRoute>,
                 },
             ],
         },
@@ -91,23 +107,23 @@ const App = () => {
             children: [
                 {
                     path: "login",
-                    element: <LoginPage />
+                    element: <ProtectuserRoute user={isLoggedIn}><LoginPage /></ProtectuserRoute>
                 },
                 {
                     path: "register",
-                    element: <RegisterPage />
+                    element: <ProtectuserRoute user={isLoggedIn}><RegisterPage /></ProtectuserRoute>
                 },
                 {
                     path: "profile",
-                    element: <EditProfile />
+                    element: <ProtectRoute user={isLoggedIn}><EditProfile /></ProtectRoute>
                 },
                 {
                     path: "security",
-                    element: <Security />
+                    element: <ProtectRoute user={isLoggedIn}><Security /></ProtectRoute>
                 },
                 {
                     path: "help",
-                    element: <Help />
+                    element: <ProtectRoute user={isLoggedIn}><Help /></ProtectRoute>
                 },
             ],
         },
@@ -118,9 +134,7 @@ const App = () => {
     ]);
 
     return (
-        <AuthProvider>
             <RouterProvider router={router} />
-        </AuthProvider>
     )
 }
 

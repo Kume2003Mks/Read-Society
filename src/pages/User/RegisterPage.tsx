@@ -1,18 +1,9 @@
 import RegisterBox from '../../components/Auth_component/RegisterBox'
 import '../../Style/Global.css'
 import { useAuth } from '../../function/context/AuthContext';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
 
 const RegisterPage: JSX.ElementType = () => {
     const { isLoggedIn } = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (isLoggedIn === true) {
-            navigate('/');
-        }
-    },[isLoggedIn])
 
     return (
         <>

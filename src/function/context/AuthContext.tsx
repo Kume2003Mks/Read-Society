@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: any) => {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sure'
+      confirmButtonText: 'Confrim'
     }).then((result) => {
       if (result.isConfirmed) {
         auth.logout();

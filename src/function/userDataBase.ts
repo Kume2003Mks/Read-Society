@@ -39,6 +39,7 @@ export default class userDataBase {
       throw error;
     }
   }
+  
   public async editProfile(
     username: string,
     firstName: string,

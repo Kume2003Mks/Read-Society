@@ -5,7 +5,6 @@ import Nav from '../components/nevigation/NavBar'
 import '../Style/Global.css'
 import { useEffect, useState } from 'react'
 import Capsule from '../components/Element/Capsule'
-import Sbar from '../components/Element/Sbar'
 import getdata from '../function/test/getdata'
 
 const Explore: JSX.ElementType = () => {
@@ -47,6 +46,7 @@ const Explore: JSX.ElementType = () => {
                         <Capsule label='Most Viewed' color='#818487'/><br/>
                         <Capsule label='Top Rated' color='#818487'/>
                     </div>
+                    
                 </SideBar>
                 <div className='grid-layout h-full flex-1 p-4'>
                     {data?.map((val: any) => (

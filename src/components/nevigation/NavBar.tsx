@@ -5,6 +5,9 @@ import logo from '../../assets/RS_Logo.svg'
 import './NavBar.css'
 import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
+import SearchBar from '../../components/Element/SearchBar'
+
+
 
 const Nav: JSX.ElementType = () => {
   const { isLoggedIn, logout, userData } = useAuth();
@@ -41,6 +44,7 @@ const Nav: JSX.ElementType = () => {
   };
 
   return (
+    
     <nav className={`navbar ${isMenuOpen ? 'menu-open' : ''}`}>
       <div className='navbar-logo'>
         <NavLink to='/'>
@@ -89,15 +93,19 @@ const Nav: JSX.ElementType = () => {
             <li>
               <NavLink to='/community'>Community</NavLink>
             </li>
+            
           </>
         )}
       </ul>
-
-      
-
+      <>  
+            
+            <SearchBar />
+            
+      </>      
       <div className={`navbar-buttons ${isMenuOpen ? 'menu-open' : ''}`}>
         <div className="theme-button" onClick={() => { alert('hello world') }}>
-          <Icon icon="mingcute:sun-fill" className='toggle-theme' />
+          <Icon icon="mingcute:sun-fill" className='toggle-theme' /> 
+          
         </div>
         {isLoggedIn ? (
           <>

@@ -6,7 +6,7 @@ import {
     createUserWithEmailAndPassword,
     signOut as firebaseSignOut
 } from "firebase/auth";
-import { Timestamp, collection, doc, setDoc } from 'firebase/firestore';
+import { Timestamp, doc, setDoc } from 'firebase/firestore';
 
 export default class authentication {
 
@@ -85,10 +85,9 @@ export default class authentication {
                 last_time: Timestamp.now().toDate(), //default value
             };
 
-            const userProfilesCollectionRef = collection(database, 'users', user.uid, 'profiles');
-            const userProfileDocRef = doc(userProfilesCollectionRef, user.uid);
+            const userDocumentRef = doc(database, 'users', user.uid);
+            await setDoc(userDocumentRef, userData);
 
-            await setDoc(userProfileDocRef, userData);
             localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential.user }));
             console.log('Registration successful');
             Swal.fire({

@@ -5,12 +5,13 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
 import Swal from 'sweetalert2'
+import { Profile } from '../../function/DeclareType'
 
 const EditProfile = () => {
 
   const { userData } = useAuth();
   const [usertoken, setusertoken] = useState('')
-  const [userProfile, setUserProfile] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState<Profile | null>(null);
   const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');

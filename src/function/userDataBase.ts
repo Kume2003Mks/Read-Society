@@ -1,4 +1,4 @@
-import { Timestamp, collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { DocumentSnapshot, Timestamp, doc, getDoc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { database, storage } from "../utils/Firebase";
 
@@ -20,17 +20,17 @@ export default class userDataBase {
 
     // ถ้าไม่มีข้อมูลใน Session Storage ให้ดึงข้อมูลใน Firestore
     const userDocRef = doc(database, 'users', this.uid);
-    const profilesCollectionRef = collection(userDocRef, 'profiles');
 
     try {
-      const querySnapshot = await getDocs(profilesCollectionRef);
+      const docSnapshot: DocumentSnapshot = await getDoc(userDocRef);
 
-      if (!querySnapshot.empty) {
-        const firstDoc = querySnapshot.docs[0];
-        const userProfileData = firstDoc.data();
+      if (docSnapshot.exists()) {
+        const userProfileData = docSnapshot.data();
 
         sessionStorage.setItem('userProfile', JSON.stringify(userProfileData));
+        console.log(userProfileData);
         return userProfileData;
+
       } else {
         // หากไม่มีข้อมูล
         return null;
@@ -38,7 +38,7 @@ export default class userDataBase {
     } catch (error) {
       throw error;
     }
-  }
+}
   
   public async editProfile(
     username: string,
@@ -51,8 +51,6 @@ export default class userDataBase {
     imageFile: File | null
   ) {
     const userDocRef = doc(database, 'users', this.uid);
-    const profilesCollectionRef = collection(userDocRef, 'profiles');
-    const userProfileDocRef = doc(profilesCollectionRef, this.uid);
 
     try {
       const sessionData = sessionStorage.getItem('userProfile');
@@ -90,7 +88,7 @@ export default class userDataBase {
           updatedData.profile_image = imageUrl;
         }
   
-        await setDoc(userProfileDocRef, updatedData, { merge: true });
+        await setDoc(userDocRef, updatedData, { merge: true });
         sessionStorage.removeItem('userProfile');
       }
     } catch (error) {

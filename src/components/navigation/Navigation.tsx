@@ -6,19 +6,18 @@ import './NavBar.css'
 import './NavBar-dropdown.css'
 import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
+import { Profile } from '../../function/DeclareType'
 
 const Navigation: JSX.ElementType = () => {
   const { isLoggedIn, logout, userData } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [userProfile, setUserProfile] = useState<any>(null)
+  const [userProfile, setUserProfile] = useState<Profile | null>(null)
   const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
   const navbarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (userData && userData.uid) {
-
-      console.log('User UID:', userData.uid);
       getProfile(userData.uid)
     }
   }, [userData]);
@@ -45,8 +44,6 @@ const Navigation: JSX.ElementType = () => {
     const userProfile = await Uprofile.getProfile()
     setUserProfile(userProfile)
   }
-
-  console.log(userProfile)
 
   const toggleProfileMenu = (): void => {
     setProfileMenuOpen(!isProfileMenuOpen);

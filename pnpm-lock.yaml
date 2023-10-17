@@ -20,6 +20,9 @@ dependencies:
   sweetalert2:
     specifier: ^11.7.31
     version: 11.7.31
+  swiper:
+    specifier: ^10.3.1
+    version: 10.3.1
 
 devDependencies:
   '@iconify/react':
@@ -2636,6 +2639,11 @@ packages:
 
   /sweetalert2@11.7.31:
     resolution: {integrity: sha512-AVNODg41LqhC241UHTanW2ZQdh0ziiw+Gc3Dmy1EuCFP+g09P3mBEhvauU88J3JLEX6UpTfhp7iok9t8uhEdQQ==}
+    dev: false
+
+  /swiper@10.3.1:
+    resolution: {integrity: sha512-24Wk3YUdZHxjc9faID97GTu6xnLNia+adMt6qMTZG/HgdSUt4fS0REsGUXJOgpTED0Amh/j+gRGQxsLayJUlBQ==}
+    engines: {node: '>= 4.7.0'}
     dev: false
 
   /tailwindcss@3.3.3:

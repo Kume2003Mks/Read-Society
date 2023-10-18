@@ -23,13 +23,12 @@ function Home(): JSX.Element {
   }, []);
 
   const images = [
-    'https://img.freepik.com/free-vector/abstract-yellow-black-wide-banner_1017-32326.jpg?w=1800&t=st=1695832119~exp=1695832719~hmac=a93a8034d230e5a4c491d67c322c33fae33b638f7852490feda73fe4012c4d12',
-    'https://img.freepik.com/free-vector/dark-blue-banner-with-arrow-style-yellow-shapes_1017-32328.jpg?w=1380&t=st=1695832737~exp=1695833337~hmac=404bc72d3f291dde5d58becc10671abff5458d73c7b6dc3c3dedb5947d320d99',
-    'https://img.freepik.com/free-vector/flat-background-halloween-season-celebration_23-2150753020.jpg?w=1060&t=st=1697388015~exp=1697388615~hmac=454a6b3150eced436522e1e67e893231a3003d03b424d60421097d5d1ae92376',
+    'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/RB1.png?alt=media&token=526d5994-6071-416c-b69e-efed733d92c6',
+    'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/RD2.png?alt=media&token=65929814-2b15-4ba6-bf5b-c170da049aa1',
+    'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/SD1.png?alt=media&token=a0ea5c41-12f6-458e-9f10-df864c06eac3',
   ];
 
   return (
-    <>
       <main className='p-container overflow-x-hidden overflow-y-auto h-full'>
 
         <div className="hero-container justify-center">
@@ -103,7 +102,6 @@ function Home(): JSX.Element {
           }
         </Book_View>
       </main>
-    </>
   )
 }
 

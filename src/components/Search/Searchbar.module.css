@@ -1,0 +1,29 @@
+/* SearchBar.css */
+.search_bar {
+    position: relative;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+  }
+  
+  .search_input {
+    width: 100% ;
+    border-radius: 8px;
+    border: 2px solid #000000;
+    outline: none;
+    font-size: 12pt;
+    text-decoration: none;
+    background-color: transparent;
+    padding: 4px 4px 4px 24px;
+    flex: 1;
+  }
+  
+  .search_icon {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+  }
+  

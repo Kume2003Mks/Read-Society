@@ -36,7 +36,7 @@ const Book_Card: JSX.ElementType = ({genre, title, thumbnail,user}:any) => {
       {/**card */}
       <div className={`h-fill w-fill justify-center cursor-pointer `}>
             <div>
-                <img src={thumbnail} alt={title} className={`w-full h-auto rounded-b-lg object-cover ${styles.A4_Size}`} />
+                <img src={thumbnail} alt={title} className={`w-full h-auto rounded-lg object-cover ${styles.A4_Size}`} />
                 <div className='mt-1'>
                     <p className='text-sm truncate'>{title}</p>
                     <p className='text-xs text-slate-500'>{user}</p>

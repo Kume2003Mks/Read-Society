@@ -4,7 +4,6 @@ import SideBar from "../../components/Layouts/SideBar"
 
 const Profile = () => {
   return (
-    <>
     <main className="flex-row h-screen justify-between flex p-container">
         <SideBar className='p-1'>
             <img src="" alt="" />
@@ -18,7 +17,6 @@ const Profile = () => {
             <h1 className='text-xl font-bold text-left px-3 mb-2 '>Following</h1>
         </SideBar>
     </main>
-</>
   )
 }
 

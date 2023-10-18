@@ -6,7 +6,6 @@ const RegisterPage: JSX.ElementType = () => {
     const { isLoggedIn } = useAuth();
 
     return (
-        <>
             <main className="blackground-css">
                 {isLoggedIn ? (
                     <div className='flex-row items-center align-middle'>
@@ -23,8 +22,6 @@ const RegisterPage: JSX.ElementType = () => {
                 )}
 
             </main>
-        </>
-
     )
 }
 

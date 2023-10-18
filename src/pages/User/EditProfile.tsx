@@ -123,7 +123,6 @@ const EditProfile = () => {
   };
 
   return (
-    <>
       <main className="flex-row h-screen justify-between flex p-container">
         <Sidebarnav />
         <form className="flex flex-1 p-8 flex-row">
@@ -238,7 +237,6 @@ const EditProfile = () => {
 
         </form>
       </main>
-    </>
   )
 }
 

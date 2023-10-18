@@ -7,7 +7,6 @@ const LoginPage: JSX.ElementType = () => {
     const { isLoggedIn } = useAuth();
 
     return (
-        <>
             <main className="blackground-css">
                 {isLoggedIn ? (
                     <>Your login</>
@@ -18,7 +17,6 @@ const LoginPage: JSX.ElementType = () => {
                 )}
 
             </main>
-        </>
     )
 }
 

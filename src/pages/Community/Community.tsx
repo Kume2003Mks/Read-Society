@@ -6,7 +6,6 @@ import Followers from '../../components/Element/Followers'
 
 const Community: JSX.ElementType = () => {
     return (
-        <>
             <main className="flex-row h-screen justify-between flex p-container">
                 <SideBar className='p-1'>
                     <h1 className='text-xl font-bold text-left px-3 mb-2'>Explore</h1>
@@ -82,8 +81,6 @@ const Community: JSX.ElementType = () => {
                     <Followers name='Mookrata' image='https://today.tamu.edu/wp-content/uploads/2019/06/image-220.png'/>
                 </SideBar>
             </main>
-        </>
-
     )
 }
 

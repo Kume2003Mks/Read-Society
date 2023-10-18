@@ -79,13 +79,13 @@ const Navigation: JSX.ElementType = () => {
         {isLoggedIn ? (
           <>
             <li>
-              <NavLink to='/collection'>Collection</NavLink>
-            </li>
-            <li>
               <NavLink to='/community'>Community</NavLink>
             </li>
             <li>
-              <NavLink to='/mycreation'>My Creation</NavLink>
+              <NavLink to='/collection'>Collection</NavLink>
+            </li>
+            <li>
+              <NavLink to='/mycreation/mybooks'>My Creation</NavLink>
             </li>
           </>
         ) : (

@@ -82,7 +82,6 @@ const Security = () => {
   }
 
   return (
-    <>
       <main className="flex-row h-screen justify-between flex p-container">
         <Sidebarnav />
         <div className="flex flex-1 p-8 flex-row">
@@ -175,7 +174,6 @@ const Security = () => {
           </div>
         </div>
       </main>
-    </>
   )
 }
 

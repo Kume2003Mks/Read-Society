@@ -14,6 +14,8 @@ import Navigation from './components/navigation/Navigation.tsx';
 import EditProfile from './pages/User/EditProfile.tsx';
 import Security from './pages/User/Security.tsx';
 import Help from './pages/User/Help.tsx';
+import Upload from './pages/Creation/Upload.tsx';
+import Deleted from './pages/Creation/Deletedpage.tsx';
 
 const App = () => {
 
@@ -93,11 +95,19 @@ const App = () => {
         },
         {
             path: "/mycreation",
-            element: <Layout />,
+            element: <ProtectRoute user={isLoggedIn}><Layout /></ProtectRoute>,
             children: [
                 {
-                    path: '',
-                    element: <ProtectRoute user={isLoggedIn}><My_Creation /></ProtectRoute>,
+                    path: 'mybooks',
+                    element: <My_Creation />,
+                },
+                {
+                    path: 'upload',
+                    element: <Upload />,
+                },
+                {
+                    path: 'deleted',
+                    element: <Deleted />,
                 },
             ],
         },

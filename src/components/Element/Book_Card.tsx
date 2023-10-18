@@ -30,7 +30,7 @@ const Book_Card: JSX.ElementType = ({genre, title, thumbnail,user}:any) => {
   const genreColor = genreColors[genre] || 'red';
 
   return (
-    <div className='px-2 pb-2 h-auto justify-center rounded-lg cursor-pointer flex flex-col flex-1 snap-start hover:bg-slate-300'>
+    <div className='px-2 pb-2 h-fit justify-center rounded-lg cursor-pointer flex flex-col flex-1 snap-start hover:bg-slate-300'>
       {/**category label*/}
       <h1 className='text-xs text-black text-right w-fit self-end px-1 pt-1 rounded-t-lg' style={{backgroundColor: genreColor}}>{genre}</h1>
       {/**card */}

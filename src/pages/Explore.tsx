@@ -6,15 +6,16 @@ import SearchBar from '../components/Search/SearchBar'
 import Books from '../function/Books'
 import Book_Card from '../components/Element/Book_Card'
 import Filter_Button from '../components/Element/Filter_Button'
+import { Book } from '../function/DeclareType'
 
 const Explore: JSX.ElementType = () => {
 
-    const [books, setBooks] = useState<any>([]);
+    const [books, setBooks] = useState<Book[]>([]);
 
     useEffect(() => {
         async function loadBooks() {
             const book = new Books();
-            const data: any = await book.getBooks();
+            const data: Book[] = await book.getBooks();
             setBooks(data);
         }
         loadBooks();

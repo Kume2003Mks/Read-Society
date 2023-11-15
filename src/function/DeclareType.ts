@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore";
+import { ReactNode } from "react";
 
 export interface Book {
     genre: string;
@@ -21,3 +22,8 @@ export interface Profile {
     instagram: string;
     website: string;
 }
+
+export interface ProtectRouteProps {
+    user: boolean;
+    children: ReactNode;
+  }

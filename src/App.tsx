@@ -16,6 +16,8 @@ import Security from './pages/User/Security.tsx';
 import Help from './pages/User/Help.tsx';
 import Upload from './pages/Creation/Upload.tsx';
 import Deleted from './pages/Creation/Deletedpage.tsx';
+import { ProtectRouteProps } from './function/DeclareType.ts'
+import ResetPassword from './pages/User/ResetPassword.tsx';
 
 const App = () => {
 
@@ -30,16 +32,16 @@ const App = () => {
         )
     }
 
-    const ProtectuserRoute = ({ user, children }:any) => {
+    const ProtectuserRoute : React.FC<ProtectRouteProps> = ({ user, children }) => {
         if (user === true) {
-            return <Navigate to="/"  />;
+            return <Navigate to="/" />;
           }
           return children;
     }
 
-    const ProtectRoute = ({ user, children }:any) => {
+    const ProtectRoute : React.FC<ProtectRouteProps>  = ({ user, children }) => {
         if (user === false) {
-            return <Navigate to="/"  />;
+            return <Navigate to="/" />;
           }
           return children;
     }
@@ -134,6 +136,10 @@ const App = () => {
                 {
                     path: "help",
                     element: <ProtectRoute user={isLoggedIn}><Help /></ProtectRoute>
+                },
+                {
+                    path: "forgot-password",
+                    element: <ResetPassword />
                 },
             ],
         },

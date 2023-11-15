@@ -5,16 +5,17 @@ import '../Style/Global.css'
 import { useAuth } from '../function/context/AuthContext.tsx'
 import Books from '../function/Books.ts'
 import Book_Card from '../components/Element/Book_Card.tsx'
+import { Book } from '../function/DeclareType.ts'
 
 const Collection: JSX.ElementType = () => {
     const { userData } = useAuth();
-    const [books, setBooks] = useState<any>([]);
+    const [books, setBooks] = useState<Book[]>([]);
 
     useEffect(() => {
         async function loadBooks() {
             const book = new Books();
             if (userData && userData.uid) {
-                const data: any = await book.getBooksByOwner(userData.uid);
+                const data: Book[] = await book.getBooksByOwner(userData.uid);
                 setBooks(data);
             }
         }

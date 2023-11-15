@@ -9,14 +9,15 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useEffect, useState } from 'react';
 import Books from '../function/Books';
+import { Book } from '../function/DeclareType';
 
 function Home(): JSX.Element {
 
-  const [books, setBooks] = useState<any>([]);
+  const [books, setBooks] = useState<Book[]>([]);
   useEffect(() => {
     async function loadBooks() {
       const book = new Books();
-      const data: any = await book.getBooks();
+      const data: Book[] = await book.getBooks();
       setBooks(data);
     }
     loadBooks();

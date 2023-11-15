@@ -1,5 +1,5 @@
 import '../../Style/Global.css'
-import { CreationBar } from './My_Creation'
+import CreationBar from '../../components/navigation/CreationBar'
 
 const Deleted = () => {
   return (

@@ -86,7 +86,7 @@ const LoginBox: JSX.ElementType = () => {
         <div className="error">{errors.password}</div>
       </div>
       <div className="from-layout-password">
-        <Link to="#">Forgotten Password</Link>
+        <Link to="/user/forgot-password">Forgotten Password</Link>
       </div>
       <div style={{ width: '80%', marginBottom: '2rem', marginTop: '0.5rem' }}>
         <div className="login-btn" style={{ marginBottom: '1rem' }} onClick={handleSubmit}>Login</div>

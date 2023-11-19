@@ -1,3 +1,8 @@
+:root {
+    --button-color: #005FC7;
+    --input-color: #D9D9D9;
+  }
+
 .container {
     display: flex;
     flex-direction: column;
@@ -12,7 +17,7 @@
 
 .container input {
     font-size: 1rem;
-    background-color: #D9D9D9;
+    background-color: var(--background-color);
     border-radius: 10px;
     width: 80%;
     padding: 0.5rem;
@@ -21,11 +26,11 @@
 .save_btn {
     width: 10rem;
     align-self: flex-end;
-    border: 3px solid #005FC7;
+    border: 3px solid var(--button-color);
     border-radius: 10px;
     font-size: 1rem;
     padding: 0.5rem;
-    background-color: #005FC7;
+    background-color: var(--button-color);
     text-align: center;
     color: #ffffff;
     transition-duration: 0.5s;
@@ -36,7 +41,7 @@
     width: 8rem;
     margin-top: 0.5rem;
     align-self: flex-start;
-    border: 3px solid #005FC7;
+    border: 3px solid var(--button-color);
     border-radius: 10px;
     font-size: 1rem;
     padding: 0.5rem;
@@ -63,7 +68,7 @@
 .input_container input {
     flex-grow: 1;
     font-size: 1rem;
-    background-color: #D9D9D9;
+    background-color: var(--background-color);
     border-radius: 10px;
     padding: 0.5rem;
 }
@@ -83,7 +88,7 @@
 
 .aboutme_input {
     font-size: 1rem;
-    background-color: #D9D9D9;
+    background-color: var(--background-color);
     border-radius: 10px;
     padding: 0.5rem;
     resize: none;

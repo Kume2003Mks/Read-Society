@@ -18,6 +18,7 @@ import Upload from './pages/Creation/Upload.tsx';
 import Deleted from './pages/Creation/Deletedpage.tsx';
 import { ProtectRouteProps } from './function/DeclareType.ts'
 import ResetPassword from './pages/User/ResetPassword.tsx';
+import BookDetails from './pages/Books/BookDetails.tsx';
 
 const App = () => {
 
@@ -65,9 +66,15 @@ const App = () => {
                     path: '',
                     element: <Explore />,
                 },
+            ],
+        },
+        {
+            path: "/book-detail",
+            element: <Layout />,
+            children: [
                 {
-                    path: 'books/:id',
-                    element: <div />,
+                    path: ':book_id',
+                    element: <BookDetails />,
                 },
             ],
         },

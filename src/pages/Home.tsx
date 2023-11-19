@@ -63,10 +63,11 @@ function Home(): JSX.Element {
             .map((props: any, index: any) => (
               <Book_Card
                 key={index}
+                id={props.id}
                 genre={props.genre}
                 title={props.title}
                 thumbnail={props.thumbnail}
-                user={props.owner.userName}
+                user={props.profile.userName}
               />
             ))
           }
@@ -79,10 +80,11 @@ function Home(): JSX.Element {
             .map((props: any, index: any) => (
               <Book_Card
                 key={index}
+                id={props.id}
                 genre={props.genre}
                 title={props.title}
                 thumbnail={props.thumbnail}
-                user={props.owner.userName}
+                user={props.profile.userName}
               />
             ))
           }
@@ -94,10 +96,11 @@ function Home(): JSX.Element {
             .map((props: any, index: any) => (
               <Book_Card
                 key={index}
+                id={props.id}
                 genre={props.genre}
                 title={props.title}
                 thumbnail={props.thumbnail}
-                user={props.owner.userName}
+                user={props.profile.userName}
               />
             ))
           }

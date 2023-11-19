@@ -2,12 +2,14 @@ import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
 
 export interface Book {
+    id: string;
     genre: string;
     genre2?: string;
     title: string;
     type: string;
     description: string;
-    owner: string | Profile;
+    owner: string;
+    profile?: Profile;
     thumbnail: string;
     created: Timestamp;
 }

@@ -1,13 +1,30 @@
-import { collection, getDocs, doc, getDoc, where, query } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { database } from "../utils/Firebase";
-import { Book } from "./DeclareType";
+import { Book, Profile } from "./DeclareType";
 
 export default class Books {
-  constructor() {}
+  constructor() { }
+
+  private async fetchOwnerProfile(ownerUid: string): Promise<Profile | null> {
+    try {
+      const userDocRef = doc(database, 'users', ownerUid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data() as Profile;
+        return userData;
+      } else {
+        console.log('Owner profile not found for UID:', ownerUid);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching owner profile:', error);
+      return null;
+    }
+  }
 
   public async getBooks() {
     try {
-
       const storedBooks = sessionStorage.getItem('booksData');
       if (storedBooks) {
         const parsedBooks = JSON.parse(storedBooks);
@@ -20,60 +37,63 @@ export default class Books {
 
       const allBooks: Book[] = [];
       for (const docs of querySnapshot.docs) {
-        const bookData:any = docs.data() as Book;
+        const bookData: any = docs.data() as Book;
+        const bookId = docs.id;
+        bookData.id = bookId;
 
-        const userDocRef = doc(database, 'users', bookData.owner); // Corrected
-        const userDoc = await getDoc(userDocRef);
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          // Map the user information to the book data
-          bookData.owner = userData;
+        const ownerProfile = await this.fetchOwnerProfile(bookData.owner);
+        if (ownerProfile) {
+          bookData.profile = ownerProfile;
         }
-  
+
         allBooks.push(bookData);
       }
       sessionStorage.setItem('booksData', JSON.stringify(allBooks));
       console.log(allBooks);
       return allBooks;
     } catch (error) {
-      console.error("เกิดข้อผิดพลาดขณะดึงข้อมูล:", error);
+      console.error("Error fetching data:", error);
       return [];
     }
   }
 
-  public async getBooksByOwner(ownerUid: string) {
+  public async getBookById(bookId: string) {
     try {
-      const storedBooks = sessionStorage.getItem(`Bookdata${ownerUid}`);
+      // Check in sessionStorage first
+      const storedBooks = sessionStorage.getItem('booksData');
       if (storedBooks) {
         const parsedBooks = JSON.parse(storedBooks);
-        console.log(parsedBooks);
-        return parsedBooks;
+        const foundBook = parsedBooks.find((book: Book) => book.id === bookId);
+        if (foundBook) {
+          console.log(foundBook);
+          return foundBook;
+        }
       }
-  
-      const booksCollection = collection(database, 'books');
-      const ownerQuery = query(booksCollection, where('owner', '==', ownerUid));
-      const querySnapshot = await getDocs(ownerQuery);
-  
-      const allBooks: Book[] = [];
-      for (const docSnapshot of querySnapshot.docs) {
 
-        const bookData:any = docSnapshot.data() as Book;
-        const userDocRef = doc(database, 'users', bookData.owner);
-        const userDoc = await getDoc(userDocRef);
-        if (userDoc.exists()) {
-         const userData = userDoc.data();
-        bookData.owner = userData;
-         }
-  
-        allBooks.push(bookData);
+      // If not found in sessionStorage, search in Firebase Firestore
+      const bookDocRef = doc(database, 'books', bookId);
+      const bookDoc = await getDoc(bookDocRef);
+
+      if (bookDoc.exists()) {
+        const bookData: any = bookDoc.data() as Book;
+
+        // Fetch owner's profile information
+        const ownerProfile = await this.fetchOwnerProfile(bookData.owner);
+        if (ownerProfile) {
+          bookData.profile = ownerProfile;
+        }
+
+        console.log(bookData)
+        return bookData;
+      } else {
+        console.log('Book not found with the specified ID:', bookId);
+        return null;
       }
-      sessionStorage.setItem(`Bookdata${ownerUid}`, JSON.stringify(allBooks));
-      console.log(allBooks);
-      return allBooks;
     } catch (error) {
-      console.error("เกิดข้อผิดพลาดขณะดึงข้อมูล:", error);
-      return [];
+      console.error('Error searching for book data:', error);
+      return null;
     }
   }
-  
+
+
 }

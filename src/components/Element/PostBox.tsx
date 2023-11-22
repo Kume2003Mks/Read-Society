@@ -2,8 +2,8 @@ import styles from '../../Style/Component.module.css'
 import { Icon } from '@iconify/react';
 
 type PostBox = {
-  img_link: string;
-  content: string;
+  img_link?: string;
+  content?: string;
 }
 
 const PostBox: React.FC<PostBox> = ({ img_link, content }) => {

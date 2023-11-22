@@ -18,19 +18,20 @@ const My_Creation = () => {
             }
         }
         loadBooks();
-    }, []);
+    }, [userData]);
 
     return (
         <main className="flex-row h-screen justify-between flex-wrap flex p-container">
             <CreationBar item={books.length}/>
             <div className='grid-layout h-full flex-1 p-4'>
-                {books.map((props: any, index: any) => (
+                {books.map((props: Book, index: number) => (
                         <Book_Card
                             key={index}
+                            id={props.id}
                             genre={props.genre}
                             title={props.title}
                             thumbnail={props.thumbnail}
-                            user={props.owner.userName}
+                            user={props.profile?.userName}
                         />
                     ))
                 }

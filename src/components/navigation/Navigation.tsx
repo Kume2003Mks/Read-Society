@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Icon } from '@iconify/react'
 import logo from '../../assets/RS_Logo.svg'
 import './NavBar.css'
@@ -13,7 +13,7 @@ const Navigation: JSX.ElementType = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [userProfile, setUserProfile] = useState<Profile | null>(null)
-  const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
   const navbarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -21,6 +21,11 @@ const Navigation: JSX.ElementType = () => {
       getProfile(userData.uid)
     }
   }, [userData]);
+
+
+  const toggleProfileMenu = useCallback(() => {
+    setProfileMenuOpen((prevIsProfileMenuOpen) => !prevIsProfileMenuOpen);
+  }, []);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -34,20 +39,17 @@ const Navigation: JSX.ElementType = () => {
     } else {
       window.removeEventListener('click', handleOutsideClick);
     }
+
     return () => {
       window.removeEventListener('click', handleOutsideClick);
     };
-  }, [isProfileMenuOpen]);
-
+  }, [isProfileMenuOpen, toggleProfileMenu]);
+  
   const getProfile = async (uid: string) => {
     const Uprofile = new userDataBase(uid);
     const userProfile = await Uprofile.getProfile()
     setUserProfile(userProfile)
   }
-
-  const toggleProfileMenu = (): void => {
-    setProfileMenuOpen(!isProfileMenuOpen);
-  };
 
   return (
     <nav className={`navbar ${isMenuOpen ? 'menu-open' : ''}`}>

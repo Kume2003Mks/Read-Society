@@ -1,7 +1,12 @@
 import { Icon } from '@iconify/react'
 import Style from '../../Style/Component.module.css'
 
-const Filter_Button = ({icon, label}:any) => {
+type Filter_Button = {
+  icon: string;
+  label: string;
+}
+
+const Filter_Button: React.FC<Filter_Button> = ({ icon, label }) => {
   return (
     <div className={Style.filter_list}>
       <div className={`${Style.circle} w-6 h-6`} style={{ backgroundColor: 'gray' }}>

@@ -1,0 +1,36 @@
+:root {
+    --main-color: #a0a0a0;
+    --bg-color: #c5c5c5;
+}
+
+table {
+    width: 100%;
+    overflow-y: auto;
+    border-collapse: collapse;
+}
+
+table thead{
+    position: sticky;
+    top:0;
+    background-color: white;
+}
+
+table tr {
+    border: none;
+    border-bottom: 2px solid var(--main-color);
+}
+
+table tbody tr:hover {
+    background-color: var(--bg-color);
+}
+
+table tbody {
+    overflow-y: auto;
+}
+
+table td,
+table th {
+    padding: 8px;
+    white-space: nowrap;
+}
+

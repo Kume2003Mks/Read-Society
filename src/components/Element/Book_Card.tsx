@@ -1,7 +1,15 @@
 import { Link } from 'react-router-dom';
 import styles from '../../Style/Component.module.css'
 
-const Book_Card: JSX.ElementType = ({genre, title, thumbnail,user,id}:any) => {
+type Book_Card = {
+  genre: string;
+  title: string;
+  thumbnail: string;
+  user: string;
+  id: string;
+}
+
+const Book_Card: JSX.ElementType = ({ genre, title, thumbnail, user, id }: Book_Card) => {
 
   const genreColors: { [genre: string]: string } = {
     Horror: "#FF5733", // Red-Orange
@@ -33,17 +41,17 @@ const Book_Card: JSX.ElementType = ({genre, title, thumbnail,user,id}:any) => {
   return (
     <div className='px-2 pb-2 h-fit justify-center rounded-lg cursor-pointer flex flex-col flex-1 snap-start hover:bg-slate-300'>
       {/**category label*/}
-      <h1 className='text-xs text-black text-right w-fit self-end px-1 pt-1 rounded-t-lg' style={{backgroundColor: genreColor}}>{genre}</h1>
+      <h1 className='text-xs text-black text-right w-fit self-end px-1 pt-1 rounded-t-lg' style={{ backgroundColor: genreColor }}>{genre}</h1>
       {/**card */}
       <Link to={`/book-detail/${id}`}>
-      <div className={`h-fill w-fill justify-center cursor-pointer `}>
-            <div>
-                <img src={thumbnail} alt={`${title} - ${genre} book cover`} className={`w-full h-auto rounded-lg object-cover ${styles.A4_Size}`} />
-                <div className='mt-1'>
-                    <p className='text-sm truncate'>{title}</p>
-                    <p className='text-xs text-slate-500'>{user}</p>
-                </div>
+        <div className={`h-fill w-fill justify-center cursor-pointer `}>
+          <div>
+            <img src={thumbnail} alt={`${title} - ${genre} book cover`} className={`w-full h-auto rounded-lg object-cover ${styles.A4_Size}`} />
+            <div className='mt-1'>
+              <p className='text-sm truncate'>{title}</p>
+              <p className='text-xs text-slate-500'>{user}</p>
             </div>
+          </div>
         </div>
       </Link>
     </div>

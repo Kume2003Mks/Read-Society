@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from './function/context/AuthContext.tsx';
 
 import Home from './pages/Home.tsx'
@@ -161,4 +161,4 @@ const App = () => {
     )
 }
 
-export default App
+export default App;

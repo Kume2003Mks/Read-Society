@@ -23,7 +23,7 @@ function Home(): JSX.Element {
     loadBooks();
   }, []);
 
-  const images = [
+  const images: string[] = [
     'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/RB1.png?alt=media&token=526d5994-6071-416c-b69e-efed733d92c6',
     'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/RD2.png?alt=media&token=65929814-2b15-4ba6-bf5b-c170da049aa1',
     'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/SD1.png?alt=media&token=a0ea5c41-12f6-458e-9f10-df864c06eac3',
@@ -60,14 +60,14 @@ function Home(): JSX.Element {
         <Book_View title='Popular' className='grid-row-layout snap-both'>
           {books
             .slice(0, 15)
-            .map((props: any, index: any) => (
+            .map((props: Book, index: number) => (
               <Book_Card
                 key={index}
                 id={props.id}
                 genre={props.genre}
                 title={props.title}
                 thumbnail={props.thumbnail}
-                user={props.profile.userName}
+                user={props.profile?.userName}
               />
             ))
           }
@@ -75,16 +75,16 @@ function Home(): JSX.Element {
 
         <Book_View title='New Arrival' className='grid-row-layout snap-both'>
           {books
-            .sort((a: any, b: any) => b.created.seconds - a.created.seconds)
+            .sort((a: Book, b: Book) => b.created.seconds - a.created.seconds)
             .slice(0, 15)
-            .map((props: any, index: any) => (
+            .map((props: Book, index: number) => (
               <Book_Card
                 key={index}
                 id={props.id}
                 genre={props.genre}
                 title={props.title}
                 thumbnail={props.thumbnail}
-                user={props.profile.userName}
+                user={props.profile?.userName}
               />
             ))
           }
@@ -92,15 +92,15 @@ function Home(): JSX.Element {
         <Book_View title='Other' className='grid-layout'>
           {books
             .slice(0, 20)
-            .sort((a: any, b: any) => a.title.localeCompare(b.title))
-            .map((props: any, index: any) => (
+            .sort((a: Book, b: Book) => a.title.localeCompare(b.title))
+            .map((props: Book, index: number) => (
               <Book_Card
                 key={index}
                 id={props.id}
                 genre={props.genre}
                 title={props.title}
                 thumbnail={props.thumbnail}
-                user={props.profile.userName}
+                user={props.profile?.userName}
               />
             ))
           }

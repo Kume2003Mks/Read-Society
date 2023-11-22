@@ -20,7 +20,7 @@ const Collection: JSX.ElementType = () => {
             }
         }
         loadBooks();
-    }, []);
+    }, [userData]);
 
     return (
         <main className={classStyle.MainScreen}>
@@ -119,13 +119,13 @@ const Collection: JSX.ElementType = () => {
                 </ul>
             </SideBar>
             <div className='grid-layout h-full flex-1 p-4'>
-                {books.map((props: any, index: any) => (
+                {books.map((props: Book, index: number) => (
                     <Book_Card
                         key={index}
                         genre={props.genre}
                         title={props.title}
                         thumbnail={props.thumbnail}
-                        user={props.owner.userName}
+                        user={props.profile?.userName}
                     />
                 ))
                 }

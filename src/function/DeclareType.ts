@@ -1,20 +1,21 @@
 import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
 
-export interface Book {
+export type Book ={
     id: string;
     genre: string;
     genre2?: string;
     title: string;
     type: string;
     description: string;
+    tags?: string[];
     owner: string;
     profile?: Profile;
     thumbnail: string;
     created: Timestamp;
 }
 
-export interface Profile {
+export type Profile = {
     userName: string;
     firstName: string;
     lastName: string;
@@ -23,6 +24,13 @@ export interface Profile {
     facebook: string;
     instagram: string;
     website: string;
+}
+
+export type Episode = {
+    id: string;
+    title: string;
+    bookfile: string;
+    upload: Timestamp;
 }
 
 export interface ProtectRouteProps {

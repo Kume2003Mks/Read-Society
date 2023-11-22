@@ -4,7 +4,11 @@ import { Icon } from "@iconify/react"
 
 const Link_Btn: string = 'text-base text-center flex flex-row flex-wrap justify-between p-2'
 
-const CreationBar = ({item}:any) => {
+interface CreationBarProps {
+    item?: number; // Replace 'number' with the actual type of 'item'
+  }
+
+const CreationBar:React.FC<CreationBarProps> = ({item}) => {
 
     return (
         <SideBar className='p-2'>

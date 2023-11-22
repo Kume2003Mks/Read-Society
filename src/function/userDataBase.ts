@@ -2,6 +2,18 @@ import { DocumentSnapshot, Timestamp, doc, getDoc, setDoc } from "firebase/fires
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { database, storage } from "../utils/Firebase";
 
+interface UserProfileData {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  about_me: string;
+  facebook: string;
+  instagram: string;
+  website: string;
+  profile_image?: string;
+  last_time?: Date;
+}
+
 export default class userDataBase {
 
   private uid: string;
@@ -36,6 +48,7 @@ export default class userDataBase {
         return null;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
 }
@@ -62,7 +75,7 @@ export default class userDataBase {
           userProfileData.firstName !== firstName ||
           userProfileData.lastName !== lastName;
 
-        const updatedData: any = {
+        const updatedData: UserProfileData = {
           userName: username,
           firstName: firstName,
           lastName: lastName,
@@ -70,7 +83,6 @@ export default class userDataBase {
           facebook: Facebook,
           instagram: Instagram,
           website: Website,
-       
         };
 
         if (hasChanged) {
@@ -82,7 +94,7 @@ export default class userDataBase {
           if (userProfileData.profile_image) {
             await this.deleteProfileImage(userProfileData.profile_image);
           }
-  
+
           // อัปโหลดรูปภาพใหม่
           const imageUrl = await this.uploadProfileImage(imageFile);
           updatedData.profile_image = imageUrl;
@@ -92,6 +104,7 @@ export default class userDataBase {
         sessionStorage.removeItem('userProfile');
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -108,6 +121,7 @@ export default class userDataBase {
   
       return imageUrl;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -123,6 +137,7 @@ export default class userDataBase {
         await deleteObject(imageRef);
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }

@@ -1,7 +1,12 @@
 import styles from '../../Style/Component.module.css'
 import { Icon } from '@iconify/react';
 
-const PostBox: JSX.ElementType = ({ img_link, content }: any) => {
+type PostBox = {
+  img_link: string;
+  content: string;
+}
+
+const PostBox: React.FC<PostBox> = ({ img_link, content }) => {
 
   return (
     <div className={styles.post_Box}>

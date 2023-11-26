@@ -12,8 +12,8 @@ const My_Creation = () => {
     useEffect(() => {
         async function loadBooks() {
             const book = new Books();
-            if (userData && userData.uid) {
-                const data: Book[] = await book.getBooksByOwner(userData.uid);
+            if (userData && userData.user.uid) {
+                const data: Book[] = await book.getBooksByOwner(userData.user.uid);
                 setBooks(data);  
             }
         }

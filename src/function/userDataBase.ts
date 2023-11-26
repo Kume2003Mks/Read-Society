@@ -23,14 +23,12 @@ export default class userDataBase {
   }
 
   public async getProfile() {
-    // ตรวจสอบ Session Storage ก่อน
     const sessionData = sessionStorage.getItem('userProfile');
     if (sessionData) {
       const userProfileData = JSON.parse(sessionData);
       return userProfileData;
     }
 
-    // ถ้าไม่มีข้อมูลใน Session Storage ให้ดึงข้อมูลใน Firestore
     const userDocRef = doc(database, 'users', this.uid);
 
     try {

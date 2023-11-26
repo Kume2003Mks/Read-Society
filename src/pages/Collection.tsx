@@ -14,8 +14,8 @@ const Collection: JSX.ElementType = () => {
     useEffect(() => {
         async function loadBooks() {
             const book = new Books();
-            if (userData && userData.uid) {
-                const data: Book[] = await book.getBooksByOwner(userData.uid);
+            if (userData && userData.user.uid) {
+                const data: Book[] = await book.getBooksByOwner(userData.user.uid);
                 setBooks(data);
             }
         }
@@ -24,7 +24,7 @@ const Collection: JSX.ElementType = () => {
 
     return (
         <main className={classStyle.MainScreen}>
-            <SideBar className='bg-white p-2'>
+            <SideBar className='p-2'>
                 <h1 className='text-2xl font-bold text-center'>My Collection</h1>
                 {/* My Creation */}
                 <div className='m-4 border-t-2 border-black' />
@@ -122,6 +122,7 @@ const Collection: JSX.ElementType = () => {
                 {books.map((props: Book, index: number) => (
                     <Book_Card
                         key={index}
+                        id={props.id}
                         genre={props.genre}
                         title={props.title}
                         thumbnail={props.thumbnail}

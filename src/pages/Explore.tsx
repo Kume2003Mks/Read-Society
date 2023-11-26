@@ -22,9 +22,8 @@ const Explore: JSX.ElementType = () => {
     }, [])
 
     return (
-        <>
             <main className="flex-row justify-between flex-wrap flex h-screen p-container">
-                <SideBar className='bg-white p-2'>
+                <SideBar className='p-2'>
                     <h1 className='text-2xl font-bold text-center underline underline-offset-2'>Explore</h1>
                     {/* My Creation */}
                     <h1 className='text-xl font-bold text-left px-3 mt-2'>Category</h1>
@@ -62,8 +61,6 @@ const Explore: JSX.ElementType = () => {
                     ))}
                 </div>
             </main>
-        </>
-
     )
 }
 

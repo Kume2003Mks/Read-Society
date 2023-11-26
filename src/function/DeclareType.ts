@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
 
-export type Book ={
+export type Book = {
     id: string;
     genre: string;
     genre2?: string;
@@ -36,4 +36,4 @@ export type Episode = {
 export interface ProtectRouteProps {
     user: boolean;
     children: ReactNode;
-  }
+}

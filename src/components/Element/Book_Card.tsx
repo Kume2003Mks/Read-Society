@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import styles from '../../Style/Component.module.css'
 
-type Book_Card = {
+type BookCardProps = {
   genre: string;
   title: string;
   thumbnail: string;
-  user: string;
+  user?: string;
   id: string;
 }
 
-const Book_Card: JSX.ElementType = ({ genre, title, thumbnail, user, id }: Book_Card) => {
+const Book_Card: React.FC<BookCardProps>  = ({ genre, title, thumbnail, user, id }) => {
 
   const genreColors: { [genre: string]: string } = {
     Horror: "#FF5733", // Red-Orange
@@ -32,7 +32,7 @@ const Book_Card: JSX.ElementType = ({ genre, title, thumbnail, user, id }: Book_
     HistoricalFiction: "#CD853F", // Peru
     SelfHelp: "#20B2AA", // Light Sea Green
     Thriller: "#8B0000", // Dark Red
-    Adventure: "#FFD700", // Gold (used again for a bright category)
+    Adventure: "#FFD700", // Gold
     Poetry: "#FF1493", // Deep Pink
   };
 

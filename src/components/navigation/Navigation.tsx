@@ -7,9 +7,11 @@ import './NavBar-dropdown.css'
 import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
 import { Profile } from '../../function/DeclareType'
+import { useTheme } from '../../function/context/ThemeContext'
 
 const Navigation: JSX.ElementType = () => {
   const { isLoggedIn, logout, userData } = useAuth();
+  const { isDarkTheme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [userProfile, setUserProfile] = useState<Profile | null>(null)
@@ -17,8 +19,8 @@ const Navigation: JSX.ElementType = () => {
   const navbarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (userData && userData.uid) {
-      getProfile(userData.uid)
+    if (userData && userData.user.uid) {
+      getProfile(userData.user.uid)
     }
   }, [userData]);
 
@@ -44,7 +46,7 @@ const Navigation: JSX.ElementType = () => {
       window.removeEventListener('click', handleOutsideClick);
     };
   }, [isProfileMenuOpen, toggleProfileMenu]);
-  
+
   const getProfile = async (uid: string) => {
     const Uprofile = new userDataBase(uid);
     const userProfile = await Uprofile.getProfile()
@@ -58,10 +60,16 @@ const Navigation: JSX.ElementType = () => {
           <img src={logo} alt="logo" className='w-24 h-full mr-4' />
         </NavLink>
         <div className="m-wrap">
-          <div className="m-theme-button" onClick={() => { alert('hello world') }}>
-            <Icon
-              icon="mingcute:sun-fill"
-              className='toggle-theme' />
+          <div className="m-theme-button" onClick={() => toggleTheme()}>
+            {isDarkTheme ? (
+              <Icon
+                icon="charm:moon"
+                className='toggle-theme' />
+            ) : (
+              <Icon
+                icon="mingcute:sun-fill"
+                className='toggle-theme' />
+            )}
           </div>
           <div className="m-theme-button" onClick={() => setMenuOpen(!isMenuOpen)}>
             <Icon
@@ -99,8 +107,16 @@ const Navigation: JSX.ElementType = () => {
         )}
       </ul>
       <div className={`navbar-buttons ${isMenuOpen ? 'menu-open' : ''}`}>
-        <div className="theme-button" onClick={() => { alert('hello world') }}>
-          <Icon icon="mingcute:sun-fill" className='toggle-theme' />
+        <div className="theme-button" onClick={() => toggleTheme()}>
+          {isDarkTheme ? (
+            <Icon
+              icon="bi:moon-stars-fill"
+              className='toggle-theme' />
+          ) : (
+            <Icon
+              icon="material-symbols:wb-sunny-rounded"
+              className='toggle-theme' />
+          )}
         </div>
         {isLoggedIn ? (
           <>

@@ -23,6 +23,10 @@ export default class Books {
     }
   }
 
+  public async uploadBook(){
+    
+  }
+
   public async getBooks() {
     try {
       const storedBooks = sessionStorage.getItem('booksData');
@@ -93,7 +97,6 @@ export default class Books {
 
   public async getBookById(bookId: string) {
     try {
-      // Check in sessionStorage first
       const storedBooks = sessionStorage.getItem('booksData');
       if (storedBooks) {
         const parsedBooks = JSON.parse(storedBooks);
@@ -103,7 +106,6 @@ export default class Books {
           return foundBook;
         }
       }
-
       // If not found in sessionStorage, search in Firebase Firestore
       const bookDocRef = doc(database, 'books', bookId);
       const bookDoc = await getDoc(bookDocRef);
@@ -111,7 +113,6 @@ export default class Books {
       if (bookDoc.exists()) {
         const bookData: Book = bookDoc.data() as Book;
 
-        // Fetch owner's profile information
         const ownerProfile = await this.fetchOwnerProfile(bookData.owner);
         if (ownerProfile) {
           bookData.profile = ownerProfile;
@@ -139,7 +140,6 @@ export default class Books {
       const episodes: Episode[] = [];
       epsQuerySnapshot.forEach((doc) => {
         const episodeData = doc.data() as Episode;
-        // Use a different property name for the document ID, e.g., 'docId'
         const bookId = doc.id;
         episodeData.id = bookId;
         episodes.push(episodeData);

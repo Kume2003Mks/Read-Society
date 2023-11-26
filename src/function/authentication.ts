@@ -16,14 +16,12 @@ export default class authentication {
         // initialize
     }
 
-    // เข้ารหัสข้อมูลจาก Base64
-    private encodeData(data: any): string {
+    private encodeData(data: Record<string, unknown>): string {
         const jsonData = JSON.stringify(data);
         return btoa(jsonData);
     }
 
-    // ถอดรหัสข้อมูลจาก Base64
-    private decodeData(encodedData: string): any {
+    private decodeData(encodedData: string) {
         const jsonData = atob(encodedData);
         return JSON.parse(jsonData);
     }
@@ -45,7 +43,7 @@ export default class authentication {
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log('Login With', user.email);
-                localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential.user }));
+                localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential }));
                 Swal.fire({
                     title: '<strong>Login successfully</strong>',
                     icon: 'success',
@@ -88,7 +86,7 @@ export default class authentication {
             const userDocumentRef = doc(database, 'users', user.uid);
             await setDoc(userDocumentRef, userData);
 
-            localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential.user }));
+            localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential }));
             console.log('Registration successful');
             Swal.fire({
                 title: '<strong>Registration successful</strong>',
@@ -99,8 +97,8 @@ export default class authentication {
             }).then(() => {
                 window.location.reload();
             });
-        } catch (error: any) {
-            console.error('Error registering user:', error.message);
+        } catch (error) {
+            console.error('Error registering user:', error);
             Swal.fire({
                 title: '<strong>Registration Failed</strong>',
                 icon: 'error',

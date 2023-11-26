@@ -9,6 +9,14 @@
     }
   }
 
+:root{
+    --dropdown-menu: #fff;
+}
+
+.dark-mode {
+    --dropdown-menu: #3c3c3c;
+}
+
 .profile-menu {
     position: absolute;
     top: 4rem;
@@ -16,7 +24,7 @@
     width: 250px;
     height: fit-content;
     display: flex;
-    background-color: #ffffff;
+    background-color: var(--dropdown-menu);
     border-radius: 12px;
     box-shadow: -5px 5px 24px 5px rgba(0,0,0,0.25);
     animation: fadeIn 0.3s ease-in-out;

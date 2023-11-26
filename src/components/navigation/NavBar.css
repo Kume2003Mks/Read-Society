@@ -1,5 +1,24 @@
+:root{
+  --navbar-background: #47B5FF;
+  --navbar-link-color: #505050;
+  --navbar-active-color: #000;
+  --profile-border: #000;
+  --nav-button: #005FC7;
+  --nav-button-hover: #fff;
+
+}
+
+.dark-mode{
+  --navbar-background: #06283D;
+  --navbar-link-color: #d1d1d1ca;
+  --navbar-active-color: #ffffff;
+  --profile-border: #ffffff;
+  --nav-button: #005FC7;
+  --nav-button-hover: #fff;
+}
+
 .navbar {
-  background: #47B5FF;
+  background: var(--navbar-background);
   box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
@@ -26,10 +45,11 @@
 .navbar-links li {
   font-weight: bold;
   font-size: 1rem;
-  color: #505050;
+  color: var(--navbar-link-color);
 }
 
 .profile-name{
+  color: var(--nav-button-hover);
   font-weight: bold;
   font-size: 1rem;
   align-self: center;
@@ -39,7 +59,7 @@
   width: 3rem;
   height: 3rem;
   border-width: 2px;
-  border-color: black;
+  border-color: var(--profile-border);
   border-radius: 100%;
   object-fit: cover;
 }
@@ -62,23 +82,23 @@
 }
 
 .navbar li a:hover {
-  color: #000000;
+  color: var(--navbar-active-color);
   transition-duration: 0.5s;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .navbar li a.active {
-  color: #000000;
+  color: var(--navbar-active-color);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .login-button {
   border-radius: 10px;
-  border: 2px solid #005FC7;
+  border: 2px solid var(--nav-button);
   background: transparent;
-  color: #005FC7;
+  color: var(--nav-button);
   width: 140px;
   padding: 0.5rem;
   font-weight: bold;
@@ -90,9 +110,9 @@
 
 .regis-button {
   border-radius: 10px;
-  border: 2px solid #005FC7;
-  background: #005FC7;
-  color: white;
+  border: 2px solid var(--nav-button);
+  background: var(--nav-button);
+  color: var(--nav-button-hover);
   width: 140px;
   padding: 0.5rem;
   font-weight: bold;
@@ -104,15 +124,15 @@
 
 .login-button:hover {
   border-radius: 2rem;
-  color: white;
-  border: 2px solid #ffffff;
+  color: var(--nav-button-hover);
+  border: 2px solid var(--nav-button-hover);
   cursor: pointer;
 }
 
 .regis-button:hover {
   border-radius: 2rem;
-  color: rgb(255, 255, 255);
-  border: 2px solid #ffffff;
+  color: var(--nav-button-hover);
+  border: 2px solid var(--nav-button-hover);
   cursor: pointer;
 }
 
@@ -150,7 +170,6 @@
   .navbar-links li {
     font-weight: bold;
     font-size: 0.75rem;
-    color: #505050;
   }
 
   .profile-name{

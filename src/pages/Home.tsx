@@ -30,7 +30,7 @@ function Home(): JSX.Element {
   ];
 
   return (
-      <main className='p-container overflow-x-hidden overflow-y-auto h-full'>
+      <main className='p-container overflow-x-hidden h-screen'>
 
         <div className="hero-container justify-center">
           <Swiper

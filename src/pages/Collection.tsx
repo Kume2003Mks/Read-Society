@@ -1,26 +1,15 @@
 import SideBar from '../components/Layouts/SideBar'
 import { Icon } from '@iconify/react'
-import { useEffect, useState } from 'react'
+import { Suspense, lazy } from 'react'
 import '../Style/Global.css'
-import { useAuth } from '../function/context/AuthContext.tsx'
-import Books from '../function/Books.ts'
-import Book_Card from '../components/Element/Book_Card.tsx'
 import { Book } from '../function/DeclareType.ts'
+import { useBook } from '../function/context/BooksContext.tsx'
+
+const Book_Card = lazy(() => import('../components/Element/Book_Card'));
 
 const Collection: JSX.ElementType = () => {
-    const { userData } = useAuth();
-    const [books, setBooks] = useState<Book[]>([]);
-
-    useEffect(() => {
-        async function loadBooks() {
-            const book = new Books();
-            if (userData && userData.user.uid) {
-                const data: Book[] = await book.getBooksByOwner(userData.user.uid);
-                setBooks(data);
-            }
-        }
-        loadBooks();
-    }, [userData]);
+    
+    const { OwnerbookCount, Ownerbooks } = useBook();
 
     return (
         <main className={classStyle.MainScreen}>
@@ -36,7 +25,7 @@ const Collection: JSX.ElementType = () => {
                                 <Icon icon="solar:book-bold" className="icon-size" />
                                 My Creation
                             </p>
-                            <p className='text-right'>1</p>
+                            <p className='text-right'>{OwnerbookCount}</p>
                         </a>
                     </li>
                 </ul>
@@ -119,17 +108,19 @@ const Collection: JSX.ElementType = () => {
                 </ul>
             </SideBar>
             <div className='grid-layout h-full flex-1 p-4'>
-                {books.map((props: Book, index: number) => (
-                    <Book_Card
-                        key={index}
-                        id={props.id}
-                        genre={props.genre}
-                        title={props.title}
-                        thumbnail={props.thumbnail}
-                        user={props.profile?.userName}
-                    />
-                ))
-                }
+                <Suspense fallback={<div className='self-center'>Loading...</div>}>
+                    {Ownerbooks.map((props: Book, index: number) => (
+                        <Book_Card
+                            key={index}
+                            id={props.id}
+                            genre={props.genre}
+                            title={props.title}
+                            thumbnail={props.thumbnail}
+                            user={props.profile?.userName}
+                        />
+                    ))
+                    }
+                </Suspense>
             </div>
         </main>
     )

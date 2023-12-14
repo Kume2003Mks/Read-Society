@@ -7,11 +7,13 @@
 :root{
   --main-text-color: black;
   --main-background-color: white;
+  --thumb-scrollbar-color: #a5a5a5;
 }
 
 .dark-mode {
   --main-text-color: white;
   --main-background-color: #1e1e1e;
+  --thumb-scrollbar-color: #444444;
 }
 
 * {
@@ -40,7 +42,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #444; 
+  background: var(--thumb-scrollbar-color); 
   border-radius: 1rem;
 }
 
@@ -52,3 +54,6 @@ h1,h2,h3,h4,h5,h6,p {
   color: var(--main-text-color);
 }
 
+body.swal2-shown > [aria-hidden='true'] {
+  filter: blur(4px);
+}

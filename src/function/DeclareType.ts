@@ -37,3 +37,24 @@ export interface ProtectRouteProps {
     user: boolean;
     children: ReactNode;
 }
+
+export type Post = {
+    id?: string;
+    text?: string;
+    image?: string[];
+    spoil?: boolean;
+    uid: string;
+    timestamp: Timestamp;
+    profile?: Profile;
+    like?: undefined | boolean;
+    comments?: Coment;
+}
+
+export type Coment = {
+    id: string;
+    text?: string;
+    image?: string[];
+    uid: string | Profile;
+    timestamp: Timestamp;
+    reply?: Coment;
+}

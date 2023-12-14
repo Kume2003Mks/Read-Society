@@ -1,31 +1,11 @@
-import { collection, getDocs, doc, getDoc, orderBy, query, where } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, orderBy, query, where, Timestamp, addDoc } from "firebase/firestore";
 import { database } from "../utils/Firebase";
-import { Book, Episode, Profile } from "./DeclareType";
+import { Book, Episode } from "./DeclareType";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import FatchProfiles from "./FetchProfiles";
 
 export default class Books {
   constructor() { }
-
-  private async fetchOwnerProfile(ownerUid: string): Promise<Profile | null> {
-    try {
-      const userDocRef = doc(database, 'users', ownerUid);
-      const userDoc = await getDoc(userDocRef);
-
-      if (userDoc.exists()) {
-        const userData = userDoc.data() as Profile;
-        return userData;
-      } else {
-        console.log('Owner profile not found for UID:', ownerUid);
-        return null;
-      }
-    } catch (error) {
-      console.error('Error fetching owner profile:', error);
-      return null;
-    }
-  }
-
-  public async uploadBook(){
-    
-  }
 
   public async getBooks() {
     try {
@@ -44,8 +24,8 @@ export default class Books {
         const bookData: Book = docs.data() as Book;
         const bookId = docs.id;
         bookData.id = bookId;
-
-        const ownerProfile = await this.fetchOwnerProfile(bookData.owner);
+        const Profiles = new FatchProfiles()
+        const ownerProfile = await Profiles.fetchOwnerProfile(bookData.owner);
         if (ownerProfile) {
           bookData.profile = ownerProfile;
         }
@@ -79,8 +59,8 @@ export default class Books {
         const bookData: Book = docSnapshot.data() as Book;
         const bookId = docSnapshot.id; // เพิ่มบรรทัดนี้เพื่อดึง ID ของเอกสาร
         bookData.id = bookId;
-        
-        const ownerProfile = await this.fetchOwnerProfile(bookData.owner);
+        const Profiles = new FatchProfiles()
+        const ownerProfile = await Profiles.fetchOwnerProfile(bookData.owner);
         if (ownerProfile) {
           bookData.profile = ownerProfile;
         }
@@ -112,8 +92,8 @@ export default class Books {
 
       if (bookDoc.exists()) {
         const bookData: Book = bookDoc.data() as Book;
-
-        const ownerProfile = await this.fetchOwnerProfile(bookData.owner);
+        const Profiles = new FatchProfiles()
+        const ownerProfile = await Profiles.fetchOwnerProfile(bookData.owner);
         if (ownerProfile) {
           bookData.profile = ownerProfile;
         }
@@ -153,5 +133,45 @@ export default class Books {
       return null;
     }
   }
+
+  public async uploadBook(
+    title: string,
+    genre: string,
+    genre2: string,
+    type: string,
+    description: string,
+    tags: string[],
+    owner: string,
+    thumbnail: File) {
+
+      try {
+        const storage = getStorage();
+        const thumbnailRef = ref(storage, `books/${owner}/${title}`);
+        await uploadBytes(thumbnailRef, thumbnail);
+
+        const thumbnailURL = await getDownloadURL(thumbnailRef);
+
+        const newBook = {
+          title: title,
+          genre: genre,
+          genre2: genre2,
+          type: type,
+          description: description,
+          tags: tags,
+          owner: owner,
+          thumbnail: thumbnailURL,
+          created: Timestamp.now().toDate()
+        };
+
+        const booksCollection = collection(database, 'books');
+        const newBookRef = await addDoc(booksCollection, newBook);
+
+        sessionStorage.removeItem(`Bookdata${owner}`);
+    
+        console.log('New book added with ID:', newBookRef.id);
+      } catch (error) {
+        console.error('Error uploading book:', error);
+      }
+    }
 
 }

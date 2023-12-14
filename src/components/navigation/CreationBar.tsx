@@ -1,15 +1,12 @@
 import { NavLink } from "react-router-dom"
 import SideBar from "../Layouts/SideBar"
 import { Icon } from "@iconify/react"
+import { useBook } from '../../function/context/BooksContext';
 
 const Link_Btn: string = 'text-base text-center flex flex-row flex-wrap justify-between p-2'
 
-interface CreationBarProps {
-    item?: number; // Replace 'number' with the actual type of 'item'
-  }
-
-const CreationBar:React.FC<CreationBarProps> = ({item}) => {
-
+const CreationBar:React.FC = () => {
+    const { OwnerbookCount } = useBook();
     return (
         <SideBar className='p-2'>
             <h1 className='text-2xl font-bold text-center px-3 mb-2'>My Creation</h1>
@@ -21,7 +18,7 @@ const CreationBar:React.FC<CreationBarProps> = ({item}) => {
                             <Icon icon="solar:book-bold" className="icon-size" />
                             Your Books
                         </p>
-                        <p className='text-right'>{item}</p>
+                        <p className='text-right'>{OwnerbookCount}</p>
                     </NavLink>
                 </li>
                 <li>

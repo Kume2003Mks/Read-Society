@@ -5,11 +5,37 @@ import fromStyle from '../../Style/form.module.css';
 import CreationBar from '../../components/navigation/CreationBar';
 import Swal from 'sweetalert2';
 import { Icon } from '@iconify/react';
+import Books from '../../function/Books';
+import { useAuth } from '../../function/context/AuthContext';
 
 const TypeOptionset: string[] = ['Novel', 'Cartoon', 'General'];
-const GenreOptionset: string[] = ['Moc', 'Cartoon', 'General'];
+const GenreOptionset: string[] = [
+  "Horror",
+  "Science",
+  "Mystery",
+  "Comics",
+  "Nonfiction",
+  "Fantasy",
+  "Humor",
+  "Romance",
+  "Action",
+  "Physics",
+  "Contemporary",
+  "SciFi",
+  "History",
+  "GraphicNovels",
+  "Adult",
+  "Biography",
+  "FantasyRomance",
+  "HistoricalFiction",
+  "SelfHelp",
+  "Thriller",
+  "Adventure",
+  "Poetry",];
 
 const Upload = () => {
+  const { userData } = useAuth();
+
   const [imgfile, setImgfile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState('');
   const [TypeOption, setTypeOption] = useState('');
@@ -42,23 +68,54 @@ const Upload = () => {
     setTags((prevTags) => [...prevTags, newTag]);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!bookName || !TypeOption || !GenreOption || !description || !imgfile) {
+      Swal.fire({
+        title: '<strong>Please fill in all required fields.</strong>',
+        icon: 'error',
+        confirmButtonText: '<h1>Ok</h1>',
+      });
+      return;
+    }
 
-    console.log({
-      imgfile,
-      TypeOption,
-      GenreOption,
-      subGenreOption,
-      tags,
-      bookName,
-      description,
-    });
+    try {
 
-    Swal.fire({
-      title: 'Upload successful!',
-      icon: 'success',
-      confirmButtonText: '<h1>Ok</h1>',
-    });
+      let uid: string = "";
+
+      if (userData && userData.user.uid) {
+        uid = (userData.user.uid)
+      }
+
+      const booksManager = new Books();
+
+      await booksManager.uploadBook(
+        bookName,
+        GenreOption,
+        subGenreOption,
+        TypeOption,
+        description,
+        tags,
+        uid,
+        imgfile,);
+
+      setImgfile(null);
+      setPreviewImage('');
+      setTypeOption('');
+      setGenreOption('');
+      setsubGenreOption('');
+      setTags([]);
+      setBookName('');
+      setDescription('');
+
+      Swal.fire({
+        title: 'Upload successful!',
+        icon: 'success',
+        confirmButtonText: '<h1>Ok</h1>',
+      });
+    } catch (error) {
+      console.error('Error uploading book:', error);
+      // Handle the error appropriately, e.g., display an error message to the user
+    }
   };
 
   return (

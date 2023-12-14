@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from './function/context/AuthContext.tsx';
+import { ProtectRouteProps } from './function/DeclareType.ts'
 
 import Home from './pages/Home.tsx'
 import Explore from './pages/Explore.tsx'
@@ -16,9 +17,9 @@ import Security from './pages/User/Security.tsx';
 import Help from './pages/User/Help.tsx';
 import Upload from './pages/Creation/Upload.tsx';
 import Deleted from './pages/Creation/Deletedpage.tsx';
-import { ProtectRouteProps } from './function/DeclareType.ts'
 import ResetPassword from './pages/User/ResetPassword.tsx';
 import BookDetails from './pages/Books/BookDetails.tsx';
+import Upload_EP from './pages/Creation/Upload_EP.tsx';
 
 const App = () => {
 
@@ -33,18 +34,11 @@ const App = () => {
         )
     }
 
-    const ProtectuserRoute : React.FC<ProtectRouteProps> = ({ user, children }) => {
-        if (user === true) {
-            return <Navigate to="/" />;
-          }
-          return children;
-    }
-
-    const ProtectRoute : React.FC<ProtectRouteProps>  = ({ user, children }) => {
+    const ProtectRoute: React.FC<ProtectRouteProps> = ({ user, children }) => {
         if (user === false) {
-            return <Navigate to="/" />;
-          }
-          return children;
+            return <Navigate to='/' />
+        }
+        return children;
     }
 
     const router = createBrowserRouter([
@@ -104,7 +98,10 @@ const App = () => {
         },
         {
             path: "/mycreation",
-            element: <ProtectRoute user={isLoggedIn}><Layout /></ProtectRoute>,
+            element: (
+                <ProtectRoute user={isLoggedIn}>
+                    <Layout />
+                </ProtectRoute>),
             children: [
                 {
                     path: 'mybooks',
@@ -112,7 +109,17 @@ const App = () => {
                 },
                 {
                     path: 'upload',
-                    element: <Upload />,
+                    element: <Outlet />,
+                    children: [
+                        {
+                            path: '',
+                            element: <Upload />,
+                        },
+                        {
+                            path: 'ep',
+                            element: <Upload_EP />,
+                        }
+                    ]
                 },
                 {
                     path: 'deleted',
@@ -126,11 +133,11 @@ const App = () => {
             children: [
                 {
                     path: "login",
-                    element: <ProtectuserRoute user={isLoggedIn}><LoginPage /></ProtectuserRoute>
+                    element: <ProtectRoute user={!isLoggedIn}><LoginPage /></ProtectRoute>
                 },
                 {
                     path: "register",
-                    element: <ProtectuserRoute user={isLoggedIn}><RegisterPage /></ProtectuserRoute>
+                    element: <ProtectRoute user={!isLoggedIn}><RegisterPage /></ProtectRoute>
                 },
                 {
                     path: "profile",
@@ -157,7 +164,7 @@ const App = () => {
     ]);
 
     return (
-            <RouterProvider router={router} />
+        <RouterProvider router={router} />
     )
 }
 

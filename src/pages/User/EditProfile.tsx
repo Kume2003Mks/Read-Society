@@ -85,7 +85,11 @@ const EditProfile = () => {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Confirm'
+      confirmButtonText: 'Confirm',
+      backdrop: `
+      rgba(0, 0, 0, 0.5);
+      -webkit-filter: blur(4px)
+    `
     }).then(async (result) => {
       if (result.isConfirmed) {
         setIsLoading(true); // เริ่มแสดงสถานะ loading

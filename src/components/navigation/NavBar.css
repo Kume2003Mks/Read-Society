@@ -12,7 +12,7 @@
   --navbar-background: #06283D;
   --navbar-link-color: #d1d1d1ca;
   --navbar-active-color: #ffffff;
-  --profile-border: #ffffff;
+  --profile-border: #3d3d3d;
   --nav-button: #005FC7;
   --nav-button-hover: #fff;
 }
@@ -26,7 +26,7 @@
   height: 64px;
   padding: 10px;
   position: fixed;
-  z-index: 100;
+  z-index: 99;
   top: 0;
 }
 

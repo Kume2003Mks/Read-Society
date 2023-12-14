@@ -11,10 +11,12 @@
 
 :root{
     --dropdown-menu: #fff;
+    --font-color: black;
 }
 
 .dark-mode {
     --dropdown-menu: #3c3c3c;
+    --font-color: white;
 }
 
 .profile-menu {
@@ -58,6 +60,7 @@
 }
 
 .menu-icon-size{
+    color: var(--font-color);
     width: 1.15rem;
     height: 1.15rem;
 }

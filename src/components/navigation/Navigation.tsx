@@ -8,6 +8,7 @@ import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
 import { Profile } from '../../function/DeclareType'
 import { useTheme } from '../../function/context/ThemeContext'
+import ProfileLoad from '../loading/ProfileLoad'
 
 const Navigation: JSX.ElementType = () => {
   const { isLoggedIn, logout, userData } = useAuth();
@@ -162,7 +163,7 @@ const Navigation: JSX.ElementType = () => {
                 )}
               </div>
             ) : (
-              <p>Loading...</p>
+              <ProfileLoad/>
             )}
           </>
         ) : (

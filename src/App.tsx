@@ -10,7 +10,7 @@ import My_Creation from './pages/Creation/My_Creation.tsx';
 import LoginPage from './pages/User/LoginPage.tsx'
 import RegisterPage from './pages/User/RegisterPage.tsx'
 import ErrorPage from './pages/ErrorPage.tsx'
-import Profile from './pages/Community/Profile.tsx';
+import C_Profile from './pages/Community/C_Profile.tsx';
 import Navigation from './components/navigation/Navigation.tsx';
 import EditProfile from './pages/User/EditProfile.tsx';
 import Security from './pages/User/Security.tsx';
@@ -20,6 +20,8 @@ import Deleted from './pages/Creation/Deletedpage.tsx';
 import ResetPassword from './pages/User/ResetPassword.tsx';
 import BookDetails from './pages/Books/BookDetails.tsx';
 import Upload_EP from './pages/Creation/Upload_EP.tsx';
+import Edit_Book from './pages/Creation/Edit_Book.tsx';
+import Edit_Ep from './pages/Creation/Edit_Ep.tsx';
 
 const App = () => {
 
@@ -35,10 +37,7 @@ const App = () => {
     }
 
     const ProtectRoute: React.FC<ProtectRouteProps> = ({ user, children }) => {
-        if (user === false) {
-            return <Navigate to='/' />
-        }
-        return children;
+        return user ? children : <Navigate to='/' />;
     }
 
     const router = createBrowserRouter([
@@ -91,8 +90,8 @@ const App = () => {
                     element: <Community />,
                 },
                 {
-                    path: 'profile/:id',
-                    element: <Profile />,
+                    path: 'profile/:user_id',
+                    element: <C_Profile />,
                 },
             ],
         },
@@ -116,7 +115,7 @@ const App = () => {
                             element: <Upload />,
                         },
                         {
-                            path: 'ep',
+                            path: 'ep/:upload_id',
                             element: <Upload_EP />,
                         }
                     ]
@@ -124,6 +123,20 @@ const App = () => {
                 {
                     path: 'deleted',
                     element: <Deleted />,
+                },
+                {
+                    path: 'edited',
+                    element: <Outlet />,
+                    children: [
+                        {
+                            path: 'book/:editbook_id',
+                            element: <Edit_Book />,
+                        },
+                        {
+                            path: 'ep/:editep_id',
+                            element: <Edit_Ep />,
+                        }
+                    ]
                 },
             ],
         },

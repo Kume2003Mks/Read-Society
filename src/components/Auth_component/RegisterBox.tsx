@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
 import { useAuth } from '../../function/context/AuthContext.tsx';
+import Swal from 'sweetalert2';
 
 const RegisterBox: JSX.ElementType = () => {
     
@@ -86,8 +87,8 @@ const RegisterBox: JSX.ElementType = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
+            Swal.fire('please wait')
             register(email, password, firstName, lastName, username)
-            console.log('Form submitted successfully');
         }
     }
 

@@ -1,5 +1,5 @@
 import { DocumentSnapshot, Timestamp, doc, getDoc, setDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { database, storage } from "../utils/Firebase";
 
 interface UserProfileData {
@@ -88,12 +88,6 @@ export default class userDataBase {
         }
 
         if (imageFile) {
-          // ลบรูปภาพเก่าถ้ามี
-          if (userProfileData.profile_image) {
-            await this.deleteProfileImage(userProfileData.profile_image);
-          }
-
-          // อัปโหลดรูปภาพใหม่
           const imageUrl = await this.uploadProfileImage(imageFile);
           updatedData.profile_image = imageUrl;
         }
@@ -108,7 +102,7 @@ export default class userDataBase {
   }
 
   private async uploadProfileImage(imageFile: File): Promise<string> {
-    const storageRef = ref(storage, `profile_images/${this.uid}/${imageFile.name}`);
+    const storageRef = ref(storage, `profile_images/${this.uid}/${this.uid}`);
 
     try {
       // อัปโหลดรูปภาพไปยัง Firebase Storage
@@ -124,21 +118,4 @@ export default class userDataBase {
     }
   }
 
-  private async deleteProfileImage(imageUrl: string): Promise<void> {
-    const def_image: string = 'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/Uni.png?alt=media&token=dc96bce1-5857-4ad6-b9a5-e635074c2169'
-    // สร้างอ้างอิงไปยังรูปภาพที่ต้องการลบ
-    const imageRef = ref(storage, imageUrl);
-  
-    try {
-      // ลบรูปภาพ
-      if (def_image !== imageUrl){
-        await deleteObject(imageRef);
-      }
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
-  
-  
 }

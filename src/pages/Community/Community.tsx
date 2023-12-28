@@ -176,7 +176,7 @@ const Community: JSX.ElementType = () => {
                             </div>
                         </div>
 
-                        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+                        <Modal title="Post" isOpen={isOpen} onClose={() => setIsOpen(false)}>
                             {isprocessed ? (
                                 <div className="flex h-80 items-center">
                                     <Loading />
@@ -241,8 +241,8 @@ const Community: JSX.ElementType = () => {
                                         <h1 className="text-center text-red-700">{error}</h1>
                                     </div>
                                     {/* Button to submit the post */}
-                                    <div onClick={handlePost} className="bg-blue-500 text-white p-2 rounded-lg">
-                                        <h1 className="cursor-pointer text-center">Post</h1>
+                                    <div onClick={handlePost} className="cursor-pointer bg-blue-500 text-white p-2 rounded-lg">
+                                        <h1 className="text-center">Post</h1>
                                     </div>
                                 </div>
                             )}

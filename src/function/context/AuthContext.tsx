@@ -25,7 +25,7 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(auth.getAuthStatus());
   const [userData, setUserData] = useState<UserCredential | null>(null);
 
   useEffect(() => {

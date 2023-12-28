@@ -1,0 +1,24 @@
+.image_profile{
+    aspect-ratio: 1;
+    width: 50%;
+    object-fit: cover;
+    border-radius: 100%;
+    border-width: 2px;
+    border-color: var(--profile-border);
+}
+
+.header{
+    text-align: center;
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+.content{
+    text-align: center;
+    font-size: 12pt;
+}
+
+.about{
+    font-size: 12pt;
+    text-align: left;
+}

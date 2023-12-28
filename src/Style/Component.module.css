@@ -2,13 +2,15 @@
     --border-color: black;
     --icon-color: black;
     --background-color: white;
+    --btn-hover: lightgrey;
+    --button-color: #005FC7;
 }
 
 :global(.dark-mode) {
     --border-color: #3d3d3d;
     --icon-color: white;
     --background-color: #2c2c2c;
-
+    --btn-hover: #444444;
 }
 
 .A4_Size {
@@ -18,13 +20,98 @@
 .post_Box {
     display: flex;
     flex-direction: column;
-    padding: 1.75rem;
+    padding: 1.75rem 1.75rem 0.75rem 1.75rem;
     background-color: var(--background-color);
     border-radius: 0.75rem;
     border-color: var(--border-color);
     border-width: 2px;
     gap: 1rem;
     width: 100%;
+}
+
+.post_Box_modal {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem 1.75rem 0.75rem 1.75rem;
+    background-color: var(--background-color);
+    gap: 1rem;
+    width: 100%;
+}
+
+.interact_bar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-content: center;
+    gap: 8px;
+}
+
+.interact_bar_modal {
+    display: flex;
+    padding: 4px 0 4px 0;
+    border-color: var(--border-color);
+    border-width: 2px 0 2px 0;
+    width: 100%;
+    justify-content: space-between;
+    align-content: center;
+    gap: 8px;
+}
+
+.interact_bar_modal div {
+    display: flex;
+    padding: 4px;
+    flex: 1;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.interact_bar_modal div:hover {
+    background-color: var(--btn-hover);
+    border-radius: 8px;
+}
+
+.interact_bar div {
+    display: flex;
+    padding: 4px;
+    flex: 1;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.interact_bar div:hover {
+    background-color: var(--btn-hover);
+    border-radius: 8px;
+}
+
+.comment_box_input {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 0.75rem;
+    margin-bottom: 8px;
+}
+
+.sendButton {
+    display: flex;
+    aspect-ratio: 1;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 100%;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.comment_box_input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3rem;
 }
 
 .icon_btn {
@@ -43,6 +130,7 @@
 .user {
     display: flex;
     gap: 8px;
+    cursor: pointer;
 }
 
 .user h1 {
@@ -108,6 +196,11 @@
     filter: blur(1rem);
     background: rgba(255, 255, 255, 0.5);
     border-radius: 8px;
+}
+
+.read_more {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* tablat */

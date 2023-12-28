@@ -4,7 +4,7 @@ import { Profile } from "./DeclareType";
 
 export default class FatchProfiles {
 
-    public async fetchOwnerProfile(ownerUid: string): Promise<Profile | null> {
+    public async fetchProfile(ownerUid: string): Promise<Profile | null> {
         try {
           const userDocRef = doc(database, 'users', ownerUid);
           const userDoc = await getDoc(userDocRef);

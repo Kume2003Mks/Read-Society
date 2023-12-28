@@ -5,7 +5,7 @@
 }
 
 :global(.dark-mode) {
-    --fake-input: #282828;
+    --fake-input: #2f2f2f;
     --fake-input-border: 1px solid rgb(100, 100, 100);
     --input-label: rgb(206, 206, 206);
 }
@@ -71,7 +71,7 @@
     color: var(--input-label);
 }
 
-.profile_image{
+.profile_image {
     width: 3rem;
     height: 3rem;
     aspect-ratio: 1;
@@ -79,4 +79,4 @@
     border-color: var(--profile-border);
     border-radius: 100%;
     object-fit: cover;
-  }
+}

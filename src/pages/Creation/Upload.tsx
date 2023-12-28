@@ -7,8 +7,9 @@ import Swal from 'sweetalert2';
 import { Icon } from '@iconify/react';
 import Books from '../../function/Books';
 import { useAuth } from '../../function/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-const TypeOptionset: string[] = ['Novel', 'Cartoon', 'General'];
+const TypeOptionset: string[] = ['Novel', 'Cartoon', 'General', 'Non-Fiction'];
 const GenreOptionset: string[] = [
   "Horror",
   "Science",
@@ -34,6 +35,7 @@ const GenreOptionset: string[] = [
   "Poetry",];
 
 const Upload = () => {
+  const navigate = useNavigate();
   const { userData } = useAuth();
 
   const [imgfile, setImgfile] = useState<File | null>(null);
@@ -46,6 +48,7 @@ const Upload = () => {
   const [description, setDescription] = useState('');
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+
     const file = e.target.files?.[0];
     if (file) {
       if (file.size <= 2 * 1024 * 1024) {
@@ -64,7 +67,6 @@ const Upload = () => {
 
   const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTag = e.target.value;
-    // You may want to add more validation for tags
     setTags((prevTags) => [...prevTags, newTag]);
   };
 
@@ -88,7 +90,7 @@ const Upload = () => {
 
       const booksManager = new Books();
 
-      await booksManager.uploadBook(
+      const id = await booksManager.uploadBook(
         bookName,
         GenreOption,
         subGenreOption,
@@ -111,6 +113,8 @@ const Upload = () => {
         title: 'Upload successful!',
         icon: 'success',
         confirmButtonText: '<h1>Ok</h1>',
+      }).then(() => {
+        navigate(`/mycreation/upload/ep/${id}`)
       });
     } catch (error) {
       console.error('Error uploading book:', error);

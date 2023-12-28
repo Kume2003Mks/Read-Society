@@ -6,9 +6,10 @@ interface ModalProps {
   isOpen: boolean;
   onClose?: () => void;
   children: React.ReactNode;
+  title?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -35,12 +36,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return (
     <div className={modalClassNames}>
       <div className={styles.modalContent} ref={modalRef}>
-        <div onClick={onClose} className={styles.closeButton}>
-          <Icon icon="ep:close-bold" className=" h-full w-full"/>
+        <div className={styles.modal_Header}>
+          <div className={styles.text_Header}>
+            <h1>{title}</h1>
+          </div>
+          <div onClick={onClose} className={styles.closeButton}>
+            <Icon icon="ep:close-bold" className=" h-full w-full" />
+          </div>
         </div>
         {children}
       </div>
-
     </div>
   );
 };

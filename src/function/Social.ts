@@ -1,4 +1,4 @@
-import { collection, Timestamp, addDoc, getDocs } from "firebase/firestore";
+import { collection, Timestamp, addDoc, getDocs, query, where } from "firebase/firestore";
 import { database } from "../utils/Firebase";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { Post } from "./DeclareType";
@@ -8,12 +8,12 @@ export default class Social{
 
     public async getPosts(){
         try {
-            const storedPosts = sessionStorage.getItem('PostsData');
-            if (storedPosts) {
+         /*     const storedPosts = sessionStorage.getItem('PostsData');
+          if (storedPosts) {
               const parsedPosts = JSON.parse(storedPosts);
               console.log(parsedPosts);
               return parsedPosts;
-            }
+            }*/
       
             const postCollection = collection(database, 'posts');
             const querySnapshot = await getDocs(postCollection);
@@ -25,7 +25,7 @@ export default class Social{
               postData.id = bookId;
 
               const Profiles = new FatchProfiles()
-              const ownerProfile = await Profiles.fetchOwnerProfile(postData.uid);
+              const ownerProfile = await Profiles.fetchProfile(postData.uid);
               if (ownerProfile) {
                 postData.profile = ownerProfile;
               }
@@ -40,6 +40,32 @@ export default class Social{
             return [];
           }
     }
+
+    public async getPostsByID(ownerUid: string) {
+        try {
+          const postsCollection = collection(database, 'posts');
+          const ownerQuery = query(postsCollection, where('uid', '==', ownerUid));
+          const querySnapshot = await getDocs(ownerQuery);
+    
+          const allPosts: Post[] = [];
+          for (const docSnapshot of querySnapshot.docs) {
+            const postData: Post = docSnapshot.data() as Post;
+            const bookId = docSnapshot.id; 
+            postData.id = bookId;
+            const Profiles = new FatchProfiles()
+            const ownerProfile = await Profiles.fetchProfile(postData.uid);
+            if (ownerProfile) {
+              postData.profile = ownerProfile;
+            }
+            allPosts.push(postData);
+          }
+          console.log(allPosts);
+          return allPosts;
+        } catch (error) {
+          console.error("เกิดข้อผิดพลาดขณะดึงข้อมูล:", error);
+          return [];
+        }
+      }
 
     public async addPost(uid: string, spoil: boolean, text?: string, images?: FileList) {
         let imageUrls: string[] = [];

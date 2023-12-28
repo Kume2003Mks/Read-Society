@@ -24,8 +24,8 @@ const Explore: JSX.ElementType = () => {
                 <div className='grid grid-cols-2 gap-2 mx-2 mt-1 pt-1'>
                     <Capsule label='Novel' color='red' />
                     <Capsule label='Cartoon' color='orange' />
-                    <Capsule label='Cartoon' color='green' />
-                    <Capsule label='Audio Book' color='blue' />
+                    <Capsule label='General' color='green' />
+                    <Capsule label='Non-Fiction' color='blue' />
                 </div>
                 <h1 className='text-xl font-bold text-left px-3 mt-2'>Hot Tag</h1>
                 <div className='mx-4 border-t-2 border-black' />

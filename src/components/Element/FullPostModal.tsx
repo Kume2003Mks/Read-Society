@@ -1,0 +1,139 @@
+// FullPostModal.tsx
+import React, { useEffect, useState } from 'react';
+import Modal from '../Modal/Modal'; // Import the Modal component
+import styles from '../../Style/Component.module.css'; // Import styling
+import { Icon } from '@iconify/react';
+import { useNavigate } from 'react-router-dom';
+import { PostBox } from './PostBox';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { useAuth } from '../../function/context/AuthContext';
+import userDataBase from '../../function/userDataBase';
+import { Profile } from '../../function/DeclareType';
+
+interface FullPostModalProps {
+    onClose: () => void;
+    post: PostBox; // Assuming you have a PostBox type
+}
+
+const FullPostModal: React.FC<FullPostModalProps> = ({ onClose, post }) => {
+    const { userData, isLoggedIn } = useAuth();
+    const [userProfile, setUserProfile] = useState<Profile | null>(null)
+
+    useEffect(() => {
+        const getProfile = async (uid: string) => {
+            const Uprofile = new userDataBase(uid);
+            const userProfile = await Uprofile.getProfile()
+            setUserProfile(userProfile)
+        }
+        if (userData && userData.user.uid) {
+            getProfile(userData.user.uid)
+        }
+
+    }, [userData]);
+
+    const [spoilerVisible, setSpoilerVisible] = useState(post.isSpoil);
+
+    const navigate = useNavigate();
+
+    const formattedDate = post.timestamp
+        ? new Date(post.timestamp.seconds * 1000 + post.timestamp.nanoseconds / 1000000)
+        : null;
+
+    const formatDate = (date: Date | null) => {
+        if (!date) return 'No date';
+
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        const hour = date.getHours().toString().padStart(2, '0');
+        const minute = date.getMinutes().toString().padStart(2, '0');
+
+        return `${day}/${month}/${year} ${hour}:${minute}`;
+    };
+
+    const formattedDateString = formatDate(formattedDate);
+
+    return (
+        <Modal isOpen={true} onClose={onClose} title={`Post by ${post.username}`}>
+            <div className={styles.post_Box_modal}>
+                <div className={styles.user} onClick={() => navigate(`/community/profile/${post.uid}`)}>
+                    <img src={post.userprofile} alt={post.username} className={styles.profile_user} />
+                    <div>
+                        <h1>{post.username}</h1>
+                        <p>{formattedDateString}</p>
+                    </div>
+                </div>
+
+                <div className={styles.contentWrapper}>
+                    {spoilerVisible && post.isSpoil && (
+                        <p className={styles.spoiler_text} onClick={() => setSpoilerVisible(false)}>
+                            Click to reveal spoiler
+                        </p>
+                    )}
+                    <div className={`${spoilerVisible ? styles.spoiler : "flex flex-col gap-2"}`}>
+                        <p>{post.text}</p>
+
+                        {post.image && post.image.length > 0 && (
+                            <Swiper
+                                pagination={{
+                                    clickable: true,
+                                }}
+                                navigation={post.image.length > 1 ? true : false}
+                                modules={[Pagination, Navigation]}
+                                className={styles.post_image}
+                            >
+                                {post.image.map((imageSrc, index) => (
+                                    <SwiperSlide key={index}>
+                                        <img src={imageSrc} alt={`Image ${index + 1}`} loading="lazy" />
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        )}
+                    </div>
+                </div>
+
+                <div className={styles.interact_bar_modal}>
+                    <div onClick={() => alert('ฟ้ารักพ่อ')}>
+                        <Icon icon="icon-park-solid:like" className={styles.icon_btn} />
+                        <p>Like</p>
+                    </div>
+                    <div>
+                        <Icon icon="fluent:comment-20-filled" className={styles.icon_btn} />
+                        <p>Comment</p>
+                    </div>
+                    <div onClick={() => alert('ฟ้ารักพ่อ')}>
+                        <Icon icon="majesticons:share" className={styles.icon_btn} />
+                        <p>Share</p>
+                    </div>
+                </div>
+            </div>
+
+            {isLoggedIn && (
+                <div className={styles.comment_section}>
+                    <div className={styles.comment_box_input}>
+                        <img src={userProfile?.profile_image} alt={userProfile?.userName} className={styles.profile_user} />
+                        <input
+                            type="text"
+                            placeholder="Write a comment..."
+
+                        />
+                        <div onClick={() => alert('comm')} className={styles.sendButton}>
+                            <Icon icon="mingcute:send-line" className='w-full h-full'/>
+                        </div>
+
+                    </div>
+                </div>
+            )}
+
+
+        </Modal>
+    );
+};
+
+export default FullPostModal;

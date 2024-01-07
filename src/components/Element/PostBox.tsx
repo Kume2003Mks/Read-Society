@@ -21,9 +21,10 @@ export type PostBox = {
   userprofile?: string;
   isSpoil?: boolean;
   timestamp: Timestamp;
+  id: string;
 }
 
-const PostBox: React.FC<PostBox> = ({ uid, image, text, username, userprofile, isSpoil, timestamp }) => {
+const PostBox: React.FC<PostBox> = ({ uid, image, text, username, userprofile, isSpoil, timestamp, id }) => {
 
   const navigate = useNavigate();
 
@@ -97,7 +98,7 @@ const PostBox: React.FC<PostBox> = ({ uid, image, text, username, userprofile, i
       </div>
 
       {isModalOpen && (
-        <FullPostModal post={{ uid, image, text, username, userprofile, isSpoil, timestamp }} onClose={() => setIsModalOpen(false)} />
+        <FullPostModal post={{ uid, image, text, username, userprofile, isSpoil, timestamp, id }} onClose={() => setIsModalOpen(false)} />
       )}
 
       <div className={styles.interact_bar}>

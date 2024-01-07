@@ -39,7 +39,7 @@ export interface ProtectRouteProps {
 }
 
 export type Post = {
-    id?: string;
+    id: string;
     text?: string;
     image?: string[];
     spoil?: boolean;
@@ -47,14 +47,12 @@ export type Post = {
     timestamp: Timestamp;
     profile?: Profile;
     like?: undefined | boolean;
-    comments?: Coment;
+    comments?: Comment;
 }
 
-export type Coment = {
-    id: string;
+export type Comment = {
     text?: string;
-    image?: string[];
-    uid: string | Profile;
-    timestamp: Timestamp;
-    reply?: Coment;
+    profile?: Profile;
+    uid: string;
+    timestamp?: Timestamp;
 }

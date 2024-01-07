@@ -8,6 +8,8 @@ import Books from "../../function/Books";
 import Styles from "../../Style/read.module.css"
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import SideBar from "../../components/Layouts/SideBar";
+import Loading from "../../components/loading/Loading";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
@@ -17,7 +19,7 @@ const Read = () => {
     const { book_id, ep_id } = useParams();
 
     const [epload, setepLoading] = useState<Episode | null>(null)
-    const [Loading, setLoading] = useState<boolean>(false)
+    const [isLoading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
 
@@ -48,21 +50,60 @@ const Read = () => {
     }
 
     return (
-        <main className="flex-col flex flex-1 items-center p-container">
-            <Document
-                file={epload?.url}
-                onLoadSuccess={onDocumentLoadSuccess}
-                onLoadError={(error) => console.error("Error loading PDF:", error)}
-            >
-                <Page 
-                pageNumber={pageNumber}
-                 />
-            </Document>
-            <p onClick={() => setPageNumber(pageNumber + 1)}>
-                Page {pageNumber} of {numPages}
-            </p>
+        <main className="flex flex-row justify-between flex-1 flex-wrap h-screen p-container">
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <>
+                    {isLoggedIn ? (
+                        <div className="flex flex-1 h-full">
+                            <SideBar className="sticky">
+                                <div>
+                                    <button onClick={() => setPageNumber(pageNumber - 1)} disabled={pageNumber === 1}>
+                                        Previous 
+                                    </button>
+                                    <button onClick={() => setPageNumber(pageNumber + 1)} disabled={pageNumber === numPages}>
+                                        Next 
+                                    </button>
+                                </div>
+
+                                <p>
+                                    Page {pageNumber} of {numPages}
+                                </p>
+
+                                {Array.from({ length: numPages ?? 0 }, (_, index) => (
+                                    <p
+                                        key={index + 1}
+                                        onClick={() => setPageNumber(index + 1)}
+                                        className={pageNumber === index + 1 ? Styles.highlighted : ''}
+                                    >
+                                        Page {index + 1}
+                                    </p>
+                                ))}
+                            </SideBar>
+                            <Document
+                                className="flex flex-1 justify-center"
+                                file={epload?.url}
+                                onLoadSuccess={onDocumentLoadSuccess}
+                                onLoadError={(error) => console.error("Error loading PDF:", error)}
+                            >
+                                <Page
+                                    className="h-fit"
+                                    pageNumber={pageNumber}
+                                />
+                            </Document>
+                        </div>
+                    ) : (
+                        <div>
+                            <p>Please log in to view this content.</p>
+                        </div>
+                    )}
+                </>
+            )}
         </main>
     )
 }
 
 export default Read
+
+

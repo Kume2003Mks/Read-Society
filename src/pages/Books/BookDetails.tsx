@@ -1,13 +1,15 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams} from "react-router-dom"
 import Books from '../../function/Books';
 import Styles from '../../Style/Component.module.css';
 import table from '../../Style/table.module.css'
-import { Book, Episode } from "../../function/DeclareType";
-import { useEffect, useState } from "react";
+import { Book, Episode, Profile, Comment } from "../../function/DeclareType";
+import { useEffect, useState, lazy, Suspense  } from "react";
 import Loading from "../../components/loading/Loading";
 import { useAuth } from "../../function/context/AuthContext";
 import { Icon } from "@iconify/react";
+import userDataBase from "../../function/userDataBase";
 
+const Comment_Box = lazy(() => import('../../components/Element/Comment_Box'));
 
 const BookDetails = () => {
 
@@ -18,11 +20,24 @@ const BookDetails = () => {
     const [desloading, setdesLoading] = useState<boolean>(true);
     const [eploading, setepLoading] = useState<boolean>(true);
     const [editing, setEditing] = useState<boolean>(false);
+    const [userProfile, setUserProfile] = useState<Profile | null>(null)
+    const [commentText, setCommentText] = useState<string>('');
+    const [comment, setComment] = useState<Comment[]>([])
+    const [reloadComponent, setReloadComponent] = useState(false);
 
     const { book_id } = useParams();
-    const { userData } = useAuth();
+    const { userData, isLoggedIn } = useAuth();
 
     useEffect(() => {
+        const getProfile = async (uid: string) => {
+            const Uprofile = new userDataBase(uid);
+            const userProfile = await Uprofile.getProfile()
+            setUserProfile(userProfile)
+        }
+        if (userData && userData.user.uid) {
+            getProfile(userData.user.uid)
+        }
+
         async function loadBooks() {
             try {
                 const id: string = book_id!;
@@ -52,11 +67,47 @@ const BookDetails = () => {
                 setepLoading(false);
             }
         }
+        async function loadComments() {
+            try {
+                const id: string = book_id!;
+                const book = new Books();
+                const comments = await book.getComments(id)
+                setComment(comments)
+            } catch (error) {
+                console.error("Error loading book:", error);
+            }
+        }
         loadBooks();
         loadEps();
+        loadComments()
 
-    }, [book_id, userData]);
+    }, [book_id, userData, reloadComponent]);
     console.log(ep);
+
+    const handleSendComment = async () => {
+        let uid: string = ""
+        if (userData && userData.user.uid) {
+            uid = userData.user.uid
+        }
+
+        if (commentText.trim() !== '') {
+            const book = new Books();
+            const newComment: Comment = {
+                text: commentText,
+                uid: uid,
+            }
+            setComment([...comment, newComment]);
+
+            const success = await book.addComment(book_id!, uid, commentText);
+            if (success) {
+                console.log('Comment added successfully!');
+            } else {
+                console.error('Failed to add comment.');
+            }
+            setCommentText('');
+            setReloadComponent((prev) => !prev);
+        }
+    };
 
     return (
         <main className="flex-col flex flex-1 items-center p-container">
@@ -134,9 +185,9 @@ const BookDetails = () => {
                                             {ep?.map((episode, index) => (
                                                 <tr key={index}>
                                                     <td><h1 className="text-center">{index + 1}</h1></td>
-                                                    <td 
-                                                    onClick={() => navigate(`/book-detail/read/${book_id!}/${episode.id}`)}
-                                                    className="cursor-pointer"><h1>{episode.title}</h1></td>
+                                                    <td
+                                                        onClick={() => navigate(`/book-detail/read/${book_id!}/${episode.id}`)}
+                                                        className="cursor-pointer"><h1>{episode.title}</h1></td>
                                                     {editing &&
                                                         <td className={table.edit}>
                                                             <div title={`edit ${episode.title}`}
@@ -159,6 +210,34 @@ const BookDetails = () => {
                             <div className="bg-[#1FA0F6] w-full items-center flex p-4 relative">
                                 <h1 className="text-2xl font-bold mb-1">Comment</h1>
                             </div>
+                            <div className="flax flex-1 overflow-y-auto p-4">
+                                <Suspense fallback={<div>Loading...</div>}>
+                                    {comment.map((comment, index) => (
+                                        <Comment_Box key={index}
+                                            text={comment?.text}
+                                            image={comment.profile?.profile_image}
+                                            user_name={comment.profile?.userName}
+                                            uid={comment.uid}
+                                        />
+                                    ))}
+                                </Suspense>
+                            </div>
+                            {isLoggedIn && (
+                                <div className={Styles.comment_section}>
+                                    <div className={Styles.comment_box_input}>
+                                        <img src={userProfile?.profile_image} alt={userProfile?.userName} className={Styles.profile_user} />
+                                        <input
+                                            type="text"
+                                            placeholder="Write a comment..."
+                                            onChange={(e) => setCommentText(e.target.value)}
+                                        />
+                                        <div onClick={handleSendComment} className={Styles.sendButton}>
+                                            <Icon icon="mingcute:send-line" className='w-full h-full' />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
 

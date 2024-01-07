@@ -1,5 +1,5 @@
 // FullPostModal.tsx
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import Modal from '../Modal/Modal'; // Import the Modal component
 import styles from '../../Style/Component.module.css'; // Import styling
 import { Icon } from '@iconify/react';
@@ -14,7 +14,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useAuth } from '../../function/context/AuthContext';
 import userDataBase from '../../function/userDataBase';
-import { Profile } from '../../function/DeclareType';
+import { Comment, Profile } from '../../function/DeclareType';
+import Social from '../../function/Social';
+
+const Comment_Box = lazy(() => import('./Comment_Box'));
+
 
 interface FullPostModalProps {
     onClose: () => void;
@@ -24,6 +28,10 @@ interface FullPostModalProps {
 const FullPostModal: React.FC<FullPostModalProps> = ({ onClose, post }) => {
     const { userData, isLoggedIn } = useAuth();
     const [userProfile, setUserProfile] = useState<Profile | null>(null)
+    const [spoilerVisible, setSpoilerVisible] = useState(post.isSpoil);
+    const [comment, setComment] = useState<Comment[]>([])
+    const [commentText, setCommentText] = useState<string>('');
+    const [reloadComponent, setReloadComponent] = useState(false);
 
     useEffect(() => {
         const getProfile = async (uid: string) => {
@@ -35,9 +43,19 @@ const FullPostModal: React.FC<FullPostModalProps> = ({ onClose, post }) => {
             getProfile(userData.user.uid)
         }
 
-    }, [userData]);
+        async function loadComments() {
+            try {
+                const social = new Social();
+                const comments = await social.getComments(post.id);
+                setComment(comments)
+            } catch (error) {
+                console.error("Error loading Comment:", error);
+            }
+        }
 
-    const [spoilerVisible, setSpoilerVisible] = useState(post.isSpoil);
+        loadComments()
+
+    }, [userData, post, reloadComponent]);
 
     const navigate = useNavigate();
 
@@ -59,6 +77,34 @@ const FullPostModal: React.FC<FullPostModalProps> = ({ onClose, post }) => {
 
     const formattedDateString = formatDate(formattedDate);
 
+    const handleSendComment = async () => {
+        let uid: string = ""
+        if (userData && userData.user.uid) {
+            uid = userData.user.uid
+        }
+
+        if (commentText.trim() !== '') {
+            const social = new Social();
+            const newComment: Comment = {
+                text: commentText,
+                uid: uid,
+            }
+            setComment([...comment, newComment]);
+
+            const success = await social.addComment(commentText, uid, post.id);
+
+            if (success) {
+                console.log('Comment added successfully!');
+            } else {
+                console.error('Failed to add comment.');
+            }
+
+            setCommentText('');
+            setReloadComponent((prev) => !prev);
+
+        }
+    };
+
     return (
         <Modal isOpen={true} onClose={onClose} title={`Post by ${post.username}`}>
             <div className={styles.post_Box_modal}>
@@ -77,7 +123,7 @@ const FullPostModal: React.FC<FullPostModalProps> = ({ onClose, post }) => {
                         </p>
                     )}
                     <div className={`${spoilerVisible ? styles.spoiler : "flex flex-col gap-2"}`}>
-                        <p>{post.text}</p>
+                        <p style={{ whiteSpace: 'pre-line' }}>{post.text}</p>
 
                         {post.image && post.image.length > 0 && (
                             <Swiper
@@ -121,16 +167,25 @@ const FullPostModal: React.FC<FullPostModalProps> = ({ onClose, post }) => {
                         <input
                             type="text"
                             placeholder="Write a comment..."
-
+                            value={commentText}
+                            onChange={(e) => setCommentText(e.target.value)}
                         />
-                        <div onClick={() => alert('comm')} className={styles.sendButton}>
-                            <Icon icon="mingcute:send-line" className='w-full h-full'/>
+                        <div onClick={handleSendComment} className={styles.sendButton}>
+                            <Icon icon="mingcute:send-line" className='w-full h-full' />
                         </div>
-
                     </div>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        {comment.map((comment, index) => (
+                            <Comment_Box key={index}
+                                text={comment?.text}
+                                image={comment.profile?.profile_image}
+                                user_name={comment.profile?.userName}
+                                uid={comment.uid}
+                            />
+                        ))}
+                    </Suspense>
                 </div>
             )}
-
 
         </Modal>
     );

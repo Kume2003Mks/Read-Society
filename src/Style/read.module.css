@@ -5,3 +5,7 @@
 .page_renderer .textLayer {
     display: none !important;
 }
+
+.highlighted {
+    background-color: #e0e0e0;
+}

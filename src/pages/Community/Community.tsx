@@ -43,8 +43,6 @@ const Community: JSX.ElementType = () => {
         getPost()
     }, [userData]);
 
-    console.log(error)
-
     const handlePost = async () => {
         let uid: string = "";
         if (userData && userData.user.uid) {

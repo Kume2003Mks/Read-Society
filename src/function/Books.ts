@@ -1,6 +1,6 @@
 import { collection, getDocs, doc, getDoc, orderBy, query, where, Timestamp, addDoc, updateDoc } from "firebase/firestore";
 import { database, storage } from "../utils/Firebase";
-import { Book, Episode } from "./DeclareType";
+import { Book, Comment, Episode } from "./DeclareType";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import FatchProfiles from "./FetchProfiles";
 
@@ -155,7 +155,7 @@ export default class Books {
       // If not found in sessionStorage, search in Firebase Firestore
       const epDocRef = doc(database, 'books', bookId, 'ep', epId);
       const epDoc = await getDoc(epDocRef);
-  
+
       if (epDoc.exists()) {
         const epData: Episode = epDoc.data() as Episode;
         console.log(epData);
@@ -169,7 +169,6 @@ export default class Books {
       return null;
     }
   }
-  
 
   public async uploadBook(
     title: string,
@@ -288,13 +287,13 @@ export default class Books {
     epId: string,
     title: string,
     pdf: File | null,
-  
+
   ) {
     try {
       const epDocRef = doc(database, 'books', bookId, 'ep', epId);
       const epDoc = await getDoc(epDocRef);
 
-      const updatedData:EpData = {
+      const updatedData: EpData = {
         title,
       };
 
@@ -319,4 +318,57 @@ export default class Books {
     }
   }
 
+  public async addComment(bookId: string, uid: string, text: string) {
+    try {
+      const bookRef = doc(database, 'books', bookId);
+      const commentsCollectionRef = collection(bookRef, 'comments');
+
+      const newComment = {
+        uid: uid,
+        text: text,
+        timestamp: Timestamp.now().toDate(),
+      };
+
+      const docRef = await addDoc(commentsCollectionRef, newComment);
+
+      console.log('Comment added with ID: ', docRef.id);
+      return true;
+    } catch (error) {
+      console.error('Error adding comment: ', error);
+      return false;
+    }
+  }
+
+  public async getComments(bookId: string) {
+    try {
+      const bookRef = doc(database, 'books', bookId);
+      const commentsCollectionRef = collection(bookRef, 'comments');
+
+      // Use getDocs to query the 'comments' collection and get all documents
+      const querySnapshot = await getDocs(commentsCollectionRef);
+
+      const comments: Comment[] = [];
+
+      await Promise.all(
+        querySnapshot.docs.map(async (doc) => {
+          const commentData = doc.data();
+          const Profiles = new FatchProfiles();
+          const userProfile = await Profiles.fetchProfile(commentData.uid); // Fixed: Use 'uid' instead of 'profile'
+          if (userProfile) {
+            comments.push({
+              uid: commentData.uid,
+              profile: userProfile,
+              text: commentData.text,
+              timestamp: commentData.timestamp,
+            });
+          }
+        })
+      );
+
+      return comments;
+    } catch (error) {
+      console.error('Error getting comments: ', error);
+      return [];
+    }
+  }
 }

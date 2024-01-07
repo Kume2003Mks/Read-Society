@@ -15,6 +15,11 @@ interface BookData {
   thumbnail?: string;
 }
 
+interface EpData {
+  title: string;
+  url?: string;
+}
+
 export default class Books {
   constructor() { }
 
@@ -124,15 +129,15 @@ export default class Books {
   public async getEpisodesById(bookId: string) {
     try {
       const epsCollection = collection(database, 'books', bookId, 'ep');
-      const epsQuery = query(epsCollection, orderBy('upload')); // แทน 'timestamp' ด้วยชื่อฟิลด์ที่เก็บเวลา
+      const epsQuery = query(epsCollection, orderBy('upload'));
 
       const epsQuerySnapshot = await getDocs(epsQuery);
 
       const episodes: Episode[] = [];
       epsQuerySnapshot.forEach((doc) => {
         const episodeData = doc.data() as Episode;
-        const bookId = doc.id;
-        episodeData.id = bookId;
+        const EpId = doc.id;
+        episodeData.id = EpId;
         episodes.push(episodeData);
       });
 
@@ -144,6 +149,27 @@ export default class Books {
       return null;
     }
   }
+
+  public async getSomeEp(bookId: string, epId: string) {
+    try {
+      // If not found in sessionStorage, search in Firebase Firestore
+      const epDocRef = doc(database, 'books', bookId, 'ep', epId);
+      const epDoc = await getDoc(epDocRef);
+  
+      if (epDoc.exists()) {
+        const epData: Episode = epDoc.data() as Episode;
+        console.log(epData);
+        return epData;
+      } else {
+        console.log('Book not found with the specified ID:', epId);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error searching for book data:', error);
+      return null;
+    }
+  }
+  
 
   public async uploadBook(
     title: string,
@@ -188,7 +214,7 @@ export default class Books {
   public async uploadEp(bookId: string, epName: string, file: File) {
     try {
       const storage = getStorage();
-      const epRef = ref(storage, `books_files/${bookId}/ep/${epName}`);
+      const epRef = ref(storage, `books_ID/${bookId}/ep/${epName + Math.floor(Math.random() * 256)}`);
       await uploadBytes(epRef, file);
 
       const epURL = await getDownloadURL(epRef);
@@ -248,6 +274,42 @@ export default class Books {
       }
 
       await updateDoc(bookRef, updatedData as Partial<BookData>);
+
+      sessionStorage.removeItem('booksData');
+
+      console.log('Book updated successfully!');
+    } catch (error) {
+      console.error('Error updating book:', error);
+    }
+  }
+
+  public async editEp(
+    bookId: string,
+    epId: string,
+    title: string,
+    pdf: File | null,
+  
+  ) {
+    try {
+      const epDocRef = doc(database, 'books', bookId, 'ep', epId);
+      const epDoc = await getDoc(epDocRef);
+
+      const updatedData:EpData = {
+        title,
+      };
+
+      if (pdf) {
+        const existingThumbnail = epDoc.get('url');
+        const imageRef = ref(storage, existingThumbnail);
+        await deleteObject(imageRef);
+
+        const thumbnailRef = ref(storage, `books_ID/${bookId}/ep/${title + Math.floor(Math.random() * 256)}`);
+        await uploadBytes(thumbnailRef, pdf);
+        const thumbnailURL = await getDownloadURL(thumbnailRef);
+        updatedData.url = thumbnailURL;
+      }
+
+      await updateDoc(epDocRef, updatedData as Partial<EpData>);
 
       sessionStorage.removeItem('booksData');
 

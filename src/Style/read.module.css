@@ -1,0 +1,7 @@
+.page_renderer{
+    display: flex;
+}
+
+.page_renderer .textLayer {
+    display: none !important;
+}

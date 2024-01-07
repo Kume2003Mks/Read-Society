@@ -122,13 +122,23 @@ const Navigation: JSX.ElementType = () => {
         {isLoggedIn ? (
           <>
             {userProfile ? (
-              <div className='flex flex-row align-middle gap-2 hover:cursor-pointer' onClick={toggleProfileMenu} ref={navbarRef}>
-                <p className='profile-name'>{userProfile.userName}</p>
-                <img src={userProfile.profile_image} alt={userProfile.userName} className='profile-img' />
-                <Icon
-                  icon={isProfileMenuOpen ? 'octicon:x-12' : 'ci:hamburger-md'}
-                  className={`toggle-dropdown ${isProfileMenuOpen ? 'open' : ''} self-center`}
-                />
+              <div className='flex flex-row align-middle gap-2' >
+                <div 
+                className='flex flex-row align-middle gap-2 cursor-pointer'
+                onClick={() => navigate(`/community/profile/${userData?.user.uid}`)}>
+                  <p className='profile-name'>{userProfile.userName}</p>
+                  <img src={userProfile.profile_image} alt={userProfile.userName} className='profile-img' />
+                </div>
+                <div
+                  className="self-center cursor-pointer"
+                  onClick={toggleProfileMenu}
+                  ref={navbarRef}>
+                  <Icon
+                    icon={isProfileMenuOpen ? 'octicon:x-12' : 'ci:hamburger-md'}
+                    className={`toggle-dropdown ${isProfileMenuOpen ? 'open' : ''} self-center`}
+                  />
+                </div>
+
                 {isProfileMenuOpen && (
                   <div className="profile-menu">
                     <ul>
@@ -163,7 +173,7 @@ const Navigation: JSX.ElementType = () => {
                 )}
               </div>
             ) : (
-              <ProfileLoad/>
+              <ProfileLoad />
             )}
           </>
         ) : (

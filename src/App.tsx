@@ -22,6 +22,7 @@ import BookDetails from './pages/Books/BookDetails.tsx';
 import Upload_EP from './pages/Creation/Upload_EP.tsx';
 import Edit_Book from './pages/Creation/Edit_Book.tsx';
 import Edit_Ep from './pages/Creation/Edit_Ep.tsx';
+import Read from './pages/Books/Read.tsx';
 
 const App = () => {
 
@@ -68,6 +69,10 @@ const App = () => {
                 {
                     path: ':book_id',
                     element: <BookDetails />,
+                },
+                {
+                    path: 'read/:book_id/:ep_id',
+                    element: <Read />,
                 },
             ],
         },
@@ -133,7 +138,7 @@ const App = () => {
                             element: <Edit_Book />,
                         },
                         {
-                            path: 'ep/:editep_id',
+                            path: 'ep/:editbook_id/:editep_id',
                             element: <Edit_Ep />,
                         }
                     ]

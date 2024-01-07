@@ -68,7 +68,7 @@ const PostBox: React.FC<PostBox> = ({ uid, image, text, username, userprofile, i
           </p>
         )}
         <div className={`${spoilerVisible ? styles.spoiler : "flex flex-col gap-2"}`}>
-          <p>{displayText}</p>
+          <p style={{ whiteSpace: 'pre-line' }}>{displayText}</p>
           {text && text.split('\n').length > 3 && !showFullText && (
             <p
               className={styles.read_more}

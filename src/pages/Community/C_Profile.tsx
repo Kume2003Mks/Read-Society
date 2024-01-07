@@ -23,8 +23,18 @@ const C_Profile = () => {
         const social = new Social();
         const profile = new FatchProfiles();
         setProfile(await profile.fetchProfile(id));
-        setPost((await social.getPostsByID(id)));
+        // setPost((await social.getPostsByID(id)));
         // setLoading(false);
+        const posts = await social.getPostsByID(id);
+        const sortedPosts = posts.slice().sort((a, b) => {
+          if (a.timestamp && b.timestamp) {
+            return b.timestamp.toMillis() - a.timestamp.toMillis();
+          }
+          return 0; // handle the case where either timestamp is undefined
+        });
+
+        // Set sorted posts
+        setPost(sortedPosts);
       } catch (error) {
         console.error("Error loading post:", error);
         //  setLoading(false);

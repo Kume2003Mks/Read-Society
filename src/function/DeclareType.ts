@@ -29,7 +29,7 @@ export type Profile = {
 export type Episode = {
     id: string;
     title: string;
-    bookfile: string;
+    url: string;
     upload: Timestamp;
 }
 

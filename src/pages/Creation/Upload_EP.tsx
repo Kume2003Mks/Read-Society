@@ -123,8 +123,8 @@ const Upload_EP = () => {
                 <Icon icon="fluent:document-pdf-32-filled" className='w-full h-full' />
               </div>
               {file && (
-                <p>{file.name}</p>
-              )}
+                <a target='_blank' className='hover:underline hover:text-red-500' href={URL.createObjectURL(file)}>{file.name}</a>
+                )}
             </div>
 
             <input type="file"

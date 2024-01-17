@@ -12,26 +12,20 @@ import { useNavigate } from 'react-router-dom';
 const TypeOptionset: string[] = ['Novel', 'Cartoon', 'General', 'Non-Fiction'];
 const GenreOptionset: string[] = [
   "Horror",
-  "Science",
   "Mystery",
   "Drama",
-  "Nonfiction",
+  "Comedy",
+  "Science",
+  "Adventure",
   "Fantasy",
-  "Humor",
   "Romance",
   "Action",
   "Physics",
-  "Contemporary",
   "SciFi",
   "History",
-  "GraphicNovels",
+  "Dystopian",
   "Adult",
   "Biography",
-  "FantasyRomance",
-  "HistoricalFiction",
-  "SelfHelp",
-  "Thriller",
-  "Adventure",
   "Poetry",];
 
 const Upload = () => {

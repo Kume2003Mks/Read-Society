@@ -14,28 +14,22 @@ type BookCardProps = {
 const Book_Card: React.FC<BookCardProps> = ({ genre, title, thumbnail, user, id, like }) => {
 
   const genreColors: { [genre: string]: string } = {
-    Horror: "#FF5733", // Red-Orange
-    Science: "#33A6FF", // Sky Blue
-    Mystery: "#663399", // Dark Purple
-    Comics: "#FFD700", // Gold
-    Nonfiction: "#228B22", // Forest Green
-    Fantasy: "#9932CC", // Dark Orchid
-    Humor: "#FF6347", // Tomato
-    Romance: "#FF69B4", // Hot Pink
-    Action: "#FF4500", // Orange-Red
-    Physics: "#8A2BE2", // Blue-Violet
-    Contemporary: "#2E8B57", // Sea Green
-    SciFi: "#00CED1", // Dark Turquoise
-    History: "#B8860B", // Dark Goldenrod
-    GraphicNovels: "#1E90FF", // Dodger Blue
-    Adult: "#8B008B", // Dark Magenta
-    Biography: "#FFE4C4", // Bisque
-    FantasyRomance: "#FF69B4", // Hot Pink
-    HistoricalFiction: "#CD853F", // Peru
-    SelfHelp: "#20B2AA", // Light Sea Green
-    Thriller: "#8B0000", // Dark Red
-    Adventure: "#FFD700", // Gold
-    Poetry: "#FF1493", // Deep Pink
+    Horror: "#FF5733",      // Red-Orange
+    Mystery: "#663399",     // DarkSlateBlue
+    Drama: "#800000",       // Maroon
+    Comedy: "#FFD700",      // Gold
+    Science: "#008080",     // Teal
+    Adventure: "#006400",   // DarkGreen
+    Fantasy: "#9932CC",     // DarkOrchid
+    Romance: "#FF1493",     // DeepPink
+    Action: "#FF4500",      // OrangeRed
+    Physics: "#4682B4",     // SteelBlue
+    SciFi: "#00CED1",       // DarkTurquoise
+    History: "#8B4513",     // SaddleBrown
+    Dystopian: "#696969",   // DimGray
+    Adult: "#800080",       // Purple
+    Biography: "#2E8B57",   // SeaGreen
+    Poetry: "#800080"       // Purple
   };
 
   const genreColor = genreColors[genre] || 'red';

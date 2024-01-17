@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from '../../Style/Component.module.css'
+import { Icon } from "@iconify/react";
 
 type BookCardProps = {
   genre: string;
@@ -7,9 +8,10 @@ type BookCardProps = {
   thumbnail: string;
   user?: string;
   id: string;
+  like: number;
 }
 
-const Book_Card: React.FC<BookCardProps>  = ({ genre, title, thumbnail, user, id }) => {
+const Book_Card: React.FC<BookCardProps> = ({ genre, title, thumbnail, user, id, like }) => {
 
   const genreColors: { [genre: string]: string } = {
     Horror: "#FF5733", // Red-Orange
@@ -44,12 +46,18 @@ const Book_Card: React.FC<BookCardProps>  = ({ genre, title, thumbnail, user, id
       <h1 className='text-xs text-black text-right w-fit self-end px-1 pt-1 rounded-t-lg' style={{ backgroundColor: genreColor }}>{genre}</h1>
       {/**card */}
       <Link to={`/book-detail/${id}`}>
-        <div className={`h-fill w-fill justify-center cursor-pointer `}>
+        <div className={`cursor-pointer `}>
           <div>
             <img src={thumbnail} alt={`${title} - ${genre} book cover`} className={`w-full h-auto rounded-lg object-cover ${styles.A4_Size}`} />
-            <div className='mt-1'>
-              <p className='text-sm truncate'>{title}</p>
-              <p className='text-xs text-slate-500'>{user}</p>
+            <div className='mt-1 relative'>
+              <div className=' flex flex-col pr-6'>
+                <p className='text-sm truncate'>{title}</p>
+                <p className='text-xs text-slate-500'>{user}</p>
+              </div>
+              <div className='absolute flex flex-col right-1 bottom-[-4px]'>
+                <Icon icon="mdi:heart" className={`w-6 h-6`} />
+                <p className='text-xs text-center'>{like}</p>
+              </div>
             </div>
           </div>
         </div>

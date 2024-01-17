@@ -3,18 +3,27 @@ import PostBox from "../../components/Element/PostBox"
 import SideBar from "../../components/Layouts/SideBar"
 import { useParams } from "react-router-dom"
 import Social from "../../function/Social";
-import { Post, Profile } from "../../function/DeclareType";
+import { Followers, Post, Profile } from "../../function/DeclareType";
 import FatchProfiles from "../../function/FetchProfiles";
 
 import profileStyles from "../../Style/C_Profile.module.css"
+import { useAuth } from "../../function/context/AuthContext";
+import { useFollow } from "../../function/context/GetFollow";
+import Follower from "../../components/Element/Follower";
 
 const C_Profile = () => {
 
   const { user_id } = useParams();
+  const { userData, isLoggedIn } = useAuth();
+  const { followingUsers } = useFollow();
+
+
 
   const [post, setPost] = useState<Post[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
-  // const [loading, setLoading] = useState(true);
+  const [showbtn, setshowbtn] = useState<boolean>(true);
+  const [isFollowing, setIsFollowing] = useState(false);
+
 
   useEffect(() => {
     async function loadPosts() {
@@ -23,26 +32,57 @@ const C_Profile = () => {
         const social = new Social();
         const profile = new FatchProfiles();
         setProfile(await profile.fetchProfile(id));
-        // setPost((await social.getPostsByID(id)));
-        // setLoading(false);
+        if (user_id === (userData && userData.user?.uid)) {
+          setshowbtn(false);
+        }
         const posts = await social.getPostsByID(id);
         const sortedPosts = posts.slice().sort((a, b) => {
           if (a.timestamp && b.timestamp) {
             return b.timestamp.toMillis() - a.timestamp.toMillis();
           }
-          return 0; // handle the case where either timestamp is undefined
+          return 0;
         });
 
-        // Set sorted posts
         setPost(sortedPosts);
       } catch (error) {
         console.error("Error loading post:", error);
-        //  setLoading(false);
       }
     }
 
     loadPosts();
-  }, [user_id]);
+
+    const checkFollowStatus = async () => {
+      if (userData && userData.user) {
+        const social = new Social();
+        const status = await social.checkFollowStatus(userData.user.uid, user_id!);
+        setIsFollowing(status);
+      }
+    };
+
+    checkFollowStatus();
+
+  }, [userData, user_id]);
+
+  const handleFollow = async () => {
+    if (profile && userData && userData.user) {
+      const social = new Social();
+      const currentUserUid = userData.user.uid;
+
+      try {
+        if (isFollowing) {
+          await social.unfollowUser(currentUserUid, user_id!);
+          console.log('Successfully unfollowed user!');
+        } else {
+          await social.followUser(currentUserUid, user_id!);
+          console.log('Successfully followed user!');
+        }
+
+        setIsFollowing(!isFollowing);
+      } catch (error) {
+        console.error('Error handling follow/unfollow:', error);
+      }
+    }
+  };
 
   return (
     <main className="flex-row h-screen justify-between flex p-container">
@@ -52,9 +92,11 @@ const C_Profile = () => {
           <h1 className={profileStyles.header}>{profile?.userName}</h1>
           <p className={profileStyles.content}>{`${profile?.firstName} ${profile?.lastName}`}</p>
         </div>
-        <div onClick={() => alert('follow')} className="bg-blue-500 w-[75%] text-white p-2 rounded-lg cursor-pointer">
-          <h1 className="text-center">Follow</h1>
-        </div>
+        {(showbtn && isLoggedIn) &&
+          <div onClick={handleFollow} className={`bg-blue-500 w-[75%] text-white p-2 rounded-lg cursor-pointer`}>
+            <h1 className="text-center">{isFollowing ? 'Unfollow' : 'Follow'}</h1>
+          </div>
+        }
         <div className="w-full px-2">
           <h1 className={profileStyles.header}>About Me</h1>
           <p className={profileStyles.about}>{profile?.about_me}</p>
@@ -72,8 +114,11 @@ const C_Profile = () => {
         ))}
       </div>
 
-      <SideBar className='p-2 sticky top-0'>
+      <SideBar className='p-2 flex gap-2'>
         <h1 className='text-xl font-bold text-left px-3 mb-2 '>Following</h1>
+        {followingUsers?.map((props: Followers, index: number) => (
+          <Follower key={index} uid={props.uid} image={props.profile.profile_image} name={props.profile.userName} />
+        ))}
       </SideBar>
     </main>
   )

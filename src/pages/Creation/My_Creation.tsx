@@ -7,7 +7,6 @@ import { useBook } from '../../function/context/BooksContext';
 const My_Creation = () => {
 
     const { Ownerbooks } = useBook();
-    console.log('Prop :', Ownerbooks);
 
     return (
         <main className="flex-row h-screen justify-between flex-wrap flex p-container">

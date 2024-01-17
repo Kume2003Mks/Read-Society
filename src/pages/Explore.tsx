@@ -55,10 +55,7 @@ const Explore: JSX.ElementType = () => {
                         {books?.map((props: Book, index: number) => (
                             <Book_Card
                                 key={index}
-                                id={props.id}
-                                genre={props.genre}
-                                title={props.title}
-                                thumbnail={props.thumbnail}
+                                {...props}
                                 user={props.profile?.userName}
                             />
                         ))}

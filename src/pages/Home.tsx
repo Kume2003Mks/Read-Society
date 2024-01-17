@@ -56,9 +56,12 @@ function Home(): JSX.Element {
       <Book_View title='Popular' className='grid-row-layout snap-both'>
         {loading ? (<Loading />) : (
           <Suspense fallback={<div>Loading...</div>}>
-            {memoizedBooks.slice(0, 15).map((props: Book, index: number) => (
-              <Book_Card key={index} {...props} user={props.profile?.userName} />
-            ))}
+            {memoizedBooks
+              .slice(0, 15)
+              .sort((a: Book, b: Book) => b.like - a.like)
+              .map((props: Book, index: number) => (
+                <Book_Card key={index} {...props} user={props.profile?.userName} />
+              ))}
           </Suspense>
         )}
       </Book_View>
@@ -68,8 +71,8 @@ function Home(): JSX.Element {
 
           <Suspense fallback={<div>Loading...</div>}>
             {memoizedBooks
-              .sort((a: Book, b: Book) => b.created.seconds - a.created.seconds)
               .slice(0, 15)
+              .sort((a: Book, b: Book) => b.created.seconds - a.created.seconds)
               .map((props: Book, index: number) => (
                 <Book_Card key={index} {...props} user={props.profile?.userName} />
               ))}

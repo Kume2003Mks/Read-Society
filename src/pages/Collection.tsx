@@ -44,36 +44,11 @@ const Collection: JSX.ElementType = () => {
                         </a>
                     </li>
                     <li>
-                        {/* Last Read */}
-                        <a href='#' className={classStyle.Link_Btn}>
-                            <p className='text-left flex flex-row'>
-                                <Icon icon="mingcute:history-fill" className="icon-size" />
-                                Last Read
-                            </p>
-                            <p className='text-right'>0</p>
-                        </a>
-                    </li>
-                    <li>
                         {/* favorite */}
                         <a href='#' className={classStyle.Link_Btn}>
                             <p className='text-left flex flex-row'>
                                 <Icon icon="iconamoon:heart-fill" className="icon-size" />
                                 Favorite
-                            </p>
-                            <p className='text-right'>0</p>
-                        </a>
-                    </li>
-                </ul>
-
-                <div className='m-4 border-t-2 border-black' />
-
-                <ul className='nav-list mx-2'>
-                    <li>
-                        {/* Deleted */}
-                        <a href='#' className={classStyle.Link_Btn}>
-                            <p className='text-left flex flex-row'>
-                                <Icon icon="mingcute:delete-fill" className="icon-size" />
-                                Deleted
                             </p>
                             <p className='text-right'>0</p>
                         </a>

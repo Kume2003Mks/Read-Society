@@ -3,15 +3,16 @@ import { Icon } from '@iconify/react'
 import '../../Style/Global.css'
 import poststyle from '../../Style/post.module.css'
 import PostBox from '../../components/Element/PostBox'
-import Followers from '../../components/Element/Followers'
 import Social from '../../function/Social'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
-import { Post, Profile } from '../../function/DeclareType'
+import { Followers, Post, Profile } from '../../function/DeclareType'
 import Modal from '../../components/Modal/Modal'
 import Loading from '../../components/loading/Loading'
 import Swal from 'sweetalert2'
+import { useFollow } from '../../function/context/GetFollow'
+import Follower from '../../components/Element/Follower'
 
 const Community: JSX.ElementType = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,7 @@ const Community: JSX.ElementType = () => {
     const [error, setError] = useState<string | null>(null);
     const [isprocessed, setProcessed] = useState<boolean>(false);
     const { userData, isLoggedIn } = useAuth();
+    const { followingUsers } = useFollow();
 
     useEffect(() => {
         const getProfile = async (uid: string) => {
@@ -263,9 +265,10 @@ const Community: JSX.ElementType = () => {
             {isLoggedIn ? (
                 <SideBar className='p-2 flex gap-2'>
                     <h1 className='text-xl font-bold text-left px-3 mb-2 '>Following</h1>
-                    <Followers name='Oakza007' image='https://play-lh.googleusercontent.com/cJokjWYV_EhTZJvJG0zbV6CowN5V8EoyjzF4LssGyjhTo6rAVntx3XjD7AkBQ2IdFKw' />
-                    <Followers name='Tammy' image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT71xmspkWvWl83N6iCRNHZcok0SMJfrE9SZw&usqp=CAU' />
-                    <Followers name='Mookrata' image='https://today.tamu.edu/wp-content/uploads/2019/06/image-220.png' />
+                    {followingUsers?.map((props: Followers, index: number) => (
+                        <Follower key={index} uid={props.uid} image={props.profile.profile_image} name={props.profile.userName} />
+                    ))}
+
                 </SideBar>
             ) : (
                 <SideBar className='p-2 flex gap-2'>

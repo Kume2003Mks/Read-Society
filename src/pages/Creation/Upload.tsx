@@ -14,7 +14,7 @@ const GenreOptionset: string[] = [
   "Horror",
   "Science",
   "Mystery",
-  "Comics",
+  "Drama",
   "Nonfiction",
   "Fantasy",
   "Humor",

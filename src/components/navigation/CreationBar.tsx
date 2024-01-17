@@ -5,7 +5,7 @@ import { useBook } from '../../function/context/BooksContext';
 
 const Link_Btn: string = 'text-base text-center flex flex-row flex-wrap justify-between p-2'
 
-const CreationBar:React.FC = () => {
+const CreationBar: React.FC = () => {
     const { OwnerbookCount } = useBook();
     return (
         <SideBar className='p-2'>
@@ -26,17 +26,6 @@ const CreationBar:React.FC = () => {
                         <p className='text-left flex flex-row'>
                             <Icon icon="fluent:arrow-upload-16-filled" className="icon-size" />
                             Upload
-                        </p>
-                    </NavLink>
-                </li>
-            </ul>
-            <div className='m-4 border-t-2 border-black' />
-            <ul className='nav-list mx-2'>
-                <li>
-                    <NavLink to='/mycreation/deleted' className={Link_Btn}>
-                        <p className='text-left flex flex-row'>
-                            <Icon icon="mingcute:delete-2-fill" className="icon-size" />
-                            Deleted
                         </p>
                     </NavLink>
                 </li>

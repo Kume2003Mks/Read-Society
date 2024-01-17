@@ -13,6 +13,7 @@ export type Book = {
     profile?: Profile;
     thumbnail: string;
     created: Timestamp;
+    like: number;
 }
 
 export type Profile = {
@@ -55,4 +56,9 @@ export type Comment = {
     profile?: Profile;
     uid: string;
     timestamp?: Timestamp;
+}
+
+export type Followers = {
+    uid: string;
+    profile: Profile;
 }

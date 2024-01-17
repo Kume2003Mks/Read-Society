@@ -6,7 +6,7 @@ import Loading from "../../components/loading/Loading";
 import CreationBar from '../../components/navigation/CreationBar';
 import { ChangeEvent, DragEvent, useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Books from '../../function/Books';
 import { useAuth } from '../../function/context/AuthContext';
@@ -15,6 +15,7 @@ const Edit_EP = () => {
 
   const { userData } = useAuth();
   const { editbook_id, editep_id } = useParams();
+  const navigate = useNavigate();
 
   const [epName, setEpName] = useState<string | undefined>('');
   const [url, seturl] = useState<string | undefined>('');
@@ -25,6 +26,7 @@ const Edit_EP = () => {
 
 
   useEffect(() => {
+
     async function loadBooks() {
       try {
         setLoading(true);
@@ -102,6 +104,30 @@ const Edit_EP = () => {
     }
   }
 
+  const handleDel = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to delete?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confrim'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const booksManager = new Books();
+        await booksManager.deleteEpisode(editbook_id!, editep_id!);
+        Swal.fire({
+          title: 'Delete successful!',
+          icon: 'success',
+          confirmButtonText: '<h1>Ok</h1>',
+        }).then(() => {
+          navigate("/")
+        });
+      }
+    })
+  }
+
   return (
     <main className="flex-row h-screen flex p-container"
       onDragOver={handleDragOver}
@@ -140,9 +166,16 @@ const Edit_EP = () => {
           {startloading ? (
             <p>loading</p>
           ) : (
-            <div className={fromStyle.confirm_btn} onClick={handleUpload}>
-              Submit
+
+            <div className='w-full flex flex-row gap-4 justify-end'>
+              <div className={`${fromStyle.confirm_btn} bg-red-500 border-red-500 `} onClick={handleDel}>
+                Delete
+              </div>
+              <div className={fromStyle.confirm_btn} onClick={handleUpload}>
+                Submit
+              </div>
             </div>
+
           )}
 
         </div>) : (<p>Only the owner can upload.</p>)}

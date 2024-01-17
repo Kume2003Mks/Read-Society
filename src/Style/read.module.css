@@ -1,11 +1,49 @@
-.page_renderer{
+.page_renderer {
     display: flex;
 }
 
-.page_renderer .textLayer {
-    display: none !important;
+.navigate {
+    margin: 4px 8px 4px 0;
+    display: flex;
+
+    & p{
+        margin: 4px 0 4px 8px;
+    }
 }
 
-.highlighted {
+.navigate:hover{
+    border-radius: 12px;
     background-color: #e0e0e0;
+    transition: all 0.3s ease-out;
+}
+
+.highlighted{
+    border-radius: 12px;
+    background-color: #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+.highlighted_nav{
+    width: 8px;
+    background-color: blue;
+    transition: background-color 0.3s ease;
+}
+
+.pdfContainer {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.pdfPage {
+    margin: 16px 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

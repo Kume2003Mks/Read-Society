@@ -87,7 +87,7 @@ const Security = () => {
         <div className="flex flex-1 p-8 flex-row">
           <div className={styles.container}>
             <h1 className='text-4xl font-bold'>Password & Security</h1>
-            <form className='w-1/2 flex flex-col'>
+            <form className='w-1/2'>
               <h2 className='text-xl font-bold'>Change Email</h2>
               <p className='mt-2'>Email</p>
               <div className={styles.input_container}>

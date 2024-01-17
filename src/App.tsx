@@ -16,13 +16,13 @@ import EditProfile from './pages/User/EditProfile.tsx';
 import Security from './pages/User/Security.tsx';
 import Help from './pages/User/Help.tsx';
 import Upload from './pages/Creation/Upload.tsx';
-import Deleted from './pages/Creation/Deletedpage.tsx';
 import ResetPassword from './pages/User/ResetPassword.tsx';
 import BookDetails from './pages/Books/BookDetails.tsx';
 import Upload_EP from './pages/Creation/Upload_EP.tsx';
 import Edit_Book from './pages/Creation/Edit_Book.tsx';
 import Edit_Ep from './pages/Creation/Edit_Ep.tsx';
 import Read from './pages/Books/Read.tsx';
+import { FollowProvider } from './function/context/GetFollow.tsx';
 
 const App = () => {
 
@@ -88,7 +88,7 @@ const App = () => {
         },
         {
             path: "/community",
-            element: <Layout />,
+            element: <FollowProvider><Layout /></FollowProvider>,
             children: [
                 {
                     path: '',
@@ -124,10 +124,6 @@ const App = () => {
                             element: <Upload_EP />,
                         }
                     ]
-                },
-                {
-                    path: 'deleted',
-                    element: <Deleted />,
                 },
                 {
                     path: 'edited',

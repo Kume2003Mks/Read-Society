@@ -30,8 +30,13 @@
 }
 
 .user_name {
-    h1 {
+    display: flex;
+    justify-content: space-between;
+    & h1 {
         cursor: pointer;
         font-weight: bold;
+    }
+    & p {
+        font-size: x-small;
     }
 }

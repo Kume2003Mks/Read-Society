@@ -38,11 +38,9 @@ export default class userDataBase {
         const userProfileData = docSnapshot.data();
 
         sessionStorage.setItem('userProfile', JSON.stringify(userProfileData));
-        console.log(userProfileData);
         return userProfileData;
 
       } else {
-        // หากไม่มีข้อมูล
         return null;
       }
     } catch (error) {
@@ -86,12 +84,10 @@ export default class userDataBase {
         if (hasChanged) {
           updatedData.last_time = Timestamp.now().toDate();
         }
-
         if (imageFile) {
           const imageUrl = await this.uploadProfileImage(imageFile);
           updatedData.profile_image = imageUrl;
         }
-  
         await setDoc(userDocRef, updatedData, { merge: true });
         sessionStorage.removeItem('userProfile');
       }
@@ -105,12 +101,8 @@ export default class userDataBase {
     const storageRef = ref(storage, `profile_images/${this.uid}/${this.uid}`);
 
     try {
-      // อัปโหลดรูปภาพไปยัง Firebase Storage
       const snapshot = await uploadBytes(storageRef, imageFile);
-      
-      // ดึง URL ของรูปภาพจาก Firebase Storage
       const imageUrl = await getDownloadURL(snapshot.ref);
-  
       return imageUrl;
     } catch (error) {
       console.log(error);

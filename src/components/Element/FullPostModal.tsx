@@ -181,6 +181,7 @@ const FullPostModal: React.FC<FullPostModalProps> = ({ onClose, post }) => {
                                 image={comment.profile?.profile_image}
                                 user_name={comment.profile?.userName}
                                 uid={comment.uid}
+                                timestamp={comment?.timestamp}
                             />
                         ))}
                     </Suspense>

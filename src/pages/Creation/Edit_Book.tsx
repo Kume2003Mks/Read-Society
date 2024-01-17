@@ -20,7 +20,7 @@ const Edit_Book = () => {
         "Horror",
         "Science",
         "Mystery",
-        "Comics",
+        "Drama",
         "Nonfiction",
         "Fantasy",
         "Humor",
@@ -110,7 +110,7 @@ const Edit_Book = () => {
     };
 
     const handleSubmit = async () => {
-        if (!bookName || !TypeOption || !GenreOption || !description ) {
+        if (!bookName || !TypeOption || !GenreOption || !description) {
             Swal.fire({
                 title: '<strong>Please fill in all required fields.</strong>',
                 icon: 'error',
@@ -147,11 +147,35 @@ const Edit_Book = () => {
                 confirmButtonText: '<h1>Ok</h1>',
             }).then(() => {
                 navigate(`/book-detail/${editbook_id!}`)
-              });
+            });
         } catch (error) {
             console.error('Error uploading book:', error);
         }
     };
+
+    const handleDel = () => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confrim'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const booksManager = new Books();
+                await booksManager.deleteBook(editbook_id!);
+                Swal.fire({
+                    title: 'Delete successful!',
+                    icon: 'success',
+                    confirmButtonText: '<h1>Ok</h1>',
+                  }).then(() => {
+                    navigate("/")
+                  });
+            }
+        })
+    }
 
     return (
         <main className="flex-row h-screen flex p-container">
@@ -249,9 +273,16 @@ const Edit_Book = () => {
                             />
                         </label>
 
-                        <div className={fromStyle.confirm_btn} onClick={handleSubmit}>
-                            Submit
+                        <div className='w-full flex flex-row gap-4 justify-end'>
+                            <div className={`${fromStyle.confirm_btn} bg-red-500 border-red-500 `} onClick={handleDel}>
+                                Delete
+                            </div>
+
+                            <div className={fromStyle.confirm_btn} onClick={handleSubmit}>
+                                Submit
+                            </div>
                         </div>
+
                     </div>
                 </div>
             ) : (<p>Only the owner can upload.</p>)}

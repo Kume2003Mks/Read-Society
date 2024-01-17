@@ -1,13 +1,14 @@
-import { useNavigate, useParams} from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Books from '../../function/Books';
 import Styles from '../../Style/Component.module.css';
 import table from '../../Style/table.module.css'
 import { Book, Episode, Profile, Comment } from "../../function/DeclareType";
-import { useEffect, useState, lazy, Suspense  } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import Loading from "../../components/loading/Loading";
 import { useAuth } from "../../function/context/AuthContext";
 import { Icon } from "@iconify/react";
 import userDataBase from "../../function/userDataBase";
+import interaction from "../../function/interaction";
 
 const Comment_Box = lazy(() => import('../../components/Element/Comment_Box'));
 
@@ -24,6 +25,11 @@ const BookDetails = () => {
     const [commentText, setCommentText] = useState<string>('');
     const [comment, setComment] = useState<Comment[]>([])
     const [reloadComponent, setReloadComponent] = useState(false);
+    const [loadlike, setloadlike] = useState(false);
+    const [likecount, setlikecount] = useState(0);
+    const [userLiked, setUserLiked] = useState(false);
+    const [userBookmarked, setUserBookmarked] = useState(false);
+
 
     const { book_id } = useParams();
     const { userData, isLoggedIn } = useAuth();
@@ -40,6 +46,7 @@ const BookDetails = () => {
 
         async function loadBooks() {
             try {
+                setdesLoading(true);
                 const id: string = book_id!;
                 const book = new Books();
                 const loadedBook = await book.getBookById(id);
@@ -77,12 +84,74 @@ const BookDetails = () => {
                 console.error("Error loading book:", error);
             }
         }
+        const checkUserLiked = async () => {
+            if (userData && userData.user && userData.user.uid) {
+                setloadlike(true);
+                const bookInteraction = new interaction(book_id!);
+                const { userLiked } = await bookInteraction.getLikes(userData.user.uid);
+                setUserLiked(userLiked);
+                setloadlike(false);
+            }
+        };
+
+        const LikedCount = async () => {
+            const bookInteraction = new interaction(book_id!);
+            const count: number = await bookInteraction.getAllLikes();
+            setlikecount(count);
+        }
+        const loadBookmarkStatus = async () => {
+            if (userData && userData.user && userData.user.uid) {
+                const bookInteraction = new interaction(book_id!);
+                const { userBookmarked } = await bookInteraction.getBookmarked(userData.user.uid);
+                setUserBookmarked(userBookmarked);
+            }
+        };
+        
         loadBooks();
         loadEps();
         loadComments()
+        checkUserLiked();
+        LikedCount();
+        loadBookmarkStatus();
 
     }, [book_id, userData, reloadComponent]);
     console.log(ep);
+
+    const handleLikeClick = async () => {
+        if (userData && userData.user && userData.user.uid) {
+            const bookInteraction = new interaction(book_id!);
+            try {
+                if (userLiked) {
+                    await bookInteraction.unlike(userData.user.uid);
+                } else {
+                    await bookInteraction.like(userData.user.uid);
+                }
+                setUserLiked(!userLiked);
+                setReloadComponent((prev) => !prev);
+            } catch (error) {
+                console.error('Error toggling like:', error);
+            }
+        }
+    };
+
+    const handleBookmarkClick = async () => {
+        if (userData && userData.user && userData.user.uid) {
+            const bookInteraction = new interaction(book_id!);
+            try {
+                if (userBookmarked) {
+                    await bookInteraction.removeBookmark(userData.user.uid);
+                    console.log('Bookmark removed successfully!');
+                } else {
+                    await bookInteraction.addBookmark(userData.user.uid);
+                    console.log('Bookmark added successfully!');
+                }
+    
+                setUserBookmarked(!userBookmarked);
+            } catch (error) {
+                console.error('Error handling bookmark:', error);
+            }
+        }
+    };
 
     const handleSendComment = async () => {
         let uid: string = ""
@@ -143,17 +212,25 @@ const BookDetails = () => {
                                 <p style={{ whiteSpace: 'pre-line' }}>{book.description} </p>
                             </div>
                         </div>
-                        <div className="absolute flex flex-row right-4 bottom-4 gap-4">
-                            <div className="p-2" title="Like">
-                                <Icon icon="mdi:heart" className="w-6 h-6 cursor-pointer" />
+
+                        {!loadlike && (
+
+                            <div className="absolute flex flex-row right-4 bottom-4 gap-4">
+
+                                <button className="p-2 flex flex-row gap-2 bg-gray-300 rounded-full" title="Like" onClick={handleLikeClick} disabled={editing}>
+                                    <Icon icon="mdi:heart" className={`w-6 h-6 ${userLiked ? 'text-red-500' : ''}`} />
+                                    {likecount !== 0 && <h1>{likecount}</h1>}
+                                </button>
+                                <button className="p-2 bg-gray-300 rounded-full" title="Book mark" onClick={handleBookmarkClick} disabled={editing}>
+                                    <Icon icon="solar:bookmark-bold" className={`w-6 h-6 ${userBookmarked ? 'text-orange-500' : ''}`} />
+                                </button>
+
+                                <button className="p-2 bg-gray-300 rounded-full" title="Share">
+                                    <Icon icon="majesticons:share" className="w-6 h-6" />
+                                </button>
                             </div>
-                            <div className="p-2" title="Book mark">
-                                <Icon icon="solar:bookmark-bold" className="w-6 h-6 cursor-pointer" />
-                            </div>
-                            <div className="p-2" title="Share">
-                                <Icon icon="majesticons:share" className="w-6 h-6 cursor-pointer" />
-                            </div>
-                        </div>
+                        )}
+
                     </div>
 
                     <div className="flex flex-row w-full container gap-2 mb-8">
@@ -218,6 +295,7 @@ const BookDetails = () => {
                                             image={comment.profile?.profile_image}
                                             user_name={comment.profile?.userName}
                                             uid={comment.uid}
+                                            timestamp={comment?.timestamp}
                                         />
                                     ))}
                                 </Suspense>

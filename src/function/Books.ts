@@ -1,8 +1,9 @@
-import { collection, getDocs, doc, getDoc, orderBy, query, where, Timestamp, addDoc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, orderBy, query, where, Timestamp, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { database, storage } from "../utils/Firebase";
 import { Book, Comment, Episode } from "./DeclareType";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import FatchProfiles from "./FetchProfiles";
+import interaction from "./interaction";
 
 interface BookData {
   title: string;
@@ -28,7 +29,6 @@ export default class Books {
       const storedBooks = sessionStorage.getItem('booksData');
       if (storedBooks) {
         const parsedBooks = JSON.parse(storedBooks);
-        console.log(parsedBooks);
         return parsedBooks;
       }
 
@@ -45,6 +45,9 @@ export default class Books {
         if (ownerProfile) {
           bookData.profile = ownerProfile;
         }
+        const like = new interaction(bookData.id)
+        const countlike = await like.getAllLikes();
+        bookData.like = countlike;
 
         allBooks.push(bookData);
       }
@@ -58,12 +61,10 @@ export default class Books {
   }
 
   public async getBooksByOwner(ownerUid: string) {
-    console.log(ownerUid);
     try {
       const storedBooks = sessionStorage.getItem(`Bookdata${ownerUid}`);
       if (storedBooks) {
         const parsedBooks = JSON.parse(storedBooks);
-        console.log('session owner books', parsedBooks);
         return parsedBooks;
       }
 
@@ -74,13 +75,18 @@ export default class Books {
       const allBooks: Book[] = [];
       for (const docSnapshot of querySnapshot.docs) {
         const bookData: Book = docSnapshot.data() as Book;
-        const bookId = docSnapshot.id; // เพิ่มบรรทัดนี้เพื่อดึง ID ของเอกสาร
+        const bookId = docSnapshot.id;
         bookData.id = bookId;
         const Profiles = new FatchProfiles()
         const ownerProfile = await Profiles.fetchProfile(bookData.owner);
         if (ownerProfile) {
           bookData.profile = ownerProfile;
         }
+
+        const like = new interaction(bookData.id)
+        const countlike = await like.getAllLikes();
+        bookData.like = countlike;
+
         allBooks.push(bookData);
       }
       sessionStorage.setItem(`Bookdata${ownerUid}`, JSON.stringify(allBooks));
@@ -113,6 +119,10 @@ export default class Books {
         if (ownerProfile) {
           bookData.profile = ownerProfile;
         }
+
+        const like = new interaction(bookData.id)
+        const countlike = await like.getAllLikes();
+        bookData.like = countlike;
 
         console.log(bookData)
         return bookData;
@@ -213,7 +223,7 @@ export default class Books {
   public async uploadEp(bookId: string, epName: string, file: File) {
     try {
       const storage = getStorage();
-      const epRef = ref(storage, `books_ID/${bookId}/ep/${epName + Math.floor(Math.random() * 256)}`);
+      const epRef = ref(storage, `books_EP/${bookId}/ep/${epName + Math.floor(Math.random() * 256)}`);
       await uploadBytes(epRef, file);
 
       const epURL = await getDownloadURL(epRef);
@@ -343,7 +353,6 @@ export default class Books {
     try {
       const bookRef = doc(database, 'books', bookId);
       const commentsCollectionRef = collection(bookRef, 'comments');
-
       // Use getDocs to query the 'comments' collection and get all documents
       const querySnapshot = await getDocs(commentsCollectionRef);
 
@@ -365,10 +374,74 @@ export default class Books {
         })
       );
 
+      comments.sort((a: Comment, b: Comment) => {
+        const aTimestamp = a.timestamp?.seconds ?? 0;
+        const bTimestamp = b.timestamp?.seconds ?? 0;
+        return bTimestamp - aTimestamp;
+      });
+      
       return comments;
     } catch (error) {
       console.error('Error getting comments: ', error);
       return [];
     }
   }
+
+  public async deleteBook(bookId: string) {
+    try {
+      const booksCollection = collection(database, 'books');
+      const bookRef = doc(booksCollection, bookId);
+
+      const bookDoc = await getDoc(bookRef);
+      const bookData = bookDoc.data() as Book;
+
+      if (bookData.thumbnail) {
+        const thumbnailRef = ref(storage, bookData.thumbnail);
+        await deleteObject(thumbnailRef);
+      }
+
+      const epsCollection = collection(database, 'books', bookId, 'ep');
+      const epsQuerySnapshot = await getDocs(epsCollection);
+
+      await Promise.all(
+        epsQuerySnapshot.docs.map(async (doc) => {
+          const epData = doc.data() as Episode;
+          if (epData.url) {
+            const epUrlRef = ref(storage, epData.url);
+            await deleteObject(epUrlRef);
+          }
+        })
+      );
+
+      await deleteDoc(bookRef);
+
+      sessionStorage.removeItem('booksData');
+      sessionStorage.removeItem(`Bookdata${bookData.owner}`);
+
+      console.log('Book deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting book:', error);
+    }
+  }
+
+  public async deleteEpisode(bookId: string, epId: string) {
+    try {
+      const epDocRef = doc(database, 'books', bookId, 'ep', epId);
+      const epDoc = await getDoc(epDocRef);
+      if (!epDoc.exists()) {
+        console.log('Episode not found with the specified ID:', epId);
+        return;
+      }
+      const epData = epDoc.data() as EpData;
+      await deleteDoc(epDocRef);
+      if (epData.url) {
+        const contentRef = ref(storage, epData.url);
+        await deleteObject(contentRef);
+      }
+      console.log('Episode deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting episode:', error);
+    }
+  }
+
 }

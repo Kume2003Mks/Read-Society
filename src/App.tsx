@@ -23,6 +23,7 @@ import Edit_Book from './pages/Creation/Edit_Book.tsx';
 import Edit_Ep from './pages/Creation/Edit_Ep.tsx';
 import Read from './pages/Books/Read.tsx';
 import { FollowProvider } from './function/context/GetFollow.tsx';
+import { CollectionProvider } from './function/context/CollectionContext.tsx';
 
 const App = () => {
 
@@ -78,7 +79,7 @@ const App = () => {
         },
         {
             path: "/collection",
-            element: <Layout />,
+            element: <CollectionProvider><Layout /></CollectionProvider>,
             children: [
                 {
                     path: '',

@@ -1,0 +1,24 @@
+:root {
+    --btn-background-color: #c5c5c5;
+  }
+
+:global(.dark-mode){
+    --btn-background-color: #404040;
+}
+
+.Link_Btn {
+    font-size: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+  
+.ActiveButton {
+    border-radius: 8px;
+    background-color: var(--btn-background-color); 
+}
+  

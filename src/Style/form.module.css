@@ -9,7 +9,6 @@
     --from-input-color: #3c3c3c;
     --input-border: 1px solid rgb(100, 100, 100);
     --text-col: white;
-
 }
 
 .container {
@@ -162,7 +161,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    border: 2px black solid;
+    border: 2px solid var(--input-border);
     background-color: var(--from-input-color);
     border-radius: 1rem;
     height: 250px;
@@ -171,7 +170,8 @@
 
 .icon_container{
     padding: 0.5rem;
-    border: 2px black solid;
+    border: 2px solid var(--main-text-color);
+    color: var(--main-text-color);
     border-radius: 100%;
     height: 64px;
     width: 64px;

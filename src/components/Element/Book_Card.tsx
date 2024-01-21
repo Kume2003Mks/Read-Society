@@ -37,7 +37,7 @@ const Book_Card: React.FC<BookCardProps> = ({ genre, title, thumbnail, user, id,
   return (
     <div className={styles.book_card}>
       {/**category label*/}
-      <h1 className='text-xs text-black text-right w-fit self-end px-1 pt-1 rounded-t-lg' style={{ backgroundColor: genreColor }}>{genre}</h1>
+      <h1 className='text-xs text-right w-fit self-end px-1 pt-1 rounded-t-lg' style={{ backgroundColor: genreColor }}>{genre}</h1>
       {/**card */}
       <Link to={`/book-detail/${id}`}>
         <div className={`cursor-pointer `}>

@@ -2,12 +2,14 @@
     --fake-input: #ccc;
     --fake-input-border: 1px solid black;
     --input-label: black;
+    --text-color: black;
 }
 
 :global(.dark-mode) {
-    --fake-input: #2f2f2f;
+    --fake-input: #3c3c3c;
     --fake-input-border: 1px solid rgb(100, 100, 100);
     --input-label: rgb(206, 206, 206);
+    --text-color: white;
 }
 
 .postwrapper {
@@ -18,7 +20,8 @@
 .text_input {
     width: 100%;
     height: 150px;
-    background-color: white;
+    background-color: var(--fake-input);
+    border: var(--fake-input-border);
     resize: none;
     padding: 8px;
 }
@@ -79,4 +82,8 @@
     border-color: var(--profile-border);
     border-radius: 100%;
     object-fit: cover;
+}
+
+.text{
+    color:var(--text-color) ;
 }

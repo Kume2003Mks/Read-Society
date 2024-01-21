@@ -1,3 +1,11 @@
+:root {
+    --btn-hover: lightgrey;
+}
+
+:global(.dark-mode) {
+    --btn-hover: #444444;
+}
+
 .page_renderer {
     display: flex;
 }
@@ -13,13 +21,13 @@
 
 .navigate:hover{
     border-radius: 12px;
-    background-color: #e0e0e0;
+    background-color: var(--btn-hover);
     transition: all 0.3s ease-out;
 }
 
 .highlighted{
     border-radius: 12px;
-    background-color: #e0e0e0;
+    background-color: var(--btn-hover);
     transition: background-color 0.3s ease;
 }
 

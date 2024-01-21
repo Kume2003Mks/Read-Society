@@ -19,7 +19,6 @@ import Social from '../../function/Social';
 
 const Comment_Box = lazy(() => import('./Comment_Box'));
 
-
 interface FullPostModalProps {
     onClose: () => void;
     post: PostBox; // Assuming you have a PostBox type

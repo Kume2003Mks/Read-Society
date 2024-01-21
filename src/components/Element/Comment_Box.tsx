@@ -40,8 +40,8 @@ const Comment_Box: React.FC<Comment_Prop> = ({ text, image, user_name, uid, time
             </div>
             {/* text box */}
             <div className={Styles.comment_content}>
-                <div className={Styles.user_name} onClick={() => navigate(`/community/profile/${uid}`)}>
-                    <h1>@{user_name}</h1>
+                <div className={Styles.user_name}>
+                    <h1 onClick={() => navigate(`/community/profile/${uid}`)}>@{user_name}</h1>
                     <p>{formattedDateString}</p>
                 </div>
                 <div >

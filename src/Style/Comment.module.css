@@ -1,3 +1,12 @@
+:root {
+    --text-border: 2px solid black;
+}
+
+:global(.dark-mode) {
+
+    --text-border: 2px solid rgb(100, 100, 100);
+}
+
 .comment_container {
     display: flex;
     padding: 12px;
@@ -9,7 +18,7 @@
     height: 3rem;
     border-radius: 100px;
     overflow: hidden;
-    border: 2px solid black;
+    border: var(--text-border);
 
    img { 
         cursor: pointer;
@@ -24,7 +33,7 @@
     flex: 1;
     flex-direction: column;
     border-radius: 8px;
-    border: 2px solid black;
+    border: var(--text-border);
     overflow: hidden;
     padding: 8px;
 }

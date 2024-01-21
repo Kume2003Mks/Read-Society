@@ -8,9 +8,8 @@ const Link_Btn: string = 'text-base text-center flex flex-row flex-wrap justify-
 const CreationBar: React.FC = () => {
     const { OwnerbookCount } = useBook();
     return (
-        <SideBar className='p-2'>
-            <h1 className='text-2xl font-bold text-center px-3 mb-2'>My Creation</h1>
-            <div className='m-4 border-t-2 border-black' />
+        <SideBar className='p-2 pt-4'>
+            <h1 className='text-2xl font-bold text-center underline underline-offset-2 mb-4'>My Creation</h1>
             <ul className='nav-list mx-2'>
                 <li>
                     <NavLink to='/mycreation/mybooks' className={Link_Btn}>

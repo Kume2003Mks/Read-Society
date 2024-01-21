@@ -1,4 +1,15 @@
-/* SearchBar.css */
+:root {
+  --background-color-btn : rgb(209 213 219);
+  --icon-button: black;
+  --border-color: black;
+}
+
+:global(.dark-mode) {
+  --background-color-btn : #3c3c3c;
+  --icon-button: white;
+  --border-color: #ffffff;
+}
+
 .search_bar {
     position: relative;
     align-items: center;
@@ -7,19 +18,18 @@
     display: flex;
   }
   
-  .search_input {
+.search_input {
     width: 100% ;
     border-radius: 8px;
-    border: 2px solid #000000;
-    outline: none;
+    border: 2px solid var(--border-color);
     font-size: 12pt;
+    color: var(--icon-button);
     text-decoration: none;
     background-color: transparent;
-    padding: 4px 4px 4px 24px;
-    flex: 1;
+    padding: 4px 4px 4px 28px;
   }
   
-  .search_icon {
+.search_icon {
     position: absolute;
     left: 8px;
     top: 50%;

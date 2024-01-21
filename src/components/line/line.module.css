@@ -1,0 +1,12 @@
+:root{
+    --line-color:black;
+}
+
+:global(.dark-mode) {
+    --line-color:#555555;
+}
+
+.line{
+    margin: 0.5rem 1rem 0.5rem 1rem;
+    border: 1px solid var(--line-color);
+}

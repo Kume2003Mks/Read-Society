@@ -1,8 +1,11 @@
+import { Suspense, lazy } from 'react';
 import '../../Style/Global.css'
-import Book_Card from '../../components/Element/Book_Card'
 import CreationBar from '../../components/navigation/CreationBar'
 import { Book } from '../../function/DeclareType'
 import { useBook } from '../../function/context/BooksContext';
+import Loading from '../../components/loading/Loading';
+
+const Book_Card = lazy(() => import('../../components/Element/Book_Card'));
 
 const My_Creation = () => {
 
@@ -12,14 +15,19 @@ const My_Creation = () => {
         <main className="flex-row h-screen justify-between flex-wrap flex p-container">
             <CreationBar />
             <div className='grid-layout h-full flex-1 p-4'>
-                {Ownerbooks.map((props: Book, index: number) => (
-                    <Book_Card
-                        key={index}
-                        {...props}
-                        user={props.profile?.userName}
-                    />
-                ))
-                }
+                <Suspense fallback={
+                    <div className='flex flex-1 justify-center items-center'>
+                        <Loading />
+                    </div>}>
+                    {Ownerbooks.map((props: Book, index: number) => (
+                        <Book_Card
+                            key={index}
+                            {...props}
+                            user={props.profile?.userName}
+                        />
+                    ))
+                    }
+                </Suspense>
             </div>
         </main>
     )

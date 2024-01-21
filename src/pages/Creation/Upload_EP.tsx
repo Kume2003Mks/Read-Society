@@ -45,7 +45,6 @@ const Upload_EP = () => {
 
     loadBooks();
 
-
   }, [upload_id, userData]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {

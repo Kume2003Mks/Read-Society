@@ -91,8 +91,8 @@ const Read = () => {
                                     file={epload?.url}
                                     onLoadSuccess={onDocumentLoadSuccess}
                                     renderMode="canvas"
-                                    className="max-h-full mt-0" 
-                                    
+                                    className="max-h-full mt-0"
+
                                     onLoadError={(error) => console.error("Error loading PDF:", error)}>
                                     <Page
                                         renderTextLayer={false}
@@ -110,8 +110,7 @@ const Read = () => {
                                         onClick={() => setPageNumber(pageNumber - 1)}
                                         disabled={pageNumber === 1}
                                         className="flex flex-col items-center" >
-
-                                        <Icon icon="fluent-mdl2:skype-arrow" />
+                                        <Icon icon="fluent-mdl2:skype-arrow" className="icon-from" />
                                         <p>
                                             Previous
                                         </p>
@@ -120,7 +119,7 @@ const Read = () => {
                                         onClick={() => setPageNumber(pageNumber + 1)}
                                         disabled={pageNumber === numPages}
                                         className="flex flex-col items-center">
-                                        <Icon icon="fluent-mdl2:skype-arrow" rotate={2} />
+                                        <Icon icon="fluent-mdl2:skype-arrow" className="icon-from" rotate={2} />
                                         <p>
                                             Next
                                         </p>

@@ -1,10 +1,15 @@
 :root {
     --button-color-from: #005FC7;
     --from-input-color: #D9D9D9;
+    --input-border: 1px solid black;
+    --text-col: black;
 }
 
 :global(.dark-mode) {
-    --button-color-from: #061e37;
+    --from-input-color: #3c3c3c;
+    --input-border: 1px solid rgb(100, 100, 100);
+    --text-col: white;
+
 }
 
 .container {
@@ -25,8 +30,8 @@
     border-radius: 10px;
     width: 80%;
     padding: 0.5rem;
-    border: 2px black solid;
-
+    border: var(--input-border);
+    color: var(--text-col);
 }
 
 .confirm_btn {
@@ -60,9 +65,11 @@
 .input_container input {
     flex-grow: 1;
     font-size: 1rem;
+    border: var(--input-border);
     background-color: var(--from-input-color);
     border-radius: 10px;
     padding: 0.5rem;
+    color: var(--text-col);
 }
 
 .toggle_btn {
@@ -79,7 +86,7 @@
 }
 
 .aboutme_input {
-    border: 2px black solid;
+    border: var(--input-border);
     font-size: 1rem;
     background-color: var(--from-input-color);
     border-radius: 10px;
@@ -87,6 +94,7 @@
     resize: none;
     height: 100px;
     flex-grow: 1;
+    color: var(--text-col);
 }
 
 .word_count {

@@ -8,21 +8,16 @@
     --grid-gap: 1rem;
     --icon-size: 1.5rem;
     --tablet-icon-size: 1.25rem;
-    --sidebar-background-color: white;
   }
 
   .dark-mode{
-    --sidebar-background-color: #2b2b2b;
+    --list-background-color: #404040;
   }
 
   .p-container {
     padding-top: 64px;
   }
 
-  .sidebar-bg{
-    background-color: var(--sidebar-background-color);
-  }
-  
   .blackground-css {
     background: var(--primary-color);
     background: var(--desktop-background);

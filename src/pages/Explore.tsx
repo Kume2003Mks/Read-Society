@@ -7,6 +7,7 @@ import Filter_Button from '../components/Element/Filter_Button'
 import Loading from '../components/loading/Loading'
 import { Book } from '../function/DeclareType'
 import { useBook } from '../function/context/BooksContext'
+import Line from '../components/line/Line'
 
 const Book_Card = lazy(() => import('../components/Element/Book_Card'));
 
@@ -20,7 +21,7 @@ const Explore: JSX.ElementType = () => {
                 <h1 className='text-2xl font-bold text-center underline underline-offset-2'>Explore</h1>
                 {/* My Creation */}
                 <h1 className='text-xl font-bold text-left px-3 mt-2'>Category</h1>
-                <div className='mx-4 border-t-2 border-black' />
+                <Line />
                 <div className='grid grid-cols-2 gap-2 mx-2 mt-1 pt-1'>
                     <Capsule label='Novel' color='red' />
                     <Capsule label='Cartoon' color='orange' />
@@ -28,12 +29,12 @@ const Explore: JSX.ElementType = () => {
                     <Capsule label='Non-Fiction' color='blue' />
                 </div>
                 <h1 className='text-xl font-bold text-left px-3 mt-2'>Hot Tag</h1>
-                <div className='mx-4 border-t-2 border-black' />
+                <Line />
                 <div className='flex gap-2 mx-2 mt-1'>
                     <SearchBar />
                 </div>
                 <h1 className='text-xl font-bold text-left px-3 mt-2'>More Filters</h1>
-                <div className='mx-4 border-t-2 border-black' />
+                <Line />
                 <div className='flex flex-col gap-2 mx-2 mt-1 pt-2'>
                     <Filter_Button icon='icon-park-solid:time' label='Latest' />
                     <Filter_Button icon='mdi:eye' label='Most Viewed' />

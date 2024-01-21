@@ -11,7 +11,6 @@ interface BookData {
   genre2: string;
   type: string;
   description: string;
-  tags: string[];
   modified: Date;
   thumbnail?: string;
 }
@@ -108,7 +107,7 @@ export default class Books {
           return foundBook;
         }
       }
-      // If not found in sessionStorage, search in Firebase Firestore
+
       const bookDocRef = doc(database, 'books', bookId);
       const bookDoc = await getDoc(bookDocRef);
 
@@ -124,7 +123,6 @@ export default class Books {
         const countlike = await like.getAllLikes();
         bookData.like = countlike;
 
-        console.log(bookData)
         return bookData;
       } else {
         console.log('Book not found with the specified ID:', bookId);
@@ -186,13 +184,12 @@ export default class Books {
     genre2: string,
     type: string,
     description: string,
-    tags: string[],
     owner: string,
     thumbnail: File) {
 
     try {
       const storage = getStorage();
-      const thumbnailRef = ref(storage, `books/${owner}/${title}`);
+      const thumbnailRef = ref(storage, `books/${owner}/${title + Math.floor(Math.random() * 256)}`);
       await uploadBytes(thumbnailRef, thumbnail);
 
       const thumbnailURL = await getDownloadURL(thumbnailRef);
@@ -203,7 +200,6 @@ export default class Books {
         genre2: genre2,
         type: type,
         description: description,
-        tags: tags,
         owner: owner,
         thumbnail: thumbnailURL,
         created: Timestamp.now().toDate()
@@ -213,6 +209,7 @@ export default class Books {
       const newBookRef = await addDoc(booksCollection, newBook);
 
       sessionStorage.removeItem(`Bookdata${owner}`);
+      sessionStorage.removeItem('booksData');
       console.log('New book added with ID:', newBookRef.id);
       return newBookRef.id
     } catch (error) {
@@ -252,7 +249,6 @@ export default class Books {
     type: string,
     description: string,
     thumbnail: File | null,
-    tags?: string[],
     genre2?: string
   ) {
     try {
@@ -267,7 +263,6 @@ export default class Books {
         genre2: genre2 || '',
         type,
         description,
-        tags: tags || [],
         modified: Timestamp.now().toDate(),
       };
 

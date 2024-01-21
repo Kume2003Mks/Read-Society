@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import Style from './Layout.module.css'
+
 
 interface BookViewProps {
     title: string;
@@ -13,7 +15,7 @@ const Book_View: React.FC<BookViewProps> = ({ children, title, className }) => {
             <div className='w-full'>
                 <p className='text-xl'>{title}</p>
             </div>
-            <div className='w-full my-2 border-t-2 border-black' />
+            <div className={Style.line} />
             <div className={`w-full ${className}`}>
                 {children}
             </div>

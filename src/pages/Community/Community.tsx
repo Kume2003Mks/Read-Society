@@ -2,9 +2,8 @@ import SideBar from '../../components/Layouts/SideBar'
 import { Icon } from '@iconify/react'
 import '../../Style/Global.css'
 import poststyle from '../../Style/post.module.css'
-import PostBox from '../../components/Element/PostBox'
 import Social from '../../function/Social'
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { useAuth } from '../../function/context/AuthContext'
 import userDataBase from '../../function/userDataBase'
 import { Followers, Post, Profile } from '../../function/DeclareType'
@@ -13,6 +12,9 @@ import Loading from '../../components/loading/Loading'
 import Swal from 'sweetalert2'
 import { useFollow } from '../../function/context/GetFollow'
 import Follower from '../../components/Element/Follower'
+import Line from '../../components/line/Line'
+
+const PostBox = lazy(() => import('../../components/Element/PostBox'));
 
 const Community: JSX.ElementType = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -104,7 +106,7 @@ const Community: JSX.ElementType = () => {
 
     return (
         <main className="flex-row h-screen justify-between flex p-container">
-            <SideBar className='p-1'>
+            <SideBar className='p-2'>
                 <h1 className='text-xl font-bold text-left px-3 mb-2'>Explore</h1>
                 <ul className='nav-list mx-2'>
                     <li>
@@ -132,8 +134,7 @@ const Community: JSX.ElementType = () => {
                         </a>
                     </li>
                 </ul>
-                <div className='m-4 border-t-2 border-black' />
-
+                <Line />
                 <h1 className='text-xl font-bold text-left px-3 my-2'>Topic</h1>
                 <ul className='nav-list mx-2'>
                     <li>
@@ -213,7 +214,7 @@ const Community: JSX.ElementType = () => {
                                     <div className="flex justify-between items-center">
                                         <label htmlFor="uploadIMG">
                                             <div className='w-12 h-12 cursor-pointer'>
-                                                <Icon icon="bx:image-add" className="h-full w-full" />
+                                                <Icon icon="bx:image-add" className={`h-full w-full ${poststyle.text}`} />
                                             </div>
 
                                         </label>
@@ -228,13 +229,13 @@ const Community: JSX.ElementType = () => {
                                         />
 
                                         {/* Checkbox for spoil */}
-                                        <label>
+                                        <label className='flex gap-1'>
                                             <input
                                                 type="checkbox"
                                                 checked={isSpoil}
                                                 onChange={() => setIsSpoil(!isSpoil)}
                                             />
-                                            Spoil
+                                            <p>Spoil</p>
                                         </label>
                                     </div>
                                     <div >
@@ -251,15 +252,21 @@ const Community: JSX.ElementType = () => {
                     </>
                 ) : (<></>)}
 
-                {post?.map((props: Post, index: number) => (
-                    <PostBox
-                        key={index}
-                        {...props}
-                        isSpoil={props?.spoil}
-                        username={props.profile?.userName}
-                        userprofile={props.profile?.profile_image}
-                    />
-                ))}
+                <Suspense fallback={
+                <div className='flex flex-1 justify-center items-center'>
+                    <Loading />
+                </div>}>
+
+                    {post?.map((props: Post, index: number) => (
+                        <PostBox
+                            key={index}
+                            {...props}
+                            isSpoil={props?.spoil}
+                            username={props.profile?.userName}
+                            userprofile={props.profile?.profile_image}
+                        />
+                    ))}
+                </Suspense>
 
             </div>
             {isLoggedIn ? (

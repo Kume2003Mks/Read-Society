@@ -1,0 +1,55 @@
+:root {
+    --background-color-btn : rgb(209 213 219);
+    --icon-button: black;
+    --border-color: black;
+}
+
+:global(.dark-mode) {
+    --background-color-btn : #3c3c3c;
+    --icon-button: white;
+    --border-color: #3d3d3d;
+}
+
+.book_container{
+    display: flex;
+    width: 100%;
+    max-width: 90%;
+    height: 400px;
+    padding: 2rem;
+    border: 2px solid var(--border-color);
+    position: relative;
+    margin-top: 2rem;
+}
+
+.raspons_container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 90%;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.book_container_col{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 90%;
+    height: 400px;
+    border: 2px solid var(--border-color);
+    position: relative;
+}
+
+
+.interact_button{
+    padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    background-color: var(--background-color-btn);
+    border-radius: 100rem;
+}
+
+.icon_button{
+    color: var(--icon-button);
+}

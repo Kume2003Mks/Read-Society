@@ -42,7 +42,6 @@ const Edit_Book = () => {
     const [TypeOption, setTypeOption] = useState('');
     const [GenreOption, setGenreOption] = useState('');
     const [subGenreOption, setsubGenreOption] = useState<string | undefined>('');
-    const [tags, setTags] = useState<string[] | undefined>([]);
     const [bookName, setBookName] = useState('');
     const [description, setDescription] = useState('');
     const [editing, setEditing] = useState<boolean>(false);
@@ -66,8 +65,6 @@ const Edit_Book = () => {
                 setTypeOption(loadedBook.type)
                 setGenreOption(loadedBook.genre)
                 setsubGenreOption(loadedBook?.genre2)
-                setTags(loadedBook?.tags)
-
 
             } catch (error) {
                 console.error("Error loading book:", error);
@@ -98,11 +95,6 @@ const Edit_Book = () => {
         }
     };
 
-    const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newTag = e.target.value;
-        setTags((prevTags) => [...(prevTags || []), newTag]);
-    };
-
     const handleSubmit = async () => {
         if (!bookName || !TypeOption || !GenreOption || !description) {
             Swal.fire({
@@ -122,7 +114,6 @@ const Edit_Book = () => {
                 TypeOption,
                 description,
                 imgfile,
-                tags,
                 subGenreOption,
             );
 
@@ -131,7 +122,6 @@ const Edit_Book = () => {
             setTypeOption('');
             setGenreOption('');
             setsubGenreOption('');
-            setTags([]);
             setBookName('');
             setDescription('');
 
@@ -200,10 +190,6 @@ const Edit_Book = () => {
                             />
                         </label>
 
-                        <label className={styles.box_input} style={{ marginTop: '8px' }}>
-                            <h1>Add tag</h1>
-                            <input type="text" placeholder="Add tag" value={tags} onChange={handleTagChange} />
-                        </label>
                     </div>
 
                     <div className="flex flex-[3] flex-col px-4 gap-2">

@@ -1,7 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom"
 import Books from '../../function/Books';
-import Styles from '../../Style/Component.module.css';
-import table from '../../Style/table.module.css'
 import { Book, Episode, Profile, Comment } from "../../function/DeclareType";
 import { useEffect, useState, lazy, Suspense } from "react";
 import Loading from "../../components/loading/Loading";
@@ -9,6 +7,10 @@ import { useAuth } from "../../function/context/AuthContext";
 import { Icon } from "@iconify/react";
 import userDataBase from "../../function/userDataBase";
 import interaction from "../../function/interaction";
+
+import Styles from '../../Style/Component.module.css';
+import table from '../../Style/table.module.css'
+import BooksStyle from '../../Style/BooksStyle.module.css';
 
 const Comment_Box = lazy(() => import('../../components/Element/Comment_Box'));
 
@@ -29,7 +31,6 @@ const BookDetails = () => {
     const [likecount, setlikecount] = useState(0);
     const [userLiked, setUserLiked] = useState(false);
     const [userBookmarked, setUserBookmarked] = useState(false);
-
 
     const { book_id } = useParams();
     const { userData, isLoggedIn } = useAuth();
@@ -185,13 +186,13 @@ const BookDetails = () => {
             ) : book ? (
                 <>
                     {/* book preview */}
-                    <div className="flex w-full h-[400px] p-8 container border-2 border-black mt-8 relative">
+                    <div className={BooksStyle.book_container}>
                         {editing &&
                             <div
                                 className="absolute right-4 top-4 w-6 h-6"
                                 title="Edit"
                                 onClick={() => navigate(`/mycreation/edited/book/${book_id!}`)}>
-                                <Icon icon="uil:edit" className="w-full h-full cursor-pointer" />
+                                <Icon icon="uil:edit" className={`w-6 h-6 cursor-pointer ${BooksStyle.icon_button}`} />
                             </div>
                         }
                         <div className="flex-none mr-8">
@@ -217,31 +218,31 @@ const BookDetails = () => {
 
                             <div className="absolute flex flex-row right-4 bottom-4 gap-4">
 
-                                <button className="p-2 flex flex-row gap-2 bg-gray-300 rounded-full" title="Like" onClick={handleLikeClick} disabled={editing}>
-                                    <Icon icon="mdi:heart" className={`w-6 h-6 ${userLiked ? 'text-red-500' : ''}`} />
+                                <button className={BooksStyle.interact_button} title="Like" onClick={handleLikeClick} disabled={editing}>
+                                    <Icon icon="mdi:heart" className={`w-6 h-6 ${userLiked ? 'text-red-500' : BooksStyle.icon_button}`} />
                                     {likecount !== 0 && <h1>{likecount}</h1>}
                                 </button>
-                                <button className="p-2 bg-gray-300 rounded-full" title="Book mark" onClick={handleBookmarkClick} disabled={editing}>
-                                    <Icon icon="solar:bookmark-bold" className={`w-6 h-6 ${userBookmarked ? 'text-orange-500' : ''}`} />
+                                <button className={BooksStyle.interact_button} title="Book mark" onClick={handleBookmarkClick} disabled={editing}>
+                                    <Icon icon="solar:bookmark-bold" className={`w-6 h-6 ${userBookmarked ? 'text-orange-500' : BooksStyle.icon_button}`} />
                                 </button>
 
-                                <button className="p-2 bg-gray-300 rounded-full" title="Share">
-                                    <Icon icon="majesticons:share" className="w-6 h-6" />
+                                <button className={BooksStyle.interact_button} title="Share">
+                                    <Icon icon="majesticons:share" className={`w-6 h-6 ${BooksStyle.icon_button}`} />
                                 </button>
                             </div>
                         )}
 
                     </div>
 
-                    <div className="flex flex-row w-full container gap-2 mb-8">
+                    <div className={BooksStyle.raspons_container}>
                         {/* episode preview */}
-                        <div className="flex w-full h-[400px] container flex-col border-2 border-black mt-8 relative">
+                        <div className={BooksStyle.book_container_col}>
                             <div className="bg-[#1FA0F6] w-full items-center flex p-4 relative">
                                 <h1 className="text-2xl font-bold mb-1">Episodes</h1>
                                 {editing &&
                                     <div className="flex flex-row gap-4 absolute right-4 self-center">
                                         <div title="Upload ep" onClick={() => navigate(`/mycreation/upload/ep/${book_id!}`)}>
-                                            <Icon icon="fluent:arrow-upload-16-filled" className="w-6 h-6 cursor-pointer" />
+                                            <Icon icon="fluent:arrow-upload-16-filled" className={`w-6 h-6 cursor-pointer ${BooksStyle.icon_button}`} />
                                         </div>
                                     </div>
                                 }
@@ -270,7 +271,7 @@ const BookDetails = () => {
                                                             <div title={`edit ${episode.title}`}
                                                                 onClick={() => navigate(`/mycreation/edited/ep/${book_id!}/${episode.id}`)}
                                                             >
-                                                                <Icon icon="ph:pencil-bold" className="w-6 h-6 cursor-pointer" />
+                                                                <Icon icon="ph:pencil-bold" className={`w-6 h-6 cursor-pointer ${BooksStyle.icon_button}`} />
                                                             </div>
                                                         </td>
                                                     }
@@ -283,7 +284,7 @@ const BookDetails = () => {
                             </div>
                         </div>
                         {/* comment preview */}
-                        <div className="flex w-full h-[400px] container flex-col border-2 border-black mt-8 relative">
+                        <div className={BooksStyle.book_container_col}>
                             <div className="bg-[#1FA0F6] w-full items-center flex p-4 relative">
                                 <h1 className="text-2xl font-bold mb-1">Comment</h1>
                             </div>

@@ -4,6 +4,7 @@ import { Suspense, lazy } from 'react'
 import '../Style/Global.css'
 import { Book } from '../function/DeclareType.ts'
 import { useBook } from '../function/context/BooksContext.tsx'
+import Line from '../components/line/Line.tsx'
 
 const Book_Card = lazy(() => import('../components/Element/Book_Card'));
 
@@ -13,10 +14,9 @@ const Collection: JSX.ElementType = () => {
 
     return (
         <main className={classStyle.MainScreen}>
-            <SideBar className='p-2'>
-                <h1 className='text-2xl font-bold text-center'>My Collection</h1>
+            <SideBar className='p-2 pt-4'>
+                <h1 className='text-2xl font-bold text-center underline underline-offset-2 mb-4'>My Collection</h1>
                 {/* My Creation */}
-                <div className='m-4 border-t-2 border-black' />
 
                 <ul className='nav-list mx-2'>
                     <li>
@@ -29,9 +29,7 @@ const Collection: JSX.ElementType = () => {
                         </a>
                     </li>
                 </ul>
-
-                <div className='m-4 border-t-2 border-black' />
-
+                <Line />
                 <ul className='nav-list mx-2'>
                     <li>
                         {/* All Book */}
@@ -55,7 +53,7 @@ const Collection: JSX.ElementType = () => {
                     </li>
                 </ul>
 
-                <div className='m-4 border-t-2 border-black' />
+                <Line />
 
                 <p className='text-right text-sm underline mx-4'>category</p>
 

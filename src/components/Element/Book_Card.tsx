@@ -35,7 +35,7 @@ const Book_Card: React.FC<BookCardProps> = ({ genre, title, thumbnail, user, id,
   const genreColor = genreColors[genre] || 'red';
 
   return (
-    <div className='px-2 pb-2 h-fit justify-center rounded-lg cursor-pointer flex flex-col flex-1 snap-start hover:bg-slate-300'>
+    <div className={styles.book_card}>
       {/**category label*/}
       <h1 className='text-xs text-black text-right w-fit self-end px-1 pt-1 rounded-t-lg' style={{ backgroundColor: genreColor }}>{genre}</h1>
       {/**card */}
@@ -49,7 +49,7 @@ const Book_Card: React.FC<BookCardProps> = ({ genre, title, thumbnail, user, id,
                 <p className='text-xs text-slate-500'>{user}</p>
               </div>
               <div className='absolute flex flex-col right-1 bottom-[-4px]'>
-                <Icon icon="mdi:heart" className={`w-6 h-6`} />
+                <Icon icon="mdi:heart" className={`w-6 h-6 ${styles.icon_color}`} />
                 <p className='text-xs text-center'>{like}</p>
               </div>
             </div>

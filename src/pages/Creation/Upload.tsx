@@ -37,7 +37,6 @@ const Upload = () => {
   const [TypeOption, setTypeOption] = useState('');
   const [GenreOption, setGenreOption] = useState('');
   const [subGenreOption, setsubGenreOption] = useState('');
-  const [tags, setTags] = useState<string[]>([]);
   const [bookName, setBookName] = useState('');
   const [description, setDescription] = useState('');
 
@@ -59,10 +58,6 @@ const Upload = () => {
     }
   };
 
-  const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTag = e.target.value;
-    setTags((prevTags) => [...prevTags, newTag]);
-  };
 
   const handleSubmit = async () => {
     if (!bookName || !TypeOption || !GenreOption || !description || !imgfile) {
@@ -84,13 +79,12 @@ const Upload = () => {
 
       const booksManager = new Books();
 
-      const id = await booksManager.uploadBook(
+      await booksManager.uploadBook(
         bookName,
         GenreOption,
         subGenreOption,
         TypeOption,
         description,
-        tags,
         uid,
         imgfile,);
 
@@ -99,7 +93,6 @@ const Upload = () => {
       setTypeOption('');
       setGenreOption('');
       setsubGenreOption('');
-      setTags([]);
       setBookName('');
       setDescription('');
 
@@ -108,7 +101,7 @@ const Upload = () => {
         icon: 'success',
         confirmButtonText: '<h1>Ok</h1>',
       }).then(() => {
-        navigate(`/mycreation/upload/ep/${id}`)
+        navigate('/')
       });
     } catch (error) {
       console.error('Error uploading book:', error);
@@ -142,10 +135,6 @@ const Upload = () => {
             />
           </label>
 
-          <label className={styles.box_input} style={{ marginTop: '8px' }}>
-            <h1>Add tag</h1>
-            <input type="text" placeholder="Add tag" onChange={handleTagChange} />
-          </label>
         </div>
 
         <div className="flex flex-[3] flex-col px-4 gap-2">

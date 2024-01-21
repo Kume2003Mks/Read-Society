@@ -4,6 +4,9 @@
     --background-color: white;
     --btn-hover: lightgrey;
     --button-color: #005FC7;
+    --card-color: #3d3d3d40;
+    --text-input: #D9D9D9;
+    --input-border: 1px solid black;
 }
 
 :global(.dark-mode) {
@@ -11,10 +14,35 @@
     --icon-color: white;
     --background-color: #2c2c2c;
     --btn-hover: #444444;
+    --card-color: #90909040;
+    --text-input: #3c3c3c;
+    --input-border: 1px solid rgb(100, 100, 100);
 }
 
 .A4_Size {
     aspect-ratio: 1/1.41;
+}
+
+.icon_color {
+    color: var(--icon-color);
+}
+
+.book_card {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
+    height: fit-content;
+    justify-content: center;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    scroll-snap-align: start;
+}
+
+.book_card:hover{
+    background-color: var(--card-color);
 }
 
 .post_Box {
@@ -110,7 +138,8 @@
 .comment_box_input input {
     flex: 1;
     padding: 8px;
-    border: 1px solid #ccc;
+    background-color: var(--text-input);
+    border: var(--input-border);
     border-radius: 3rem;
 }
 
@@ -170,8 +199,7 @@
     padding: 0.5rem;
     width: 100%;
     border-radius: 0.5rem;
-    border-width: 2px;
-    border-color: black;
+    border: 2px solid var(--border-color);
     align-items: center;
     gap: 0.5rem;
 }

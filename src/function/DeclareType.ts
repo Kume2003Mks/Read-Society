@@ -8,7 +8,6 @@ export type Book = {
     title: string;
     type: string;
     description: string;
-    tags?: string[];
     owner: string;
     profile?: Profile;
     thumbnail: string;

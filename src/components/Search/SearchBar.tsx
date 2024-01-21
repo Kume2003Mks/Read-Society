@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import Styles from './Searchbar.module.css'
+import Styles from './Searchbar.module.css';
 import { Icon } from '@iconify/react';
 
-const SearchBar = () => {
+interface SearchBarProps {
+  onSearchChange: (searchTerm: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSearchChange }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
+    onSearchChange(newSearchTerm); // Trigger the callback with the new search term
   };
 
   return (

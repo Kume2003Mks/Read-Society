@@ -51,7 +51,6 @@ export default class Books {
         allBooks.push(bookData);
       }
       sessionStorage.setItem('booksData', JSON.stringify(allBooks));
-      console.log(allBooks);
       return allBooks;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -89,7 +88,6 @@ export default class Books {
         allBooks.push(bookData);
       }
       sessionStorage.setItem(`Bookdata${ownerUid}`, JSON.stringify(allBooks));
-      console.log(allBooks);
       return allBooks;
     } catch (error) {
       console.error("เกิดข้อผิดพลาดขณะดึงข้อมูล:", error);

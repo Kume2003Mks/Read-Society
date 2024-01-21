@@ -9,7 +9,7 @@ import Line from '../components/line/Line.tsx'
 const Book_Card = lazy(() => import('../components/Element/Book_Card'));
 
 const Collection: JSX.ElementType = () => {
-    
+
     const { OwnerbookCount, Ownerbooks } = useBook();
 
     return (
@@ -23,9 +23,9 @@ const Collection: JSX.ElementType = () => {
                         <a href='#' className={classStyle.Link_Btn}>
                             <p className='text-left flex flex-row'>
                                 <Icon icon="solar:book-bold" className="icon-size" />
-                                My Creation
+                                All Book
                             </p>
-                            <p className='text-right'>{OwnerbookCount}</p>
+                            <p className='text-right'>0</p>
                         </a>
                     </li>
                 </ul>
@@ -36,9 +36,9 @@ const Collection: JSX.ElementType = () => {
                         <a href='#' className={classStyle.Link_Btn}>
                             <p className='text-left flex flex-row'>
                                 <Icon icon="solar:book-bold" className="icon-size" />
-                                All Book
+                                My Creation
                             </p>
-                            <p className='text-right'>0</p>
+                            <p className='text-right'>{OwnerbookCount}</p>
                         </a>
                     </li>
                     <li>

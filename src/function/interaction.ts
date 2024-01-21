@@ -9,8 +9,11 @@ export default class interaction {
         try {
             const likesCollectionRef = collection(doc(database, 'books', this.bookId), 'likes');
             const likeDocRef = doc(likesCollectionRef, userId);
+            const userlikeCollectionRef = collection(doc(database, 'users', userId), 'likes');
+            const userlikecolref = doc(userlikeCollectionRef, this.bookId);
 
             await setDoc(likeDocRef, { liked: true });
+            await setDoc(userlikecolref, { liked: true });
             console.log('Like added successfully');
         } catch (error) {
             console.error('Error adding like:', error);
@@ -37,8 +40,11 @@ export default class interaction {
         try {
             const likesCollectionRef = collection(doc(database, 'books', this.bookId), 'likes');
             const likeDocRef = doc(likesCollectionRef, userId);
+            const userlikeCollectionRef = collection(doc(database, 'users', userId), 'likes');
+            const userlikecolref = doc(userlikeCollectionRef, this.bookId);
 
             await deleteDoc(likeDocRef);
+            await deleteDoc(userlikecolref);
             console.log('Like removed successfully');
         } catch (error) {
             console.error('Error removing like:', error);

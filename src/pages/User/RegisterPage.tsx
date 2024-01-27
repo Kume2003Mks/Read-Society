@@ -1,24 +1,11 @@
-
-import Nav from '../components/nevigation/NavBar'
-import RegisterBox from '../components/Auth_component/RegisterBox'
-import '../Style/Global.css'
-import { useAuth } from '../function/context/AuthContext';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import RegisterBox from '../../components/Auth_component/RegisterBox'
+import '../../Style/Global.css'
+import { useAuth } from '../../function/context/AuthContext';
 
 const RegisterPage: JSX.ElementType = () => {
     const { isLoggedIn } = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (isLoggedIn === true) {
-            navigate('/');
-        }
-    },[isLoggedIn])
 
     return (
-        <>
-            <Nav />
             <main className="blackground-css">
                 {isLoggedIn ? (
                     <div className='flex-row items-center align-middle'>
@@ -35,8 +22,6 @@ const RegisterPage: JSX.ElementType = () => {
                 )}
 
             </main>
-        </>
-
     )
 }
 

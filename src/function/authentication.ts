@@ -1,11 +1,12 @@
 import { Auth, database } from '../utils/Firebase';
+import Swal from 'sweetalert2';
 import {
     signInWithEmailAndPassword,
     UserCredential,
     createUserWithEmailAndPassword,
     signOut as firebaseSignOut
 } from "firebase/auth";
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { Timestamp, doc, setDoc } from 'firebase/firestore';
 
 export default class authentication {
 
@@ -15,19 +16,17 @@ export default class authentication {
         // initialize
     }
 
-    // เข้ารหัสข้อมูลจาก Base64
-    private encodeData(data: any): string {
+    private encodeData(data: Record<string, unknown>): string {
         const jsonData = JSON.stringify(data);
         return btoa(jsonData);
     }
 
-    // ถอดรหัสข้อมูลจาก Base64
-    private decodeData(encodedData: string): any {
+    private decodeData(encodedData: string) {
         const jsonData = atob(encodedData);
         return JSON.parse(jsonData);
     }
 
-    
+
     public getAuthStatus() {
         const encodedData = localStorage.getItem(this.storageKey);
         if (encodedData) {
@@ -42,16 +41,27 @@ export default class authentication {
     public async login(email: string, password: string) {
         await signInWithEmailAndPassword(Auth, email, password)
             .then((userCredential) => {
-                alert('Login successfully');
                 const user = userCredential.user;
                 console.log('Login With', user.email);
-                localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential.user }));
-                window.location.reload();
+                localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential }));
+                Swal.fire({
+                    title: '<strong>Login successfully</strong>',
+                    icon: 'success',
+                    confirmButtonText: '<h1>Ok</h1>',
+                    timer: 3000,
+                    timerProgressBar: true,
+                }).then(() => {
+                    window.location.reload();
+                });
             })
             .catch((error) => {
                 const errorMessage = error.message;
                 console.log(errorMessage);
-                alert("login failed");
+                Swal.fire({
+                    title: '<strong>Login Failed</strong>',
+                    icon: 'error',
+                    confirmButtonText: '<h1>Ok</h1>',
+                });
             });
     }
 
@@ -70,17 +80,30 @@ export default class authentication {
                 facebook: '', //default value
                 instagram: '', //default value
                 website: '', //default value
+                last_time: Timestamp.now().toDate(), //default value
             };
 
-            const userProfilesCollectionRef = collection(database, 'users', user.uid, 'profiles');
-            const userProfileDocRef = doc(userProfilesCollectionRef, user.uid);
+            const userDocumentRef = doc(database, 'users', user.uid);
+            await setDoc(userDocumentRef, userData);
 
-            await setDoc(userProfileDocRef, userData);
-            localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential.user }));
+            localStorage.setItem(this.storageKey, this.encodeData({ user: userCredential }));
             console.log('Registration successful');
-            alert('Registration successful');
-        } catch (error: any) {
-            console.error('Error registering user:', error.message);
+            Swal.fire({
+                title: '<strong>Registration successful</strong>',
+                icon: 'success',
+                confirmButtonText: '<h1>Ok</h1>',
+                timer: 3000,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location.reload();
+            });
+        } catch (error) {
+            console.error('Error registering user:', error);
+            Swal.fire({
+                title: '<strong>Registration Failed</strong>',
+                icon: 'error',
+                confirmButtonText: '<h1>Ok</h1>',
+            });
         }
     }
 

@@ -1,4 +1,12 @@
-const Book_View: JSX.ElementType = ({ children, title, className }: any) => {
+import { ReactNode } from "react";
+
+interface BookViewProps {
+    title: string;
+    className?: string;
+    children: ReactNode;
+}
+
+const Book_View: React.FC<BookViewProps> = ({ children, title, className }) => {
 
     return (
         <div className='items-center flex mt-4 flex-col px-12'>

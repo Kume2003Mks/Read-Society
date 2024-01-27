@@ -19,7 +19,7 @@ const LoginBox: JSX.ElementType = () => {
     setShowPassword(!showPassword);
   };
   const handleRegisterPage = (): void => {
-    navigate('/register');
+    navigate('/user/register');
   }
 
   const validateForm = () => {
@@ -32,11 +32,9 @@ const LoginBox: JSX.ElementType = () => {
     } else if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/.test(email)) {
       newErrors.email = 'Invalid email format';
     }
-    if (!password) {
+    if (!password.trim()) {
       newErrors.password = 'Password is required';
-    } else if (password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
-    }
+    } 
 
     setErrors(newErrors);
     return Object.values(newErrors).every((error) => !error);
@@ -48,7 +46,6 @@ const LoginBox: JSX.ElementType = () => {
       login(email, password)
     }
   }
-
 
   return (
     <form className="mainbox gap-y-2">
@@ -89,11 +86,11 @@ const LoginBox: JSX.ElementType = () => {
         <div className="error">{errors.password}</div>
       </div>
       <div className="from-layout-password">
-        <Link to="#">Forgotten Password</Link>
+        <Link to="/user/forgot-password">Forgotten Password</Link>
       </div>
       <div style={{ width: '80%', marginBottom: '2rem', marginTop: '0.5rem' }}>
-        <button type="submit" className="login-btn" style={{ marginBottom: '1rem' }} onClick={handleSubmit}>Login</button>
-        <button className="Register-btn" onClick={handleRegisterPage}>Register</button>
+        <div className="login-btn" style={{ marginBottom: '1rem' }} onClick={handleSubmit}>Login</div>
+        <div className="Register-btn" onClick={handleRegisterPage}>Register</div>
       </div>
     </form>
   )

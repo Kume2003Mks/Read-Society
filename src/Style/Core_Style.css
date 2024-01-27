@@ -4,13 +4,56 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+  --main-text-color: black;
+  --main-background-color: white;
+  --thumb-scrollbar-color: #a5a5a5;
+}
+
+.dark-mode {
+  --main-text-color: white;
+  --main-background-color: #1e1e1e;
+  --thumb-scrollbar-color: #444444;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Prompt', sans-serif;
+  transition: all 0.3s ease-out;
 }
 
-body,
-html {
-  font-family: 'Prompt', sans-serif;
+body {
+  background-color: var(--main-background-color);
+}
+
+::-webkit-scrollbar{
+  width: 8px;
+}
+
+::-webkit-scrollbar:horizontal{
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--thumb-scrollbar-color); 
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+h1,h2,h3,h4,h5,h6,p {
+  color: var(--main-text-color);
+}
+
+body.swal2-shown > [aria-hidden='true'] {
+  filter: blur(4px);
 }

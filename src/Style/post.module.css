@@ -1,0 +1,82 @@
+:root {
+    --fake-input: #ccc;
+    --fake-input-border: 1px solid black;
+    --input-label: black;
+}
+
+:global(.dark-mode) {
+    --fake-input: #282828;
+    --fake-input-border: 1px solid rgb(100, 100, 100);
+    --input-label: rgb(206, 206, 206);
+}
+
+.postwrapper {
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.text_input {
+    width: 100%;
+    height: 150px;
+    background-color: white;
+    resize: none;
+    padding: 8px;
+}
+
+.preview_img {
+    aspect-ratio: 4/3;
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.remove_img {
+    aspect-ratio: 1;
+    cursor: pointer;
+    position: absolute;
+    margin: 8px;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: 4px;
+    padding: 2px;
+    border-radius: 100%;
+    width: 5%;
+}
+
+.post_box {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    cursor: pointer;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    background-color: var(--background-color);
+    padding: 1rem;
+}
+
+.fake_textinput {
+    border: var(--fake-input-border);
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 4rem;
+    width: 100%;
+    background-color: var(--fake-input);
+    display: flex;
+    align-items: center;
+}
+
+.fake_textinput h1 {
+    color: var(--input-label);
+}
+
+.profile_image{
+    width: 3rem;
+    height: 3rem;
+    aspect-ratio: 1;
+    border-width: 2px;
+    border-color: var(--profile-border);
+    border-radius: 100%;
+    object-fit: cover;
+  }

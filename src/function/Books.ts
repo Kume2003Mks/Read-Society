@@ -1,6 +1,6 @@
 import { collection, getDocs, doc, getDoc, orderBy, query, where, Timestamp, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { database, storage } from "../utils/Firebase";
-import { Book, Comment, Episode } from "./DeclareType";
+import { Book, Comment, Episode, Banner } from "./DeclareType";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import FatchProfiles from "./FetchProfiles";
 import interaction from "./interaction";
@@ -372,7 +372,7 @@ export default class Books {
         const bTimestamp = b.timestamp?.seconds ?? 0;
         return bTimestamp - aTimestamp;
       });
-      
+
       return comments;
     } catch (error) {
       console.error('Error getting comments: ', error);
@@ -436,5 +436,31 @@ export default class Books {
       console.error('Error deleting episode:', error);
     }
   }
+
+  public async getBanner() {
+    try {
+      const storedBanner = sessionStorage.getItem('banner');
+      if (storedBanner) {
+        const parsed = JSON.parse(storedBanner);
+        return parsed;
+      }
+        const bannerCollection = collection(database, 'banner');
+        const querySnapshot = await getDocs(bannerCollection);
+
+        const allBanner: Banner[] = [];
+        for (const docs of querySnapshot.docs) {
+            const bannerData: Banner = docs.data() as Banner;
+            const bookId = docs.id;
+            bannerData.id = bookId;
+            allBanner.push(bannerData);
+        }
+        sessionStorage.setItem('banner', JSON.stringify(allBanner));
+        return allBanner;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return [];
+    }
+}
+
 
 }

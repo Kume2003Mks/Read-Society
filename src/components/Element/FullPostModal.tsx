@@ -16,6 +16,7 @@ import { useAuth } from '../../function/context/AuthContext';
 import userDataBase from '../../function/userDataBase';
 import { Comment, Profile } from '../../function/DeclareType';
 import Social from '../../function/Social';
+import Swal from 'sweetalert2';
 
 const Comment_Box = lazy(() => import('./Comment_Box'));
 
@@ -104,6 +105,30 @@ const FullPostModal: React.FC<FullPostModalProps> = ({ onClose, post }) => {
         }
     };
 
+    const copyToClipboard = () => {
+        const currentUrl = window.location.href;
+        const shareText = `${currentUrl}?token=${post.id}`;
+      
+        navigator.clipboard.writeText(shareText)
+          .then(() => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Copied!',
+              text: 'URL copied to clipboard!',
+              timer: 1500,
+              showConfirmButton: false,
+            });
+          })
+          .catch((err) => {
+            console.error('Unable to copy to clipboard', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Unable to copy to clipboard!',
+            });
+          });
+      };
+
     return (
         <Modal isOpen={true} onClose={onClose} title={`Post by ${post.username}`}>
             <div className={styles.post_Box_modal}>
@@ -144,15 +169,11 @@ const FullPostModal: React.FC<FullPostModalProps> = ({ onClose, post }) => {
                 </div>
 
                 <div className={styles.interact_bar_modal}>
-                    <div onClick={() => alert('ฟ้ารักพ่อ')}>
-                        <Icon icon="icon-park-solid:like" className={styles.icon_btn} />
-                        <p>Like</p>
-                    </div>
                     <div>
                         <Icon icon="fluent:comment-20-filled" className={styles.icon_btn} />
                         <p>Comment</p>
                     </div>
-                    <div onClick={() => alert('ฟ้ารักพ่อ')}>
+                    <div onClick={copyToClipboard}>
                         <Icon icon="majesticons:share" className={styles.icon_btn} />
                         <p>Share</p>
                     </div>

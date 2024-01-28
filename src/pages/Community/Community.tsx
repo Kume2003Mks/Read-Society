@@ -13,6 +13,9 @@ import Swal from 'sweetalert2'
 import { useFollow } from '../../function/context/GetFollow'
 import Follower from '../../components/Element/Follower'
 import Line from '../../components/line/Line'
+import SearchBar from '../../components/Search/SearchBar'
+import { useSearchParams } from 'react-router-dom';
+
 
 const PostBox = lazy(() => import('../../components/Element/PostBox'));
 
@@ -28,6 +31,10 @@ const Community: JSX.ElementType = () => {
     const [isprocessed, setProcessed] = useState<boolean>(false);
     const { userData, isLoggedIn } = useAuth();
     const { followingUsers } = useFollow();
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         const getProfile = async (uid: string) => {
@@ -45,16 +52,22 @@ const Community: JSX.ElementType = () => {
             Setpost(post)
         }
         getPost()
-    }, [userData]);
+
+    }, [searchParams, userData]);
+
+    useEffect(() => {
+        const token: string = searchParams.get('token') || '';
+        if (token) {
+            setSearchTerm(token)
+        }
+    }, [searchParams]);
 
     const handlePost = async () => {
         let uid: string = "";
         if (userData && userData.user.uid) {
             uid = (userData.user.uid)
         }
-
         const social = new Social();
-
         if (!postText.trim() && selectedImages.length === 0) {
             setError('Please enter text or select an image.');
             return;
@@ -104,64 +117,58 @@ const Community: JSX.ElementType = () => {
         setSelectedImages(updatedImages);
     };
 
+    const filteredPosts = post.filter((searchpost) => {
+        const searchableFields = [searchpost.profile?.userName, searchpost.text, searchpost.id];
+        const isMatch = searchableFields.some((field) => {
+            const fieldValue = field ? field.toLowerCase() : '';
+            return fieldValue.includes(searchTerm.toLowerCase());
+        });
+
+        return isMatch;
+    });
+
+    const handleSortByTimestamp = () => {
+        const sortedPosts = [...post];
+        sortedPosts.sort((a: Post, b: Post) => b.timestamp.seconds - a.timestamp.seconds);
+        Setpost(sortedPosts);
+    };
+
+    const handleReset = async () => {
+        const social = new Social();
+        const newPosts = await social.getPosts();
+        Setpost(newPosts);
+        setSearchTerm('');
+    };
+
     return (
         <main className="flex-row h-screen justify-between flex p-container">
             <SideBar className='p-2'>
                 <h1 className='text-xl font-bold text-left px-3 mb-2'>Explore</h1>
                 <ul className='nav-list mx-2'>
+
                     <li>
-                        <a href='#' className={Link_Btn}>
+                        <div className={Link_Btn} onClick={handleReset}>
                             <p className='text-left flex flex-row'>
                                 <Icon icon="basil:explore-solid" className="icon-size" />
                                 Explore
                             </p>
-                        </a>
+                        </div>
                     </li>
                     <li>
-                        <a href='#' className={Link_Btn}>
-                            <p className='text-left flex flex-row'>
-                                <Icon icon="fa6-solid:fire" className="icon-size" />
-                                Popular
-                            </p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#' className={Link_Btn}>
+                        <div className={Link_Btn} onClick={() => handleSortByTimestamp()}>
                             <p className='text-left flex flex-row'>
                                 <Icon icon="fluent:megaphone-loud-32-filled" className="icon-size" />
                                 New
                             </p>
-                        </a>
+                        </div>
                     </li>
                 </ul>
                 <Line />
-                <h1 className='text-xl font-bold text-left px-3 my-2'>Topic</h1>
+                <h1 className='text-xl font-bold text-left px-3 my-2'>Search</h1>
                 <ul className='nav-list mx-2'>
                     <li>
-                        <a href='#' className={Link_Btn}>
-                            <p className='text-left flex flex-row'>
-                                <Icon icon="fa-solid:book" className="icon-size" />
-                                Novel
-                            </p>
-                        </a>
+                        <SearchBar onSearchChange={(e) => setSearchTerm(e)} />
                     </li>
-                    <li>
-                        <a href='#' className={Link_Btn}>
-                            <p className='text-left flex flex-row'>
-                                <Icon icon="material-symbols:manga-rounded" className="icon-size" />
-                                Cartoon
-                            </p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#' className={Link_Btn}>
-                            <p className='text-left flex flex-row'>
-                                <Icon icon="icon-park-solid:all-application" className="icon-size" />
-                                General
-                            </p>
-                        </a>
-                    </li>
-
                 </ul>
 
 
@@ -253,11 +260,11 @@ const Community: JSX.ElementType = () => {
                 ) : (<></>)}
 
                 <Suspense fallback={
-                <div className='flex flex-1 justify-center items-center'>
-                    <Loading />
-                </div>}>
+                    <div className='flex flex-1 justify-center items-center'>
+                        <Loading />
+                    </div>}>
 
-                    {post?.map((props: Post, index: number) => (
+                    {filteredPosts?.map((props: Post, index: number) => (
                         <PostBox
                             key={index}
                             {...props}
@@ -279,13 +286,13 @@ const Community: JSX.ElementType = () => {
                 </SideBar>
             ) : (
                 <SideBar className='p-2 flex gap-2'>
-                    <h1 className='text-xl font-bold text-left px-3 mb-2 '>Following</h1>
+                    <h1 className='text-xl font-bold text-left px-3 mb-2'>Following</h1>
                 </SideBar>
             )}
         </main>
     )
 }
 
-const Link_Btn: string = 'text-base text-center flex flex-row flex-wrap justify-between p-2 '
+const Link_Btn: string = 'text-base text-center flex flex-row flex-wrap justify-between p-2 cursor-pointer'
 
 export default Community

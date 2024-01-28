@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { Timestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import FullPostModal from './FullPostModal';
+import Swal from 'sweetalert2';
 
 export type PostBox = {
   uid: string;
@@ -51,6 +52,30 @@ const PostBox: React.FC<PostBox> = ({ uid, image, text, username, userprofile, i
   };
 
   const formattedDateString = formatDate(formattedDate);
+
+  const copyToClipboard = () => {
+    const currentUrl = window.location.href;
+    const shareText = `${currentUrl}?token=${id}`;
+  
+    navigator.clipboard.writeText(shareText)
+      .then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Copied!',
+          text: 'URL copied to clipboard!',
+          timer: 1500, 
+          showConfirmButton: false,
+        });
+      })
+      .catch((err) => {
+        console.error('Unable to copy to clipboard', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Unable to copy to clipboard!',
+        });
+      });
+  };
 
   return (
     <div className={styles.post_Box}>
@@ -102,15 +127,11 @@ const PostBox: React.FC<PostBox> = ({ uid, image, text, username, userprofile, i
       )}
 
       <div className={styles.interact_bar}>
-        <div onClick={() => alert('ฟ้ารักพ่อ')}>
-          <Icon icon="icon-park-solid:like" className={styles.icon_btn} />
-          <p>Like</p>
-        </div>
         <div onClick={() => setIsModalOpen(true)}>
           <Icon icon="fluent:comment-20-filled" className={styles.icon_btn} />
           <p>Comment</p>
         </div>
-        <div onClick={() => alert('ฟ้ารักพ่อ')}>
+        <div onClick={copyToClipboard}>
           <Icon icon="majesticons:share" className={styles.icon_btn} />
           <p>Share</p>
         </div>

@@ -2,13 +2,13 @@
 import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import Books from '../Books';
-import { Book } from '../DeclareType';
+import { Book, Banner } from '../DeclareType';
 
 interface MyCreationContextProps {
   Ownerbooks: Book[];
   books: Book[];
   OwnerbookCount: number;
-
+  banner: Banner[];
   loading: boolean;
   ownerloading: boolean;
 }
@@ -24,6 +24,8 @@ export const MybookProvider: React.FC<ContextProps> = ({ children }) => {
   const [Ownerbooks, setownerBooks] = useState<Book[]>([]);
   const [OwnerbookCount, setOwnerbookCount] = useState<number>(0);
   const [books, setBooks] = useState<Book[]>([]);
+  const [banner, setBanner] = useState<Banner[]>([]);
+
 
   const [ownerloading, setOwnerloading] = useState(true);
   const [loading, setloading] = useState(true);
@@ -45,12 +47,18 @@ export const MybookProvider: React.FC<ContextProps> = ({ children }) => {
         setOwnerloading(false);
       }
     }
+    async function loadBanner() {
+      const book = new Books();
+      const data: Banner[] = await book.getBanner();
+      setBanner(data);
+    }
     loadBooks();
     loadBooksByID();
+    loadBanner()
   }, [userData]);
 
   return (
-    <MybookContext.Provider value={{ books, Ownerbooks, OwnerbookCount, loading, ownerloading }}>
+    <MybookContext.Provider value={{ books, Ownerbooks, OwnerbookCount, loading, ownerloading, banner }}>
       {children}
     </MybookContext.Provider>
   );

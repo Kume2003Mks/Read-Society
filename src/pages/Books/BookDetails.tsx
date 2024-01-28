@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import Books from '../../function/Books';
 import { Book, Episode, Profile, Comment } from "../../function/DeclareType";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState, lazy, Suspense, useCallback } from "react";
 import Loading from "../../components/loading/Loading";
 import { useAuth } from "../../function/context/AuthContext";
 import { Icon } from "@iconify/react";
@@ -11,6 +11,7 @@ import interaction from "../../function/interaction";
 import Styles from '../../Style/Component.module.css';
 import table from '../../Style/table.module.css'
 import BooksStyle from '../../Style/BooksStyle.module.css';
+import Swal from "sweetalert2";
 
 const Comment_Box = lazy(() => import('../../components/Element/Comment_Box'));
 
@@ -179,6 +180,29 @@ const BookDetails = () => {
         }
     };
 
+    const handleCopyToClipboard = useCallback(async () => {
+        try {
+            const bookUrl = window.location.href;
+            await navigator.clipboard.writeText(bookUrl);
+            console.log("URL copied to clipboard:", bookUrl);
+            Swal.fire({
+                icon: "success",
+                title: "URL Copied!",
+                text: "The URL has been copied to the clipboard.",
+                timer: 1500,
+                timerProgressBar: true,
+                showConfirmButton: false,
+            });
+        } catch (error) {
+            console.error("Error copying URL to clipboard:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "An error occurred while copying the URL to the clipboard.",
+            });
+        }
+    }, []);
+
     return (
         <main className="flex-col flex flex-1 items-center p-container">
             {desloading ? (
@@ -226,7 +250,7 @@ const BookDetails = () => {
                                     <Icon icon="solar:bookmark-bold" className={`w-6 h-6 ${userBookmarked ? 'text-orange-500' : BooksStyle.icon_button}`} />
                                 </button>
 
-                                <button className={BooksStyle.interact_button} title="Share">
+                                <button className={BooksStyle.interact_button} title="Share" onClick={handleCopyToClipboard}>
                                     <Icon icon="majesticons:share" className={`w-6 h-6 ${BooksStyle.icon_button}`} />
                                 </button>
                             </div>

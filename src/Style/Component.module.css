@@ -141,6 +141,7 @@
     background-color: var(--text-input);
     border: var(--input-border);
     border-radius: 3rem;
+    color: var(--main-text-color);
 }
 
 .icon_btn {

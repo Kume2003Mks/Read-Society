@@ -15,13 +15,7 @@ const Book_Card = lazy(() => import('../components/Element/Book_Card'));
 
 function Home(): JSX.Element {
 
-  const { books, loading } = useBook();
-
-  const images: string[] = [
-    'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/RB1.png?alt=media&token=526d5994-6071-416c-b69e-efed733d92c6',
-    'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/RD2.png?alt=media&token=65929814-2b15-4ba6-bf5b-c170da049aa1',
-    'https://firebasestorage.googleapis.com/v0/b/webdeploytest-e935e.appspot.com/o/SD1.png?alt=media&token=a0ea5c41-12f6-458e-9f10-df864c06eac3',
-  ];
+  const { books, loading, banner } = useBook();
 
   const memoizedBooks = useMemo(() => books, [books]);
 
@@ -45,9 +39,9 @@ function Home(): JSX.Element {
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper"
         >
-          {images.map((image, index) => (
+          {banner.map((image, index) => (
             <SwiperSlide key={index}>
-              <img src={image} alt={`Image ${index + 1}`} loading="lazy" />
+              <img src={image.banner} alt={`Image ${index + 1}`} loading="lazy" />
             </SwiperSlide>
           ))}
         </Swiper>

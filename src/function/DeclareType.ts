@@ -51,6 +51,7 @@ export type Post = {
 }
 
 export type Comment = {
+    id?: string;
     text?: string;
     profile?: Profile;
     uid: string;
@@ -60,4 +61,9 @@ export type Comment = {
 export type Followers = {
     uid: string;
     profile: Profile;
+}
+
+export type Banner = {
+    id: string;
+    banner: string;
 }

@@ -66,6 +66,7 @@
     position: absolute;
     right: 0;
     align-self: center;
+    color: var(--icon-color);
     border: none;
     cursor: pointer;
     width: 1.5rem;

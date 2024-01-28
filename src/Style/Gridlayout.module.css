@@ -1,0 +1,38 @@
+.grid_button {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin: 2px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.line_button {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 2px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.icon {
+    color: var(--main-text-color);
+}
+
+.rotate_icon {
+    transform: rotate(180deg);
+}
+
+.close{
+    margin-top: 0;
+    padding-top: 0;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.open {
+    margin-top: 4px;
+    padding-top: 4px;
+    max-height: auto;
+}

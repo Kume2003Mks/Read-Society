@@ -131,6 +131,7 @@ export default class Social {
           const userProfile = await Profiles.fetchProfile(commentData.uid);
           if (userProfile) {
             comments.push({
+              id: doc.id,
               uid: commentData.uid,
               profile: userProfile,
               text: commentData.text,

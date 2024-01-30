@@ -8,7 +8,7 @@ import Loading from '../components/loading/Loading'
 import { Book } from '../function/DeclareType'
 import { useBook } from '../function/context/BooksContext'
 import Line from '../components/line/Line'
-import StyleLayout from '../style/Gridlayout.module.css'
+import StyleLayout from '../Style/Gridlayout.module.css'
 import { Icon } from '@iconify/react'
 
 const Book_Card = lazy(() => import('../components/Element/Book_Card'));

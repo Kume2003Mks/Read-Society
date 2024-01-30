@@ -1,3 +1,11 @@
+:root{
+    --main-text-color: black;
+  }
+  
+:global(.dark-mode) {
+    --main-text-color: white;
+  }
+
 .grid_button {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
